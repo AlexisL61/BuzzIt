@@ -1,8 +1,10 @@
 enum BuzzerState {
   IDLE,
   BUZZED,
-  LOCKED;
+  LOCKED_BY_TEAM,
+  LOCKED_BY_ENNEMY;
 }
+
 
 extension BuzzerStateExtension on BuzzerState {
   String get name {
@@ -11,8 +13,10 @@ extension BuzzerStateExtension on BuzzerState {
         return "IDLE";
       case BuzzerState.BUZZED:
         return "BUZZED";
-      case BuzzerState.LOCKED:
-        return "LOCKED";
+      case BuzzerState.LOCKED_BY_TEAM:
+        return "LOCKED_BY_TEAM";
+      case BuzzerState.LOCKED_BY_ENNEMY:
+        return "LOCKED_BY_ENNEMY";
       default:
         return "UNKNOWN";
     }
@@ -24,8 +28,10 @@ extension BuzzerStateExtension on BuzzerState {
         return BuzzerState.IDLE;
       case "BUZZED":
         return BuzzerState.BUZZED;
-      case "LOCKED":
-        return BuzzerState.LOCKED;
+      case "LOCKED_BY_TEAM":
+        return BuzzerState.LOCKED_BY_TEAM;
+      case "LOCKED_BY_ENNEMY":
+        return BuzzerState.LOCKED_BY_ENNEMY;
       default:
         return BuzzerState.IDLE;
     }

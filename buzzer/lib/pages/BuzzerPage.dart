@@ -31,8 +31,7 @@ class _BuzzerPageState extends State<BuzzerPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-                child: BuzzerWidget(buzzer: widget.buzzer)), 
+            Expanded(child: Center(child:BuzzerWidget(buzzer: widget.buzzer))),
             ConnectionWidget(buzzer: widget.buzzer)
           ],
         ),

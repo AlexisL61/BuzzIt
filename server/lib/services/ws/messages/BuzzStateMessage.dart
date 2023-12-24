@@ -1,13 +1,12 @@
-import 'package:buzzer/model/buzzerState.dart';
-import 'package:buzzer/services/ws/WebsocketAction.dart';
-import 'package:buzzer/services/ws/WebsocketMessage.dart';
-import 'package:buzzer/services/ws/messagesAction/ChangeBuzzerState.dart';
+import 'package:server/model/buzzerState.dart';
+import 'package:server/services/ws/WebsocketAction.dart';
+import 'package:server/services/ws/WebsocketMessage.dart';
 
 class BuzzStateMessage extends WebsocketConnectionMessage {
   static const String eventId = 'buzzState';
   late BuzzerState state;
   @override
-  List<WebsocketAction> actions = [ChangeBuzzerStateAction()];
+  List<WebsocketAction> actions = [];
 
   BuzzStateMessage() : super(eventId);
 
@@ -20,7 +19,7 @@ class BuzzStateMessage extends WebsocketConnectionMessage {
   toJson() {
     return {
       "event": event,
-      "data": {"state": state.toString()}
+      "data": {"state": state.name}
     };
   }
 }

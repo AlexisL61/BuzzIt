@@ -1,5 +1,4 @@
 import 'package:buzzer/model/buzzer.dart';
-import 'package:buzzer/model/buzzerState.dart';
 import 'package:flutter/material.dart';
 
 class BuzzerWidget extends StatefulWidget {
@@ -13,28 +12,21 @@ class BuzzerWidget extends StatefulWidget {
 class _BuzzerWidgetState extends State<BuzzerWidget> {
   @override
   Widget build(BuildContext context) {
-    if (widget.buzzer.state == BuzzerState.IDLE) {
       return buildIdleBuzzer();
-    } else {
-      return buildBuzzerPressed();
-    }
   }
 
-  Widget buildIdleBuzzer(){
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.circular(10),
-      )
-    );
-  }
-
-  Widget buildBuzzerPressed(){
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
-        borderRadius: BorderRadius.circular(10),
-      )
-    );
+  Widget buildIdleBuzzer() {
+    return InkWell(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.width,
+          width: MediaQuery.of(context).size.width,
+          child: Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).colorScheme.primary)),
+        ),
+        onTap: () {
+          widget.buzzer.buzz();
+        });
   }
 }

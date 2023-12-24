@@ -3,26 +3,35 @@ import 'buzzerState.dart';
 import 'package:server/server.dart';
 import 'room.dart';
 import 'package:collection/collection.dart';
+import 'buzzerTeam.dart';
+import 'package:server/services/ws/messages/BuzzStateMessage.dart';
+import 'dart:convert';
 
 class Buzzer {
   WebSocketChannel channel;
-  BuzzerState state;
+  BuzzerState _state;
+  BuzzerTeam team = BuzzerTeam.NONE;
 
-  Buzzer(this.channel): state = BuzzerState.IDLE;
+  Buzzer(this.channel): _state = BuzzerState.IDLE;
 
   void buzz() {
-    state = BuzzerState.BUZZED;
-  }
-
-  void lock() {
-    state = BuzzerState.LOCKED;
-  }
-
-  void unlock() {
-    state = BuzzerState.IDLE;
+    print("Buzzer buzzed");
+    print(room);
+    if (room != null) {
+      room!.buzzerActivated(this);
+    }
   }
 
   Room? get room {
     return Server().rooms.firstWhereOrNull((Room element) => element.buzzers.contains(this));
+  }
+
+  BuzzerState get state => _state;
+
+  set state(BuzzerState value) {
+    _state = value;
+    BuzzStateMessage message = BuzzStateMessage();
+    message.state = value;
+    channel.sink.add(jsonEncode(message.toJson()));
   }
 }

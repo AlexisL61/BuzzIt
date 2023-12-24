@@ -2,15 +2,14 @@ import 'package:server/services/ws/WebsocketAction.dart';
 import 'package:server/services/ws/WebsocketMessage.dart';
 import 'package:server/services/ws/messagesAction/AddBuzzerToRoomAction.dart';
 
-class RoomChosenMessage extends WebsocketConnectionMessage {  
+class RoomChosenMessage extends WebsocketConnectionMessage {
+  static const String eventId = "roomChosen";
   late String roomId;
   @override
-  List<WebsocketAction> actions = [
-    AddBuzzerToRoomAction()
-  ];
+  List<WebsocketAction> actions = [AddBuzzerToRoomAction()];
 
-  RoomChosenMessage() : super("roomChosen");
-  
+  RoomChosenMessage() : super(eventId);
+
   @override
   void hydrateData(data) {
     this.roomId = data["roomId"];
@@ -20,9 +19,7 @@ class RoomChosenMessage extends WebsocketConnectionMessage {
   toJson() {
     return {
       "event": event,
-      "data": {
-        "roomId": roomId
-      }
+      "data": {"roomId": roomId}
     };
   }
 }

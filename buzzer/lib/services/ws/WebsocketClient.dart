@@ -41,6 +41,7 @@ class WebsocketClient {
   }
 
   void onMessage(Buzzer buzzer, dynamic event) {
+    print("MESSAGE RECEIVED " + event);
     WebsocketConnectionMessage message =
         WebsocketConnectionMessage.fromJson(jsonDecode(event));
     message.actions.forEach((element) {

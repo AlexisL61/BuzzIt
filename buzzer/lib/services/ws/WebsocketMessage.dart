@@ -1,12 +1,10 @@
 import 'package:buzzer/services/ws/WebsocketAction.dart';
+import 'package:buzzer/services/ws/messages/BuzzStateMessage.dart';
 
 /// Message websocket
 /// 
 /// Classe abstraite représentant un message websocket. Le message peut-être envoyé par le serveur ou par le client.
 abstract class WebsocketConnectionMessage {
-  static const Map<String, dynamic> availableMessageType = {
-    
-  };
 
   final String event;
   late dynamic rawData;
@@ -15,17 +13,21 @@ abstract class WebsocketConnectionMessage {
   WebsocketConnectionMessage(this.event);
 
   factory WebsocketConnectionMessage.fromJson(Map<String, dynamic> json) {
-    if (availableMessageType.containsKey(json["event"])) {
-      WebsocketConnectionMessage message =
-          availableMessageType[json["event"]]!(json["event"]);
+      WebsocketConnectionMessage message = buildBaseMessage(json["event"]);
       message.rawData = json;
       message.hydrateData(json["data"]);
       return message;
-    } else {
-      throw Exception("Unknown message type");
-    }
   }
 
   void hydrateData(dynamic data);
   dynamic toJson();
+
+  static WebsocketConnectionMessage buildBaseMessage(String event){
+    switch (event) {
+      case BuzzStateMessage.eventId:
+        return BuzzStateMessage();
+      default:
+        throw Exception("Unknown message type");
+    }
+  }
 }
