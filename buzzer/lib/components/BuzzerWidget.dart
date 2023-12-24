@@ -1,4 +1,5 @@
 import 'package:buzzer/model/buzzer.dart';
+import 'package:buzzer/model/buzzerTeam.dart';
 import 'package:flutter/material.dart';
 
 class BuzzerWidget extends StatefulWidget {
@@ -23,7 +24,7 @@ class _BuzzerWidgetState extends State<BuzzerWidget> {
           child: Container(
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Theme.of(context).colorScheme.primary)),
+                  color: widget.buzzer.team.color)),
         ),
         onTap: () {
           widget.buzzer.buzz();

@@ -35,4 +35,13 @@ class Room {
     if (activeBuzzer == null) return null;
     return activeBuzzer!.team;
   }
+
+  void unbuzz() {
+    if (activeBuzzer == null) return;
+    activeBuzzer!.state = BuzzerState.IDLE;
+    activeBuzzer = null;
+    buzzers.forEach((element) {
+      element.state = BuzzerState.IDLE;
+    });
+  }
 }

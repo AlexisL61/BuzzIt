@@ -1,6 +1,8 @@
 import 'package:server/services/ws/WebsocketAction.dart';
 import 'package:server/services/ws/messages/BuzzMessage.dart';
+import 'package:server/services/ws/messages/ChangeTeamRequestMessage.dart';
 import 'package:server/services/ws/messages/RoomChosenMessage.dart';
+import 'package:server/services/ws/messages/UnBuzzMessage.dart';
 
 /// Message websocket
 ///
@@ -28,6 +30,10 @@ abstract class WebsocketConnectionMessage {
         return RoomChosenMessage();
       case BuzzMessage.eventId:
         return BuzzMessage();
+      case UnBuzzMessage.eventId:
+        return UnBuzzMessage();
+      case ChangeTeamRequestMessage.eventId:
+        return ChangeTeamRequestMessage();
       default:
         throw Exception("Unknown message type");
     }

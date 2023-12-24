@@ -16,8 +16,11 @@ class WebsocketClient {
   bool get isConnected => _isConnected;
 
   Future<void> connect(Buzzer buzzer) async {
+    const HOST = String.fromEnvironment("HOST");
+    const HOST_PORT = String.fromEnvironment("HOST_PORT");
     try {
-      _socket = WebSocketChannel.connect(Uri.parse('ws://localhost:8080/ws'));
+      _socket = WebSocketChannel.connect(
+          Uri.parse('ws://' + HOST + ':' + HOST_PORT + '/ws'));
       await _socket.ready;
       _isConnected = true;
       buzzer.notifyListeners();
@@ -33,6 +36,7 @@ class WebsocketClient {
     } catch (e) {
       _isConnected = false;
       buzzer.notifyListeners();
+      print(e);
     }
   }
 

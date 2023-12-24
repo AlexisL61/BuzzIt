@@ -15,8 +15,6 @@ class Buzzer {
   Buzzer(this.channel): _state = BuzzerState.IDLE;
 
   void buzz() {
-    print("Buzzer buzzed");
-    print(room);
     if (room != null) {
       room!.buzzerActivated(this);
     }
@@ -32,6 +30,11 @@ class Buzzer {
     _state = value;
     BuzzStateMessage message = BuzzStateMessage();
     message.state = value;
+    if (room?.activeBuzzerTeam != null){
+      message.activeTeam = room!.activeBuzzerTeam!;
+    }else{
+      message.activeTeam = null;
+    }
     channel.sink.add(jsonEncode(message.toJson()));
   }
 }

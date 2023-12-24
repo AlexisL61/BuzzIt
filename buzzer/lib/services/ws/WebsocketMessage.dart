@@ -1,5 +1,7 @@
 import 'package:buzzer/services/ws/WebsocketAction.dart';
 import 'package:buzzer/services/ws/messages/BuzzStateMessage.dart';
+import 'package:buzzer/services/ws/messages/ChangeTeamMessage.dart';
+import 'package:buzzer/services/ws/messagesAction/ChangeTeam.dart';
 
 /// Message websocket
 /// 
@@ -26,6 +28,8 @@ abstract class WebsocketConnectionMessage {
     switch (event) {
       case BuzzStateMessage.eventId:
         return BuzzStateMessage();
+      case ChangeTeamMessage.eventId:
+        return ChangeTeamMessage();
       default:
         throw Exception("Unknown message type");
     }

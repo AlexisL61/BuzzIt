@@ -13,13 +13,14 @@ class WsRouter {
 
     wsApp.get('/ws', webSocketHandler(onNewWsConnection));
 
-    shelf_io.serve(wsApp, "127.0.0.1", 8080, shared: true);
+    shelf_io.serve(wsApp, "0.0.0.0", 8080, shared: true);
   }
 
   void onNewWsConnection(WebSocketChannel channel) async {
     await channel.ready;
     Buzzer buzzer = Buzzer(channel);
     channel.stream.listen((event) {
+      print("MESSAGE RECEIVED " + event);
       WebsocketConnectionMessage message =
           WebsocketConnectionMessage.fromJson(jsonDecode(event));
       message.actions.forEach((element) {
