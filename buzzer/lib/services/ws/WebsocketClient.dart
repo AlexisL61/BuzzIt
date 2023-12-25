@@ -16,8 +16,6 @@ class WebsocketClient {
   bool get isConnected => _isConnected;
 
   Future<void> connect(Buzzer buzzer) async {
-    const HOST = String.fromEnvironment("HOST");
-    const HOST_PORT = String.fromEnvironment("HOST_PORT");
     try {
       _socket = WebSocketChannel.connect(
           Uri.parse('wss://buzzer.alexisl.fr/ws'));

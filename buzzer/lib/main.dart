@@ -1,5 +1,6 @@
 import 'package:buzzer/model/buzzer.dart';
 import 'package:buzzer/pages/BuzzerPage.dart';
+import 'package:buzzer/pages/ChooseGamePage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,8 +13,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Buzzer buzzer = Buzzer();
-    buzzer.init();
     
     return MaterialApp(
       title: 'Flutter Demo',
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: BuzzerPage(buzzer: buzzer)
+      home: ChooseGamePage()
     );
   }
 }

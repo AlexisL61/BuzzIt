@@ -2,13 +2,13 @@ import 'package:server/services/ws/WebsocketAction.dart';
 import 'package:server/services/ws/WebsocketMessage.dart';
 import 'package:server/services/ws/messagesAction/AddBuzzerToRoomAction.dart';
 
-class RoomChosenMessage extends WebsocketConnectionMessage {
-  static const String eventId = "roomChosen";
+class RoomJoinRequestMessage extends WebsocketConnectionMessage {
+  static const String eventId = "roomJoinRequest";
   late String roomId;
   @override
   List<WebsocketAction> actions = [AddBuzzerToRoomAction()];
 
-  RoomChosenMessage() : super(eventId);
+  RoomJoinRequestMessage() : super(eventId);
 
   @override
   void hydrateData(data) {

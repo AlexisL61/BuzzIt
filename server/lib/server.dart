@@ -1,5 +1,7 @@
 import 'package:server/model/room.dart';
+import 'package:server/services/generator/RoomCodeGenerator.dart';
 import 'package:server/services/ws/router.dart';
+import 'package:collection/collection.dart';
 
 void startServer() {}
 
@@ -23,5 +25,19 @@ class Server {
       rooms.add(room);
       return room;
     });
+  }
+
+  Room getRandomRoom(){
+    bool found = false;
+    String roomCode = "";
+    while(!found){
+      roomCode = RoomCodeGenerator.generate();
+      if(rooms.firstWhereOrNull((room) => room.id == roomCode) == null){
+        found = true;
+      }
+    }
+    Room room = Room(roomCode);
+    rooms.add(room);
+    return room;
   }
 }

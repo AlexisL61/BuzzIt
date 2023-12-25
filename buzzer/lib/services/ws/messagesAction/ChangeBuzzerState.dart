@@ -3,7 +3,7 @@ import 'package:buzzer/model/buzzer.dart';
 import 'package:buzzer/model/buzzerState.dart';
 import 'package:buzzer/services/ws/WebsocketAction.dart';
 import 'package:buzzer/services/ws/WebsocketMessage.dart';
-import 'package:buzzer/services/ws/messages/BuzzStateMessage.dart';
+import 'package:buzzer/services/ws/messages/in/BuzzStateMessage.dart';
 
 class ChangeBuzzerStateAction extends WebsocketAction {
   @override

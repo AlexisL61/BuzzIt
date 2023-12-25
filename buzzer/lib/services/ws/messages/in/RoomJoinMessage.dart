@@ -1,26 +1,25 @@
-
 import 'package:buzzer/services/ws/WebsocketAction.dart';
 import 'package:buzzer/services/ws/WebsocketMessage.dart';
 
-class RoomChosenMessage extends WebsocketConnectionMessage {  
+class RoomJoinMessage extends WebsocketConnectionMessage {
   late String roomId;
+  late bool success;
   @override
   List<WebsocketAction> actions = [];
 
-  RoomChosenMessage() : super("roomChosen");
-  
+  RoomJoinMessage() : super("roomJoin");
+
   @override
   void hydrateData(data) {
     this.roomId = data["roomId"];
+    this.success = data["success"];
   }
 
   @override
   toJson() {
     return {
       "event": event,
-      "data": {
-        "roomId": roomId
-      }
+      "data": {"roomId": roomId, "success": success}
     };
   }
 }

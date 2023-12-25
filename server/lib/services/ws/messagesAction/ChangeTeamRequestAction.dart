@@ -5,9 +5,9 @@ import 'package:server/model/room.dart';
 import 'package:server/server.dart';
 import 'package:server/services/ws/WebsocketAction.dart';
 import 'package:server/services/ws/WebsocketMessage.dart';
-import 'package:server/services/ws/messages/ChangeTeamMessage.dart';
-import 'package:server/services/ws/messages/ChangeTeamRequestMessage.dart';
-import 'package:server/services/ws/messages/RoomChosenMessage.dart';
+import 'package:server/services/ws/messages/out/ChangeTeamMessage.dart';
+import 'package:server/services/ws/messages/in/ChangeTeamRequestMessage.dart';
+import 'package:server/services/ws/messages/in/RoomJoinRequestMessage.dart';
 
 class ChangeTeamRequestAction extends WebsocketAction {
   @override

@@ -4,7 +4,7 @@ import 'package:server/server.dart';
 import 'room.dart';
 import 'package:collection/collection.dart';
 import 'buzzerTeam.dart';
-import 'package:server/services/ws/messages/BuzzStateMessage.dart';
+import 'package:server/services/ws/messages/out/BuzzStateMessage.dart';
 import 'dart:convert';
 
 class Buzzer {

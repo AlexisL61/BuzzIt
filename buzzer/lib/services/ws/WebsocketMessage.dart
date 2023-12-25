@@ -1,6 +1,6 @@
 import 'package:buzzer/services/ws/WebsocketAction.dart';
-import 'package:buzzer/services/ws/messages/BuzzStateMessage.dart';
-import 'package:buzzer/services/ws/messages/ChangeTeamMessage.dart';
+import 'package:buzzer/services/ws/messages/in/BuzzStateMessage.dart';
+import 'package:buzzer/services/ws/messages/in/ChangeTeamMessage.dart';
 import 'package:buzzer/services/ws/messagesAction/ChangeTeam.dart';
 
 /// Message websocket

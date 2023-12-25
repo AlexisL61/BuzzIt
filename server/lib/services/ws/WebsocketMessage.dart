@@ -1,8 +1,8 @@
 import 'package:server/services/ws/WebsocketAction.dart';
-import 'package:server/services/ws/messages/BuzzMessage.dart';
-import 'package:server/services/ws/messages/ChangeTeamRequestMessage.dart';
-import 'package:server/services/ws/messages/RoomChosenMessage.dart';
-import 'package:server/services/ws/messages/UnBuzzMessage.dart';
+import 'package:server/services/ws/messages/in/BuzzMessage.dart';
+import 'package:server/services/ws/messages/in/ChangeTeamRequestMessage.dart';
+import 'package:server/services/ws/messages/in/RoomJoinRequestMessage.dart';
+import 'package:server/services/ws/messages/in/UnBuzzMessage.dart';
 
 /// Message websocket
 ///
@@ -26,8 +26,8 @@ abstract class WebsocketConnectionMessage {
 
   static WebsocketConnectionMessage buildBaseMessage(String event) {
     switch (event) {
-      case RoomChosenMessage.eventId:
-        return RoomChosenMessage();
+      case RoomJoinRequestMessage.eventId:
+        return RoomJoinRequestMessage();
       case BuzzMessage.eventId:
         return BuzzMessage();
       case UnBuzzMessage.eventId:

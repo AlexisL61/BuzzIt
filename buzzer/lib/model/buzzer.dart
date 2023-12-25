@@ -1,14 +1,14 @@
 import 'package:buzzer/model/buzzerTeam.dart';
+import 'package:buzzer/model/player.dart';
 import 'package:buzzer/services/ws/WebsocketClient.dart';
-import 'package:buzzer/services/ws/messages/BuzzMessage.dart';
-import 'package:buzzer/services/ws/messages/ChangeTeamRequestMessage.dart';
-import 'package:buzzer/services/ws/messages/RoomChosenMessage.dart';
-import 'package:buzzer/services/ws/messages/UnBuzzMessage.dart';
+import 'package:buzzer/services/ws/messages/out/BuzzMessage.dart';
+import 'package:buzzer/services/ws/messages/out/ChangeTeamRequestMessage.dart';
+import 'package:buzzer/services/ws/messages/out/RoomJoinRequestMessage.dart';
+import 'package:buzzer/services/ws/messages/out/UnBuzzMessage.dart';
 import 'buzzerState.dart';
 
-class Buzzer {
+class Buzzer extends Player {
   BuzzerState state;
-  BuzzerTeam team = BuzzerTeam.BLUE;
   BuzzerTeam ennemyTeam = BuzzerTeam.RED;
   WebsocketClient client = WebsocketClient();
   List<Function> _listeners = [];
@@ -17,7 +17,7 @@ class Buzzer {
 
   Future<void> init() async {
     await client.connect(this);
-    RoomChosenMessage roomChosenMessage = RoomChosenMessage();
+    RoomJoinRequestMessage roomChosenMessage = RoomJoinRequestMessage();
     roomChosenMessage.roomId = "1";
     client.send(roomChosenMessage);
   }
@@ -26,11 +26,12 @@ class Buzzer {
     client.send(BuzzMessage());
   }
 
-  void changeTeam(){
+  void changeTeam() {
     int currentTeamIndex = BuzzerTeam.values.indexOf(team);
     int nextTeamIndex = (currentTeamIndex + 1) % BuzzerTeam.values.length;
     BuzzerTeam teamFound = BuzzerTeam.values[nextTeamIndex];
-    ChangeTeamRequestMessage changeTeamRequestMessage = ChangeTeamRequestMessage();
+    ChangeTeamRequestMessage changeTeamRequestMessage =
+        ChangeTeamRequestMessage();
     changeTeamRequestMessage.buzzerTeam = teamFound;
     client.send(changeTeamRequestMessage);
   }
