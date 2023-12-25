@@ -17,7 +17,7 @@ class ChangeBuzzerStateAction extends WebsocketAction {
 
     if (buzzer.state == BuzzerState.BUZZED){
       final player = AudioPlayer();
-      player.play(AssetSource('assets/sounds/buzz.mp3'));
+      player.play(AssetSource('sounds/buzz.mp3'));
     }
   }
 }

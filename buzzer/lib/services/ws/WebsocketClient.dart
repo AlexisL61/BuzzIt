@@ -20,7 +20,7 @@ class WebsocketClient {
     const HOST_PORT = String.fromEnvironment("HOST_PORT");
     try {
       _socket = WebSocketChannel.connect(
-          Uri.parse('ws://' + HOST + ':' + HOST_PORT + '/ws'));
+          Uri.parse('wss://buzzer.alexisl.fr/ws'));
       await _socket.ready;
       _isConnected = true;
       buzzer.notifyListeners();
