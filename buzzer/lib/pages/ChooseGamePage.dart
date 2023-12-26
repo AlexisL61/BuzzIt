@@ -13,18 +13,13 @@ class ChooseGamePage extends StatefulWidget {
   State<ChooseGamePage> createState() => _ChooseGamePageState();
 }
 
-class _ChooseGamePageState extends State<ChooseGamePage>
-    with SingleTickerProviderStateMixin {
+class _ChooseGamePageState extends State<ChooseGamePage> {
   AnimationController? animationController;
+
+  int selectedChild = 0;
 
   @override
   void initState() {
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 300), vsync: this);
-
-    animationController!.addListener(() {
-      setState(() {});
-    });
     super.initState();
   }
 
@@ -46,37 +41,34 @@ class _ChooseGamePageState extends State<ChooseGamePage>
         ],
       ),
       SafeArea(
-          child: 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildIntro(),
-              _buildPlayerInfo(),
-              Expanded(
-                child: InternalSlideTransition(
-                  
-                  animationController: animationController!,
-                  children: [
-                    Column(children:[
-                      Spacer(),
-                      _buildCreateGameButton(),
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildIntro(),
+          _buildPlayerInfo(),
+          Expanded(
+            child:
+                OpacitySlideTransition(selectedChild: selectedChild, children: [
+              Column(children: [
+                Spacer(),
+                _buildCreateGameButton(),
                 const SizedBox(height: 40),
                 _buildJoinGameButton(),
                 const Spacer(),
                 _buildInventoryAndSettings(),
                 const SizedBox(height: 20),
-                    ]),
-                    Column(children:[
-                      Spacer(),
-                      _buildCreateGameButton(),
+              ]),
+              Column(children: [
+                Spacer(),
+                _buildCreateGameButton(),
                 const SizedBox(height: 40),
                 _buildJoinGameButton(),
                 const Spacer(),
                 _buildInventoryAndSettings(),
                 const SizedBox(height: 20),
-                    ]),
-                  ]),
-              )
+              ]),
+            ]),
+          )
         ],
       ))
     ]));
@@ -167,7 +159,7 @@ class _ChooseGamePageState extends State<ChooseGamePage>
                 topRight: Radius.circular(20)),
             onPressed: () {
               setState(() {
-                animationController!.forward();
+                selectedChild = 1;
               });
             }));
   }
@@ -184,7 +176,7 @@ class _ChooseGamePageState extends State<ChooseGamePage>
                 topRight: Radius.circular(20)),
             onPressed: () {
               setState(() {
-                animationController!.reverse();
+                selectedChild = 0;
               });
             }));
   }
