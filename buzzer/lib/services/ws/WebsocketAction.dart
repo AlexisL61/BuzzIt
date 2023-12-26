@@ -1,9 +1,8 @@
-import 'package:buzzer/model/buzzer.dart';
+import 'package:buzzer/model/InGame/ActivePlayer.dart';
 import 'package:buzzer/services/ws/WebsocketMessage.dart';
 
 abstract class WebsocketAction {
-
   WebsocketAction();
 
-  void activate(Buzzer buzzer, WebsocketConnectionMessage message);
+  void activate(ActivePlayer buzzer, WebsocketConnectionMessage message);
 }

@@ -1,12 +1,12 @@
 import 'package:buzzer/components/BuzzerWidget.dart';
 import 'package:buzzer/components/ConnectionWidget.dart';
-import 'package:buzzer/model/buzzer.dart';
-import 'package:buzzer/model/buzzerState.dart';
-import 'package:buzzer/model/buzzerTeam.dart';
+import 'package:buzzer/model/InGame/ActivePlayer.dart';
+import 'package:buzzer/model/InGame/BuzzerState.dart';
+import 'package:buzzer/model/InGame/BuzzerTeam.dart';
 import 'package:flutter/material.dart';
 
 class BuzzerPage extends StatefulWidget {
-  final Buzzer buzzer;
+  final ActivePlayer buzzer;
 
   const BuzzerPage({super.key, required this.buzzer});
 

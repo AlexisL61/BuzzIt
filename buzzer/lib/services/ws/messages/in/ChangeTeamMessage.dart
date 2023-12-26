@@ -1,4 +1,4 @@
-import 'package:buzzer/model/buzzerTeam.dart';
+import 'package:buzzer/model/InGame/BuzzerTeam.dart';
 import 'package:buzzer/services/ws/WebsocketAction.dart';
 import 'package:buzzer/services/ws/WebsocketMessage.dart';
 import 'package:buzzer/services/ws/messagesAction/ChangeTeam.dart';

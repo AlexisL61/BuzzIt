@@ -1,23 +1,10 @@
-import 'package:buzzer/model/buzzer.dart';
-import 'package:buzzer/model/player.dart';
+import 'package:buzzer/model/Player.dart';
 
 class Room {
-  String id;
-  List<Player> players;
+  final String id;
+  final Player host;
 
-  /// The buzzer of the player using the device
-  Buzzer currentBuzzer;
+  final int playersNumber;
 
-  /// The buzzer that is currently active
-  Player? activeBuzzer;
-
-  Room(this.id, this.currentBuzzer) : players = [currentBuzzer];
-
-  void addPlayer(Player player) {
-    players.add(player);
-  }
-
-  void removePlayer(Player player) {
-    players.remove(player);
-  }
+  Room(this.id, this.host, this.playersNumber);
 }

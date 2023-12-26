@@ -1,19 +1,23 @@
 import 'package:buzzer/components/buttons/BigButton.dart';
 import 'package:buzzer/components/buttons/OneLineIconTextButton.dart';
 import 'package:buzzer/components/buttons/TwoLineBigButton.dart';
-import 'package:buzzer/components/transitions/SlideTransition.dart';
+import 'package:buzzer/components/cards/BigCard.dart';
+import 'package:buzzer/components/cards/PlayerCard.dart';
+import 'package:buzzer/components/transitions/OpacitySlideTransition.dart';
+import 'package:buzzer/model/Player.dart';
+import 'package:buzzer/pages/menu/components/GameCodeComponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ChooseGamePage extends StatefulWidget {
-  const ChooseGamePage({super.key});
+class MainMenuPage extends StatefulWidget {
+  const MainMenuPage({super.key});
 
   @override
-  State<ChooseGamePage> createState() => _ChooseGamePageState();
+  State<MainMenuPage> createState() => _MainMenuPageState();
 }
 
-class _ChooseGamePageState extends State<ChooseGamePage> {
+class _MainMenuPageState extends State<MainMenuPage> {
   AnimationController? animationController;
 
   int selectedChild = 0;
@@ -26,52 +30,52 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(children: [
-      Column(
-        children: [
-          _buildUpperBackground(),
-          Expanded(
-              child: Image(
-            color: Colors.deepPurpleAccent.withOpacity(0.2),
-            image: Svg("assets/images/background_image.svg",
-                color: Colors.deepPurpleAccent),
-            repeat: ImageRepeat.repeat,
-          )),
-          _buildBottomBackground()
-        ],
-      ),
-      SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildIntro(),
-          _buildPlayerInfo(),
-          Expanded(
-            child:
-                OpacitySlideTransition(selectedChild: selectedChild, children: [
-              Column(children: [
-                Spacer(),
-                _buildCreateGameButton(),
-                const SizedBox(height: 40),
-                _buildJoinGameButton(),
-                const Spacer(),
-                _buildInventoryAndSettings(),
-                const SizedBox(height: 20),
-              ]),
-              Column(children: [
-                Spacer(),
-                _buildCreateGameButton(),
-                const SizedBox(height: 40),
-                _buildJoinGameButton(),
-                const Spacer(),
-                _buildInventoryAndSettings(),
-                const SizedBox(height: 20),
-              ]),
-            ]),
-          )
-        ],
-      ))
-    ]));
+          Column(
+            children: [
+              _buildUpperBackground(),
+              Expanded(
+                  child: Image(
+                color: Colors.deepPurpleAccent.withOpacity(0.2),
+                image: Svg("assets/images/background_image.svg",
+                    color: Colors.deepPurpleAccent),
+                repeat: ImageRepeat.repeat,
+              )),
+              _buildBottomBackground()
+            ],
+          ),
+          SafeArea(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildIntro(),
+              _buildPlayerInfo(),
+              Expanded(
+                child: OpacitySlideTransition(
+                    selectedChild: selectedChild,
+                    children: [
+                      Column(children: [
+                        Spacer(),
+                        _buildCreateGameButton(),
+                        const SizedBox(height: 40),
+                        _buildJoinGameButton(),
+                        const Spacer(),
+                        _buildInventoryAndSettings(),
+                        const SizedBox(height: 20),
+                      ]),
+                      GameCodeComponent(
+                        goingBack: () {
+                          setState(() {
+                            selectedChild = 0;
+                          });
+                        },
+                      ),
+                    ]),
+              )
+            ],
+          ))
+        ]));
   }
 
   Widget _buildIntro() {
@@ -115,35 +119,9 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
   Widget _buildPlayerInfo() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: BigButton(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Image.network(
-                    "https://avatars.githubusercontent.com/u/30233189?v=4",
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.cover,
-                  )),
-              const SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Pseudo",
-                      style: GoogleFonts.rubik(
-                          textStyle: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600))),
-                  Text("Le magicien",
-                      style: GoogleFonts.rubik(
-                          textStyle: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600))),
-                ],
-              )
-            ]),
-          ),
-          onPressed: () {}),
+      child: PlayerCard(
+          player: Player("Alexis",
+              "https://avatars.githubusercontent.com/u/30233189?v=4")),
     );
   }
 
@@ -157,11 +135,7 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
             borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(20),
                 topRight: Radius.circular(20)),
-            onPressed: () {
-              setState(() {
-                selectedChild = 1;
-              });
-            }));
+            onPressed: () {}));
   }
 
   Widget _buildJoinGameButton() {
@@ -176,7 +150,7 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
                 topRight: Radius.circular(20)),
             onPressed: () {
               setState(() {
-                selectedChild = 0;
+                selectedChild = 1;
               });
             }));
   }

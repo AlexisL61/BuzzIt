@@ -1,9 +1,9 @@
-import 'package:buzzer/model/buzzer.dart';
-import 'package:buzzer/model/buzzerTeam.dart';
+import 'package:buzzer/model/InGame/ActivePlayer.dart';
+import 'package:buzzer/model/InGame/BuzzerTeam.dart';
 import 'package:flutter/material.dart';
 
 class BuzzerWidget extends StatefulWidget {
-  final Buzzer buzzer;
+  final ActivePlayer buzzer;
   const BuzzerWidget({super.key, required this.buzzer});
 
   @override
@@ -13,7 +13,7 @@ class BuzzerWidget extends StatefulWidget {
 class _BuzzerWidgetState extends State<BuzzerWidget> {
   @override
   Widget build(BuildContext context) {
-      return buildIdleBuzzer();
+    return buildIdleBuzzer();
   }
 
   Widget buildIdleBuzzer() {
@@ -23,8 +23,7 @@ class _BuzzerWidgetState extends State<BuzzerWidget> {
           width: MediaQuery.of(context).size.width,
           child: Container(
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: widget.buzzer.team.color)),
+                  shape: BoxShape.circle, color: widget.buzzer.team.color)),
         ),
         onTap: () {
           widget.buzzer.buzz();

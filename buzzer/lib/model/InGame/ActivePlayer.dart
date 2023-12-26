@@ -1,19 +1,19 @@
-import 'package:buzzer/model/buzzerTeam.dart';
-import 'package:buzzer/model/player.dart';
+import 'package:buzzer/model/InGame/BuzzerTeam.dart';
+import 'package:buzzer/model/InGame/InGamePlayer.dart';
 import 'package:buzzer/services/ws/WebsocketClient.dart';
 import 'package:buzzer/services/ws/messages/out/BuzzMessage.dart';
 import 'package:buzzer/services/ws/messages/out/ChangeTeamRequestMessage.dart';
 import 'package:buzzer/services/ws/messages/out/RoomJoinRequestMessage.dart';
 import 'package:buzzer/services/ws/messages/out/UnBuzzMessage.dart';
-import 'buzzerState.dart';
+import 'BuzzerState.dart';
 
-class Buzzer extends Player {
+class ActivePlayer extends InGamePlayer {
   BuzzerState state;
   BuzzerTeam ennemyTeam = BuzzerTeam.RED;
   WebsocketClient client = WebsocketClient();
   List<Function> _listeners = [];
 
-  Buzzer() : state = BuzzerState.IDLE;
+  ActivePlayer(String name, String image) : state = BuzzerState.IDLE, super(name, image);
 
   Future<void> init() async {
     await client.connect(this);

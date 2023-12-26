@@ -1,8 +1,6 @@
-import 'package:buzzer/model/buzzerTeam.dart';
-
 class Player {
   String name = "";
-  BuzzerTeam team = BuzzerTeam.NONE;
+  String image = "";
 
-  Player();
+  Player(this.name, this.image);
 }

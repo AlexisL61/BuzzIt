@@ -1,8 +1,8 @@
-import 'package:buzzer/model/buzzer.dart';
+import 'package:buzzer/model/InGame/ActivePlayer.dart';
 import 'package:flutter/material.dart';
 
 class ConnectionWidget extends StatefulWidget {
-  final Buzzer buzzer;
+  final ActivePlayer buzzer;
 
   const ConnectionWidget({super.key, required this.buzzer});
 
@@ -16,7 +16,7 @@ class _ConnectionWidgetState extends State<ConnectionWidget> {
     return Text(buildText());
   }
 
-  String buildText(){
+  String buildText() {
     if (widget.buzzer.client.isConnected == false) {
       return 'Not connected';
     } else {

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:buzzer/model/buzzer.dart';
+import 'package:buzzer/model/InGame/ActivePlayer.dart';
 import 'package:buzzer/services/ws/WebsocketMessage.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -15,10 +15,10 @@ class WebsocketClient {
   bool _isConnected = false;
   bool get isConnected => _isConnected;
 
-  Future<void> connect(Buzzer buzzer) async {
+  Future<void> connect(ActivePlayer buzzer) async {
     try {
-      _socket = WebSocketChannel.connect(
-          Uri.parse('wss://buzzer.alexisl.fr/ws'));
+      _socket =
+          WebSocketChannel.connect(Uri.parse('wss://buzzer.alexisl.fr/ws'));
       await _socket.ready;
       _isConnected = true;
       buzzer.notifyListeners();
@@ -42,7 +42,7 @@ class WebsocketClient {
     _socket.sink.add(jsonEncode(message.toJson()));
   }
 
-  void onMessage(Buzzer buzzer, dynamic event) {
+  void onMessage(ActivePlayer buzzer, dynamic event) {
     print("MESSAGE RECEIVED " + event);
     WebsocketConnectionMessage message =
         WebsocketConnectionMessage.fromJson(jsonDecode(event));

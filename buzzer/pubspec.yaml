@@ -35,6 +35,7 @@ dependencies:
   web_socket_channel: ^2.4.0
   audioplayers: ^5.2.1
   flutter_svg_provider: ^1.0.6
+  pinput: ^3.0.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
