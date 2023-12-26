@@ -32,7 +32,7 @@ class TwoLineBigButton extends StatelessWidget {
                   colors:
                       colors ?? [Colors.deepPurple, Colors.deepPurpleAccent])),
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
                 Expanded(

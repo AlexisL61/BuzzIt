@@ -1,7 +1,9 @@
 import 'package:buzzer/components/buttons/BigButton.dart';
 import 'package:buzzer/components/buttons/OneLineIconTextButton.dart';
 import 'package:buzzer/components/buttons/TwoLineBigButton.dart';
+import 'package:buzzer/components/transitions/SlideTransition.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ChooseGamePage extends StatefulWidget {
@@ -11,7 +13,21 @@ class ChooseGamePage extends StatefulWidget {
   State<ChooseGamePage> createState() => _ChooseGamePageState();
 }
 
-class _ChooseGamePageState extends State<ChooseGamePage> {
+class _ChooseGamePageState extends State<ChooseGamePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController? animationController;
+
+  @override
+  void initState() {
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 300), vsync: this);
+
+    animationController!.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,23 +35,48 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
       Column(
         children: [
           _buildUpperBackground(),
-          const Spacer(),
+          Expanded(
+              child: Image(
+            color: Colors.deepPurpleAccent.withOpacity(0.2),
+            image: Svg("assets/images/background_image.svg",
+                color: Colors.deepPurpleAccent),
+            repeat: ImageRepeat.repeat,
+          )),
           _buildBottomBackground()
         ],
       ),
       SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildIntro(),
-          _buildPlayerInfo(),
-          const Spacer(),
-          _buildCreateGameButton(),
-          const SizedBox(height: 20),
-          _buildJoinGameButton(),
-          const Spacer(),
-          _buildInventoryAndSettings(),
-          const SizedBox(height: 20),
+          child: 
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildIntro(),
+              _buildPlayerInfo(),
+              Expanded(
+                child: InternalSlideTransition(
+                  
+                  animationController: animationController!,
+                  children: [
+                    Column(children:[
+                      Spacer(),
+                      _buildCreateGameButton(),
+                const SizedBox(height: 40),
+                _buildJoinGameButton(),
+                const Spacer(),
+                _buildInventoryAndSettings(),
+                const SizedBox(height: 20),
+                    ]),
+                    Column(children:[
+                      Spacer(),
+                      _buildCreateGameButton(),
+                const SizedBox(height: 40),
+                _buildJoinGameButton(),
+                const Spacer(),
+                _buildInventoryAndSettings(),
+                const SizedBox(height: 20),
+                    ]),
+                  ]),
+              )
         ],
       ))
     ]));
@@ -43,7 +84,7 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
 
   Widget _buildIntro() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: Row(children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +109,7 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
 
   Widget _buildUpperBackground() {
     return Container(
-      height: 200,
+      height: 220,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -124,7 +165,11 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
             borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(20),
                 topRight: Radius.circular(20)),
-            onPressed: () {}));
+            onPressed: () {
+              setState(() {
+                animationController!.forward();
+              });
+            }));
   }
 
   Widget _buildJoinGameButton() {
@@ -137,7 +182,11 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
             borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(20),
                 topRight: Radius.circular(20)),
-            onPressed: () {}));
+            onPressed: () {
+              setState(() {
+                animationController!.reverse();
+              });
+            }));
   }
 
   Widget _buildInventoryAndSettings() {
@@ -153,7 +202,7 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
     return Padding(
         padding: const EdgeInsets.only(left: 16, right: 8.0),
         child: OneLineIconTextButton(
-            colors: [Colors.deepPurple, const Color.fromARGB(255, 113, 67, 219)],
+            colors: [Colors.deepPurple, Color.fromARGB(255, 113, 67, 219)],
             iconBackgroundColor: Colors.deepPurpleAccent,
             icon: Icons.badge,
             onPressed: () {},
@@ -164,7 +213,10 @@ class _ChooseGamePageState extends State<ChooseGamePage> {
     return Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 16.0),
         child: OneLineIconTextButton(
-            colors: [const Color.fromARGB(255, 113, 67, 219), Colors.deepPurpleAccent],
+            colors: [
+              const Color.fromARGB(255, 113, 67, 219),
+              Colors.deepPurpleAccent
+            ],
             iconBackgroundColor: Colors.deepPurpleAccent,
             icon: Icons.settings,
             onPressed: () {},
