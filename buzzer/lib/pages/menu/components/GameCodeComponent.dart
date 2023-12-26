@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:buzzer/components/cards/BigCard.dart';
 import 'package:buzzer/components/cards/ServerCard.dart';
-import 'package:buzzer/components/transitions/OpacitySlideTransition.dart';
 import 'package:buzzer/components/transitions/OpacityTransition.dart';
 import 'package:buzzer/model/room.dart';
 import 'package:buzzer/services/api/httpRequest.dart';
@@ -27,6 +24,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Spacer(),
         Padding(
             padding: const EdgeInsets.all(16.0),
             child: BigCard.buildPurpleCard(
@@ -43,7 +41,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
                 ],
               ),
             ))),
-        const SizedBox(height: 40),
+        const SizedBox(height: 16),
         Pinput(
           keyboardType: TextInputType.text,
           textCapitalization: TextCapitalization.characters,
@@ -64,10 +62,14 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
           onChanged: (String pin) {
             if (pin.length == 4) {
               retrieveRoomFromCode(pin);
+            }else{
+              setState(() {
+                roomFound = null;
+              });
             }
           },
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 16),
         _buildRoomFound(),
         const Spacer(),
         Padding(
