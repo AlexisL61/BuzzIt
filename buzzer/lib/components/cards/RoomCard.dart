@@ -1,18 +1,18 @@
 import 'package:buzzer/components/cards/BuzzerCard.dart';
-import 'package:buzzer/model/Player.dart';
+import 'package:buzzer/model/room.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PlayerCard extends StatefulWidget {
-  final Player player;
+class RoomCard extends StatefulWidget {
+  final Room room;
 
-  const PlayerCard({super.key, required this.player});
+  const RoomCard({super.key, required this.room});
 
   @override
-  State<PlayerCard> createState() => _PlayerCardState();
+  State<RoomCard> createState() => _RoomCardState();
 }
 
-class _PlayerCardState extends State<PlayerCard> {
+class _RoomCardState extends State<RoomCard> {
   @override
   Widget build(BuildContext context) {
     return BuzzerCard(
@@ -22,16 +22,17 @@ class _PlayerCardState extends State<PlayerCard> {
         ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: Image.network(
-              widget.player.image,
+              widget.room.host.image,
               width: 60,
               height: 60,
               fit: BoxFit.cover,
             )),
         const SizedBox(width: 10),
         Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.player.name,
+            Text("Salon de " + widget.room.host.name,
                 style: GoogleFonts.rubik(
                     textStyle: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.w600))),
@@ -40,7 +41,18 @@ class _PlayerCardState extends State<PlayerCard> {
                     textStyle: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w600))),
           ],
-        )
+        ),
+        Spacer(),
+        Row(
+          children: [
+            Text(widget.room.playersNumber.toString(),
+                style: GoogleFonts.rubik(
+                    textStyle: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w600))),
+            const SizedBox(width: 10),
+            Icon(Icons.person, size: 30)
+          ],
+        ),
       ]),
     ));
   }

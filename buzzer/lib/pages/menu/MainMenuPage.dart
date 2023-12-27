@@ -1,7 +1,7 @@
 import 'package:buzzer/components/buttons/BigButton.dart';
 import 'package:buzzer/components/buttons/OneLineIconTextButton.dart';
 import 'package:buzzer/components/buttons/TwoLineBigButton.dart';
-import 'package:buzzer/components/cards/BigCard.dart';
+import 'package:buzzer/components/cards/BuzzerCard.dart';
 import 'package:buzzer/components/cards/PlayerCard.dart';
 import 'package:buzzer/components/transitions/OpacitySlideTransition.dart';
 import 'package:buzzer/model/Player.dart';
@@ -11,6 +11,8 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MainMenuPage extends StatefulWidget {
+  static const String route = "/";
+
   const MainMenuPage({super.key});
 
   @override

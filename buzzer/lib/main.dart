@@ -1,5 +1,6 @@
 import 'package:buzzer/model/InGame/ActivePlayer.dart';
-import 'package:buzzer/pages/BuzzerPage.dart';
+import 'package:buzzer/pages/ingame/BuzzerPage.dart';
+import 'package:buzzer/pages/ingame/InGamePage.dart';
 import 'package:buzzer/pages/menu/MainMenuPage.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,10 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: MainMenuPage());
+        initialRoute: MainMenuPage.route,
+        routes: {
+          MainMenuPage.route: (context) => MainMenuPage(),
+          InGamePage.route:(context) => InGamePage()
+        });
   }
 }

@@ -1,4 +1,4 @@
-import 'package:buzzer/components/cards/BigCard.dart';
+import 'package:buzzer/components/cards/BuzzerCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,11 @@ class BigButton extends StatefulWidget {
   final VoidCallback onPressed;
   final BorderRadius? borderRadius;
 
-  const BigButton({super.key, required this.child, required this.onPressed, this.borderRadius});
+  const BigButton(
+      {super.key,
+      required this.child,
+      required this.onPressed,
+      this.borderRadius});
 
   @override
   State<BigButton> createState() => _BigButtonState();
@@ -20,6 +24,7 @@ class _BigButtonState extends State<BigButton> {
     return MaterialButton(
         padding: EdgeInsets.all(0),
         onPressed: widget.onPressed,
-        child: BigCard(child: widget.child, borderRadius: widget.borderRadius));
+        child:
+            BuzzerCard(child: widget.child, borderRadius: widget.borderRadius));
   }
 }

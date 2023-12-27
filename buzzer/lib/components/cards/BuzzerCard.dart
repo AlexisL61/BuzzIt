@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-enum BigCardStyle {
+enum BuzzerCardStyle {
   WHITE,
   PURPLE;
 }
 
-class BigCard extends StatelessWidget {
+class BuzzerCard extends StatelessWidget {
   final BorderRadius? borderRadius;
   final Widget child;
-  final BigCardStyle? style;
+  final BuzzerCardStyle? style;
 
-  const BigCard(
+  const BuzzerCard(
       {super.key, required this.child, this.borderRadius, this.style});
 
   @override
@@ -19,7 +19,7 @@ class BigCard extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-            decoration: style == BigCardStyle.PURPLE
+            decoration: style == BuzzerCardStyle.PURPLE
                 ? buildPurpleBoxDecoration()
                 : buildWhiteBoxDecoration(),
             child: ClipRRect(
@@ -62,13 +62,13 @@ class BigCard extends StatelessWidget {
 
   static Widget buildWhiteCard(
       {required Widget child, BorderRadius? borderRadius}) {
-    return BigCard(
-        child: child, borderRadius: borderRadius, style: BigCardStyle.WHITE);
+    return BuzzerCard(
+        child: child, borderRadius: borderRadius, style: BuzzerCardStyle.WHITE);
   }
 
   static Widget buildPurpleCard(
       {required Widget child, BorderRadius? borderRadius}) {
-    return BigCard(
-        child: child, borderRadius: borderRadius, style: BigCardStyle.PURPLE);
+    return BuzzerCard(
+        child: child, borderRadius: borderRadius, style: BuzzerCardStyle.PURPLE);
   }
 }

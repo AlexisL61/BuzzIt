@@ -1,6 +1,10 @@
-import 'package:buzzer/components/cards/BigCard.dart';
-import 'package:buzzer/components/cards/ServerCard.dart';
+import 'package:buzzer/components/buttons/BigButton.dart';
+import 'package:buzzer/components/cards/BuzzerCard.dart';
+import 'package:buzzer/components/cards/RoomCard.dart';
 import 'package:buzzer/components/transitions/OpacityTransition.dart';
+import 'package:buzzer/model/InGame/ActivePlayer.dart';
+import 'package:buzzer/model/InGame/InGamePlayer.dart';
+import 'package:buzzer/model/InGame/InGameRoom.dart';
 import 'package:buzzer/model/room.dart';
 import 'package:buzzer/services/api/httpRequest.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +31,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
         Spacer(),
         Padding(
             padding: const EdgeInsets.all(16.0),
-            child: BigCard.buildPurpleCard(
+            child: BuzzerCard.buildPurpleCard(
                 child: Padding(
               padding: EdgeInsets.all(16),
               child: Row(
@@ -61,8 +65,8 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
           length: 4,
           onChanged: (String pin) {
             if (pin.length == 4) {
-              retrieveRoomFromCode(pin);
-            }else{
+              retrieveRoomFromCode(pin.toUpperCase());
+            } else {
               setState(() {
                 roomFound = null;
               });
@@ -74,7 +78,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
         const Spacer(),
         Padding(
             padding: const EdgeInsets.all(16.0),
-            child: BigCard.buildPurpleCard(
+            child: BuzzerCard.buildPurpleCard(
                 child: Padding(
               padding: EdgeInsets.all(16),
               child: Row(
@@ -120,14 +124,19 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
             SizedBox.shrink(),
             const Padding(
                 padding: EdgeInsets.all(16),
-                child: BigCard(
-                    child: Center(
-                        child:CircularProgressIndicator()))),
+                child: BuzzerCard(
+                    child: Center(child: CircularProgressIndicator()))),
             roomFound == null
                 ? SizedBox.shrink()
                 : Padding(
                     padding: EdgeInsets.all(16),
-                    child: RoomCard(room: roomFound!))
+                    child: BigButton(
+                      child: RoomCard(room: roomFound!),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/ingame',
+                            arguments: InGameRoom(roomFound!.id, ActivePlayer("Alexis", ""), InGamePlayer("Alexis2", "")));
+                      },
+                    ))
           ]),
     );
   }
