@@ -1,8 +1,8 @@
-import 'package:server/services/ws/WebsocketAction.dart';
-import 'package:server/services/ws/messages/in/BuzzMessage.dart';
-import 'package:server/services/ws/messages/in/ChangeTeamRequestMessage.dart';
-import 'package:server/services/ws/messages/in/RoomJoinRequestMessage.dart';
-import 'package:server/services/ws/messages/in/UnBuzzMessage.dart';
+import 'package:server/services/router/ws/WebsocketAction.dart';
+import 'package:server/services/router/ws/messages/in/BuzzMessage.dart';
+import 'package:server/services/router/ws/messages/in/ChangeTeamRequestMessage.dart';
+import 'package:server/services/router/ws/messages/in/RoomJoinRequestMessage.dart';
+import 'package:server/services/router/ws/messages/in/UnBuzzMessage.dart';
 
 /// Message websocket
 ///

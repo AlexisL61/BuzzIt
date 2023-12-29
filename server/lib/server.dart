@@ -1,38 +1,34 @@
-import 'package:server/model/room.dart';
+import 'package:server/model/Room.dart';
 import 'package:server/services/generator/RoomCodeGenerator.dart';
-import 'package:server/services/ws/router.dart';
+import 'package:server/services/router/router.dart';
 import 'package:collection/collection.dart';
 
 void startServer() {}
 
-class Server {
+class BuzzerServer {
   List<Room> rooms = [];
 
-  factory Server() {
+  factory BuzzerServer() {
     return _singleton;
   }
 
-  static final Server _singleton = Server._internal();
+  static final BuzzerServer _singleton = BuzzerServer._internal();
 
-  Server._internal(){
-    WsRouter wsRouter = WsRouter();
+  BuzzerServer._internal() {
+    ServerRouter wsRouter = ServerRouter();
     wsRouter.startRouter();
   }
 
-  Room getRoomById(String id) {
-    return rooms.firstWhere((room) => room.id == id, orElse: (){
-      Room room = Room(id);
-      rooms.add(room);
-      return room;
-    });
+  Room? getRoomById(String id) {
+    return rooms.firstWhereOrNull((room) => room.id == id);
   }
 
-  Room getRandomRoom(){
+  Room getRandomRoom() {
     bool found = false;
     String roomCode = "";
-    while(!found){
+    while (!found) {
       roomCode = RoomCodeGenerator.generate();
-      if(rooms.firstWhereOrNull((room) => room.id == roomCode) == null){
+      if (rooms.firstWhereOrNull((room) => room.id == roomCode) == null) {
         found = true;
       }
     }

@@ -6,10 +6,12 @@ import 'package:buzzer/model/InGame/ActivePlayer.dart';
 import 'package:buzzer/model/InGame/InGamePlayer.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
 import 'package:buzzer/model/room.dart';
-import 'package:buzzer/services/api/httpRequest.dart';
+import 'package:buzzer/services/api/ApiService.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
+
+enum RoomDataStatus {IDLE, LOADING, NOT_FOUND, FOUND }
 
 class GameCodeComponent extends StatefulWidget {
   final Function() goingBack;
@@ -21,8 +23,8 @@ class GameCodeComponent extends StatefulWidget {
 }
 
 class _GameCodeComponentState extends State<GameCodeComponent> {
+  RoomDataStatus roomDataLoading = RoomDataStatus.IDLE;
   Room? roomFound;
-  bool roomDataLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
               retrieveRoomFromCode(pin.toUpperCase());
             } else {
               setState(() {
-                roomFound = null;
+                roomDataLoading = RoomDataStatus.IDLE;
               });
             }
           },
@@ -103,23 +105,36 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
   Future<void> retrieveRoomFromCode(String pin) async {
     print("Retrieving room from code $pin");
     setState(() {
-      roomDataLoading = true;
+      roomDataLoading = RoomDataStatus.LOADING;
     });
-    roomFound = await ApiService.getRoomData(pin);
+    roomFound = await ApiService().getRoomData(pin);
     setState(() {
-      roomDataLoading = false;
+      roomDataLoading = roomFound == null
+          ? RoomDataStatus.NOT_FOUND
+          : RoomDataStatus.FOUND;
     });
   }
 
   Widget _buildRoomFound() {
+    int selectedChild = 0;
+    switch (roomDataLoading) {
+      case RoomDataStatus.IDLE:
+        selectedChild = 0;
+        break;
+      case RoomDataStatus.LOADING:
+        selectedChild = 1;
+        break;
+      case RoomDataStatus.FOUND:
+        selectedChild = 2;
+        break;
+      case RoomDataStatus.NOT_FOUND:
+        selectedChild = 3;
+        break;
+    }
     return SizedBox(
       height: 120,
       child: OpacityTransition(
-          selectedChild: roomDataLoading
-              ? 1
-              : roomFound != null
-                  ? 2
-                  : 0,
+          selectedChild: selectedChild,
           children: [
             SizedBox.shrink(),
             const Padding(
@@ -136,7 +151,17 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
                         Navigator.pushNamed(context, '/ingame',
                             arguments: InGameRoom(roomFound!.id, ActivePlayer("Alexis", "https://avatars.githubusercontent.com/u/30233189?v=4"), InGamePlayer("Alexis2", "")));
                       },
-                    ))
+                    )),
+            Padding(
+                padding: EdgeInsets.all(16),
+                child: BuzzerCard(
+                    child: Center(
+                        child: Text("Salle non trouvée",
+                            style: GoogleFonts.rubik(
+                                textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.w600)))))),
           ]),
     );
   }

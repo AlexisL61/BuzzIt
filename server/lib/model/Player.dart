@@ -1,27 +1,31 @@
+import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'buzzerState.dart';
 import 'package:server/server.dart';
-import 'room.dart';
+import 'Room.dart';
 import 'package:collection/collection.dart';
 import 'buzzerTeam.dart';
-import 'package:server/services/ws/messages/out/BuzzStateMessage.dart';
-import 'dart:convert';
+import 'package:server/services/router/ws/messages/out/BuzzStateMessage.dart';
 
-class Buzzer {
+class Player {
   WebSocketChannel channel;
+  String name;
+  String image;
   BuzzerState _state;
   BuzzerTeam team = BuzzerTeam.NONE;
 
-  Buzzer(this.channel): _state = BuzzerState.IDLE;
+  Player(this.channel, this.name, this.image) : _state = BuzzerState.IDLE;
 
   void buzz() {
     if (room != null) {
-      room!.buzzerActivated(this);
+      room!.playerActivated(this);
     }
   }
 
   Room? get room {
-    return Server().rooms.firstWhereOrNull((Room element) => element.buzzers.contains(this));
+    return BuzzerServer()
+        .rooms
+        .firstWhereOrNull((Room element) => element.buzzers.contains(this));
   }
 
   BuzzerState get state => _state;
@@ -30,11 +34,15 @@ class Buzzer {
     _state = value;
     BuzzStateMessage message = BuzzStateMessage();
     message.state = value;
-    if (room?.activeBuzzerTeam != null){
+    if (room?.activeBuzzerTeam != null) {
       message.activeTeam = room!.activeBuzzerTeam!;
-    }else{
+    } else {
       message.activeTeam = null;
     }
     channel.sink.add(jsonEncode(message.toJson()));
+  }
+
+  Map<String, dynamic> toPartialJson() {
+    return {'name': name, 'image': image};
   }
 }

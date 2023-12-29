@@ -1,6 +1,6 @@
-import 'package:server/services/ws/WebsocketAction.dart';
-import 'package:server/services/ws/WebsocketMessage.dart';
-import 'package:server/services/ws/messagesAction/AddBuzzerToRoomAction.dart';
+import 'package:server/services/router/ws/WebsocketAction.dart';
+import 'package:server/services/router/ws/WebsocketMessage.dart';
+import 'package:server/services/router/ws/messagesAction/AddBuzzerToRoomAction.dart';
 
 class RoomJoinRequestMessage extends WebsocketConnectionMessage {
   static const String eventId = "roomJoinRequest";

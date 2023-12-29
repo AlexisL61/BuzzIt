@@ -1,7 +1,7 @@
 import 'package:server/model/buzzerState.dart';
 import 'package:server/model/buzzerTeam.dart';
-import 'package:server/services/ws/WebsocketAction.dart';
-import 'package:server/services/ws/WebsocketMessage.dart';
+import 'package:server/services/router/ws/WebsocketAction.dart';
+import 'package:server/services/router/ws/WebsocketMessage.dart';
 
 class BuzzStateMessage extends WebsocketConnectionMessage {
   static const String eventId = 'buzzState';

@@ -2,10 +2,19 @@ import 'package:buzzer/model/InGame/ActivePlayer.dart';
 import 'package:buzzer/pages/ingame/BuzzerPage.dart';
 import 'package:buzzer/pages/ingame/InGamePage.dart';
 import 'package:buzzer/pages/menu/MainMenuPage.dart';
+import 'package:buzzer/services/api/ApiService.dart';
+import 'package:buzzer/services/preferences/UserPreferencesService.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{ 
+  WidgetsFlutterBinding.ensureInitialized();
+  await appInit();
   runApp(const MyApp());
+}
+
+Future<void> appInit() async {
+  await UserPreferencesService().init();
+  await ApiService().init();
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +32,7 @@ class MyApp extends StatelessWidget {
         initialRoute: MainMenuPage.route,
         routes: {
           MainMenuPage.route: (context) => MainMenuPage(),
-          InGamePage.route:(context) => InGamePage()
+          InGamePage.route: (context) => InGamePage()
         });
   }
 }

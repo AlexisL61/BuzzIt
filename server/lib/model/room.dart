@@ -1,23 +1,25 @@
-import 'package:server/model/buzzer.dart';
+import 'package:server/model/Player.dart';
 import 'package:server/model/buzzerState.dart';
 import 'package:server/model/buzzerTeam.dart';
 
 class Room {
   String id;
-  List<Buzzer> buzzers;
-  Buzzer? activeBuzzer;
+  List<Player> buzzers;
+  late Player host;
+  Player? activeBuzzer;
 
   Room(this.id) : buzzers = [];
 
-  void addBuzzer(Buzzer buzzer) {
+  void addPlayer(Player buzzer) {
+    if (buzzers.length == 0) host = buzzer;
     buzzers.add(buzzer);
   }
 
-  void removeBuzzer(Buzzer buzzer) {
+  void removePlayer(Player buzzer) {
     buzzers.remove(buzzer);
   }
 
-  void buzzerActivated(Buzzer buzzer) {
+  void playerActivated(Player buzzer) {
     if (activeBuzzer != null) return;
     activeBuzzer = buzzer;
     buzzers.forEach((element) {
@@ -43,5 +45,13 @@ class Room {
     buzzers.forEach((element) {
       element.state = BuzzerState.IDLE;
     });
+  }
+
+  Map<String, dynamic> toPartialJson() {
+    return {
+      'id': id,
+      'playersNumber': buzzers.length,
+      'host': host.toPartialJson()
+    };
   }
 }

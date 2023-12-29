@@ -1,8 +1,8 @@
 
 import 'package:server/model/buzzerTeam.dart';
-import 'package:server/services/ws/WebsocketAction.dart';
-import 'package:server/services/ws/WebsocketMessage.dart';
-import 'package:server/services/ws/messagesAction/ChangeTeamRequestAction.dart';
+import 'package:server/services/router/ws/WebsocketAction.dart';
+import 'package:server/services/router/ws/WebsocketMessage.dart';
+import 'package:server/services/router/ws/messagesAction/ChangeTeamRequestAction.dart';
 
 class ChangeTeamRequestMessage extends WebsocketConnectionMessage {
   static const String eventId = 'changeTeamRequest';

@@ -1,6 +1,6 @@
-import 'package:server/services/ws/WebsocketAction.dart';
-import 'package:server/services/ws/WebsocketMessage.dart';
-import 'package:server/services/ws/messagesAction/UnBuzzAction.dart';
+import 'package:server/services/router/ws/WebsocketAction.dart';
+import 'package:server/services/router/ws/WebsocketMessage.dart';
+import 'package:server/services/router/ws/messagesAction/UnBuzzAction.dart';
 
 class UnBuzzMessage extends WebsocketConnectionMessage {
   static const String eventId = 'unbuzz';

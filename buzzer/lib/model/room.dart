@@ -7,4 +7,9 @@ class Room {
   final int playersNumber;
 
   Room(this.id, this.host, this.playersNumber);
+
+  static Room fromJson(Map<String, dynamic> json) {
+    return Room(
+        json['id'], Player.fromJson(json['host']), json['playersNumber']);
+  }
 }
