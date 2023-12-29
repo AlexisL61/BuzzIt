@@ -134,7 +134,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
                       child: RoomCard(room: roomFound!),
                       onPressed: () {
                         Navigator.pushNamed(context, '/ingame',
-                            arguments: InGameRoom(roomFound!.id, ActivePlayer("Alexis", ""), InGamePlayer("Alexis2", "")));
+                            arguments: InGameRoom(roomFound!.id, ActivePlayer("Alexis", "https://avatars.githubusercontent.com/u/30233189?v=4"), InGamePlayer("Alexis2", "")));
                       },
                     ))
           ]),

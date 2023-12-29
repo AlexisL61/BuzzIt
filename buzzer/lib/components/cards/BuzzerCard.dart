@@ -9,24 +9,32 @@ class BuzzerCard extends StatelessWidget {
   final BorderRadius? borderRadius;
   final Widget child;
   final BuzzerCardStyle? style;
+  final bool rowExpanding;
 
   const BuzzerCard(
-      {super.key, required this.child, this.borderRadius, this.style});
+      {super.key, required this.child, this.borderRadius, this.style, this.rowExpanding = true});
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: rowExpanding? MainAxisSize.max: MainAxisSize.min,
       children: [
-        Expanded(
-          child: Container(
-            decoration: style == BuzzerCardStyle.PURPLE
-                ? buildPurpleBoxDecoration()
-                : buildWhiteBoxDecoration(),
-            child: ClipRRect(
-                borderRadius: borderRadius ?? BorderRadius.circular(10),
-                child: child),
-          ),
-        ),
+        rowExpanding? Expanded(child:Container(
+          decoration: style == BuzzerCardStyle.PURPLE
+              ? buildPurpleBoxDecoration()
+              : buildWhiteBoxDecoration(),
+          child: ClipRRect(
+              borderRadius: borderRadius ?? BorderRadius.circular(10),
+              child: child),
+        )):Container(
+          decoration: style == BuzzerCardStyle.PURPLE
+              ? buildPurpleBoxDecoration()
+              : buildWhiteBoxDecoration(),
+          child: ClipRRect(
+              borderRadius: borderRadius ?? BorderRadius.circular(10),
+              child: child),
+        )
+        ,
       ],
     );
   }
@@ -69,6 +77,8 @@ class BuzzerCard extends StatelessWidget {
   static Widget buildPurpleCard(
       {required Widget child, BorderRadius? borderRadius}) {
     return BuzzerCard(
-        child: child, borderRadius: borderRadius, style: BuzzerCardStyle.PURPLE);
+        child: child,
+        borderRadius: borderRadius,
+        style: BuzzerCardStyle.PURPLE);
   }
 }

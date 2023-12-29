@@ -1,4 +1,5 @@
 import 'package:buzzer/components/buttons/BigButton.dart';
+import 'package:buzzer/components/cards/InGamePlayerCard.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +24,19 @@ class _InGamePageState extends State<InGamePage> {
   @override
   Widget build(BuildContext context) {
     inGameRoom = ModalRoute.of(context)!.settings.arguments as InGameRoom;
-    return Scaffold(body: Stack(children: [_buildRoomCode()]));
+    return Scaffold(
+        body: Stack( children: [_buildInGamePlayerCard(), _buildRoomCode()]));
   }
 
-  Widget _buildRoomCode() {
+  Widget _buildInGamePlayerCard() {
+    return SafeArea(
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+           children: [ InGamePlayerCard(player: inGameRoom!.currentBuzzer)],
+    ));
+  }
+
+  Widget _buildRoomCode() { 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
