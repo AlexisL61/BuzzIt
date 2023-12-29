@@ -1,3 +1,4 @@
+import 'package:server/model/ConnectionToken.dart';
 import 'package:server/model/Room.dart';
 import 'package:server/services/generator/RoomCodeGenerator.dart';
 import 'package:server/services/router/router.dart';
@@ -7,6 +8,7 @@ void startServer() {}
 
 class BuzzerServer {
   List<Room> rooms = [];
+  List<ConnectionToken> connectionTokens = [];
 
   factory BuzzerServer() {
     return _singleton;
