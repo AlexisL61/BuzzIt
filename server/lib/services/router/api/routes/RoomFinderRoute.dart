@@ -7,7 +7,7 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 class RoomFinderRoute extends AbstractRoute {
-  static const String route = '/room/<id>';
+  static const String route = '/room/join/<id>';
 
   void importRoute(Router router) {
     router.get(route, (Request request, String id) {
@@ -18,7 +18,11 @@ class RoomFinderRoute extends AbstractRoute {
   Map<String, dynamic> findRoom(String id) {
     Room? roomFound = BuzzerServer().getRoomById(id);
     if (roomFound != null) {
-      return roomFound.toPartialJson();
+      return {
+        "room":roomFound.toPartialJson(),
+        "status": "OK",
+        "token": roomFound.generateConnectionToken().token
+      };
     } else {
       return {'status': 'NOT_FOUND', 'message': 'Room not found'};
     }

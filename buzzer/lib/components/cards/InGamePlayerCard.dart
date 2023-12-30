@@ -1,7 +1,6 @@
 import 'package:buzzer/components/cards/BuzzerCard.dart';
 import 'package:buzzer/model/InGame/BuzzerTeam.dart';
 import 'package:buzzer/model/InGame/InGamePlayer.dart';
-import 'package:buzzer/model/Player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

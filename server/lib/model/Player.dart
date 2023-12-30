@@ -45,4 +45,13 @@ class Player {
   Map<String, dynamic> toPartialJson() {
     return {'name': name, 'image': image};
   }
+
+  toJson() {
+    return {
+      'name': name,
+      'image': image,
+      'state': state.name,
+      'team': team.name
+    };
+  }
 }

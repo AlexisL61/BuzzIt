@@ -5,13 +5,15 @@ import 'package:buzzer/components/transitions/OpacityTransition.dart';
 import 'package:buzzer/model/InGame/ActivePlayer.dart';
 import 'package:buzzer/model/InGame/InGamePlayer.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
-import 'package:buzzer/model/room.dart';
+import 'package:buzzer/model/Player.dart';
+import 'package:buzzer/model/Room.dart';
 import 'package:buzzer/services/api/ApiService.dart';
+import 'package:buzzer/services/connection/RoomConnection.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 
-enum RoomDataStatus {IDLE, LOADING, NOT_FOUND, FOUND }
+enum RoomDataStatus { IDLE, LOADING, NOT_FOUND, FOUND }
 
 class GameCodeComponent extends StatefulWidget {
   final Function() goingBack;
@@ -109,9 +111,8 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
     });
     roomFound = await ApiService().getRoomData(pin);
     setState(() {
-      roomDataLoading = roomFound == null
-          ? RoomDataStatus.NOT_FOUND
-          : RoomDataStatus.FOUND;
+      roomDataLoading =
+          roomFound == null ? RoomDataStatus.NOT_FOUND : RoomDataStatus.FOUND;
     });
   }
 
@@ -133,36 +134,39 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
     }
     return SizedBox(
       height: 120,
-      child: OpacityTransition(
-          selectedChild: selectedChild,
-          children: [
-            SizedBox.shrink(),
-            const Padding(
+      child: OpacityTransition(selectedChild: selectedChild, children: [
+        SizedBox.shrink(),
+        const Padding(
+            padding: EdgeInsets.all(16),
+            child:
+                BuzzerCard(child: Center(child: CircularProgressIndicator()))),
+        roomFound == null
+            ? SizedBox.shrink()
+            : Padding(
                 padding: EdgeInsets.all(16),
-                child: BuzzerCard(
-                    child: Center(child: CircularProgressIndicator()))),
-            roomFound == null
-                ? SizedBox.shrink()
-                : Padding(
-                    padding: EdgeInsets.all(16),
-                    child: BigButton(
-                      child: RoomCard(room: roomFound!),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/ingame',
-                            arguments: InGameRoom(roomFound!.id, ActivePlayer("Alexis", "https://avatars.githubusercontent.com/u/30233189?v=4"), InGamePlayer("Alexis2", "")));
-                      },
-                    )),
-            Padding(
-                padding: EdgeInsets.all(16),
-                child: BuzzerCard(
-                    child: Center(
-                        child: Text("Salle non trouvée",
-                            style: GoogleFonts.rubik(
-                                textStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 26,
-                                    fontWeight: FontWeight.w600)))))),
-          ]),
+                child: BigButton(
+                  child: RoomCard(room: roomFound!),
+                  onPressed: () async {
+                    InGameRoom inGameRoom = await RoomConnectionService()
+                        .connectToRoom(
+                            roomFound!,
+                            Player("Alexis",
+                                "https://avatars.githubusercontent.com/u/30233189?v=4"));
+                    Navigator.pushNamed(context, '/ingame',
+                        arguments: inGameRoom);
+                  },
+                )),
+        Padding(
+            padding: EdgeInsets.all(16),
+            child: BuzzerCard(
+                child: Center(
+                    child: Text("Salle non trouvée",
+                        style: GoogleFonts.rubik(
+                            textStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 26,
+                                fontWeight: FontWeight.w600)))))),
+      ]),
     );
   }
 }

@@ -4,8 +4,11 @@ import 'package:buzzer/components/buttons/TwoLineBigButton.dart';
 import 'package:buzzer/components/cards/BuzzerCard.dart';
 import 'package:buzzer/components/cards/PlayerCard.dart';
 import 'package:buzzer/components/transitions/OpacitySlideTransition.dart';
+import 'package:buzzer/model/InGame/InGameRoom.dart';
 import 'package:buzzer/model/Player.dart';
 import 'package:buzzer/pages/menu/components/GameCodeComponent.dart';
+import 'package:buzzer/services/api/ApiService.dart';
+import 'package:buzzer/services/connection/RoomConnection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -137,7 +140,14 @@ class _MainMenuPageState extends State<MainMenuPage> {
             borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(20),
                 topRight: Radius.circular(20)),
-            onPressed: () {}));
+            onPressed: () async {
+              InGameRoom? room = await RoomConnectionService().createRoom(Player("Alexis",
+              "https://avatars.githubusercontent.com/u/30233189?v=4"));
+              if (room != null) {
+                Navigator.pushNamed(context, '/ingame',
+                    arguments: room);
+              }
+            }));
   }
 
   Widget _buildJoinGameButton() {

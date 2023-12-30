@@ -5,6 +5,7 @@ import 'package:server/services/router/ws/messagesAction/AddBuzzerToRoomAction.d
 class RoomJoinRequestMessage extends WebsocketConnectionMessage {
   static const String eventId = "roomJoinRequest";
   late String roomId;
+  late String token;
   @override
   List<WebsocketAction> actions = [AddBuzzerToRoomAction()];
 
@@ -13,13 +14,14 @@ class RoomJoinRequestMessage extends WebsocketConnectionMessage {
   @override
   void hydrateData(data) {
     this.roomId = data["roomId"];
+    this.token = data["token"];
   }
 
   @override
   toJson() {
     return {
       "event": event,
-      "data": {"roomId": roomId}
+      "data": {"roomId": roomId, "token": token}
     };
   }
 }

@@ -20,7 +20,7 @@ class RoomJoinMessage extends WebsocketConnectionMessage {
     if (room != null) {
       return {"event": event, "data": {
         "status": "OK",
-        "room": room!.toPartialJson()
+        "room": room!.toJson()
       }};
     }
     return {"event": event, "data": {

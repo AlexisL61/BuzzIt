@@ -7,12 +7,12 @@ class InGameRoom {
   InGamePlayer host;
 
   /// The buzzer of the player using the device
-  ActivePlayer currentBuzzer;
+  ActivePlayer currentPlayer;
 
   /// The buzzer that is currently active
-  InGamePlayer? activeBuzzer;
+  InGamePlayer? activePlayer;
 
-  InGameRoom(this.id, this.currentBuzzer, this.host) : players = [currentBuzzer];
+  InGameRoom(this.id, this.currentPlayer, this.host) : players = [host];
 
   void addPlayer(InGamePlayer player) {
     players.add(player);
@@ -20,5 +20,24 @@ class InGameRoom {
 
   void removePlayer(InGamePlayer player) {
     players.remove(player);
+  }
+
+  static InGameRoom fromJson(
+      Map<String, dynamic> json, ActivePlayer currentPlayer) {
+    print(json);
+    InGameRoom room = InGameRoom(
+        json['id'], currentPlayer, InGamePlayer.fromJson(json['host']));
+    json['players'].forEach((element) {
+      room.addPlayer(InGamePlayer.fromJson(element));
+    });
+    return room;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'host': host.toJson(),
+      'players': players.map((e) => e.toJson()).toList()
+    };
   }
 }

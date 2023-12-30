@@ -25,18 +25,18 @@ class _InGamePageState extends State<InGamePage> {
   Widget build(BuildContext context) {
     inGameRoom = ModalRoute.of(context)!.settings.arguments as InGameRoom;
     return Scaffold(
-        body: Stack( children: [_buildInGamePlayerCard(), _buildRoomCode()]));
+        body: Stack(children: [_buildInGamePlayerCard(), _buildRoomCode()]));
   }
 
   Widget _buildInGamePlayerCard() {
     return SafeArea(
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-           children: [ InGamePlayerCard(player: inGameRoom!.currentBuzzer)],
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [InGamePlayerCard(player: inGameRoom!.currentPlayer)],
     ));
   }
 
-  Widget _buildRoomCode() { 
+  Widget _buildRoomCode() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,

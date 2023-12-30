@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:server/model/ConnectionToken.dart';
 import 'package:server/model/Player.dart';
+import 'package:server/model/Room.dart';
 import 'package:server/server.dart';
 import 'package:server/services/router/ws/WebsocketAction.dart';
 import 'package:server/services/router/ws/WebsocketMessage.dart';
@@ -12,9 +16,15 @@ class AddBuzzerToRoomAction extends WebsocketAction {
         message as RoomJoinRequestMessage;
     if (player.room == null) {
       RoomJoinMessage roomJoinMessage = RoomJoinMessage();
-      roomJoinMessage.room =
-          BuzzerServer().getRoomById(roomChosenMessage.roomId);
-      player.channel.sink.add(roomJoinMessage.toJson());
+      ConnectionToken? token =
+          BuzzerServer().getConnectionToken(roomChosenMessage.token, roomChosenMessage.roomId);
+      if (token != null){
+        token.room.addPlayer(player);
+        roomJoinMessage.room = token.room;
+      } else {
+        roomJoinMessage.room = null;
+      }
+      player.channel.sink.add(jsonEncode(roomJoinMessage.toJson()));
     }
   }
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:buzzer/model/ServerInfo.dart';
-import 'package:buzzer/model/room.dart';
+import 'package:buzzer/model/Room.dart';
 import 'package:buzzer/services/api/HttpError.dart';
 import 'package:buzzer/services/preferences/UserPreferencesService.dart';
 import 'package:http/http.dart' as http;
@@ -29,9 +29,19 @@ class ApiService {
   }
 
   Future<Room?> getRoomData(String roomId) async {
-    Map<String, dynamic> body = await get("/room/$roomId");
+    Map<String, dynamic> body = await get("/room/join/$roomId");
     if (body['status'] == 'OK') {
-      return Room.fromJson(body['data']);
+      return Room.fromJson(body['room'], body['token']);
+    } else {
+      return null;
+    }
+  }
+
+  Future<Room?> createRoom() async {
+    Map<String, dynamic> body = await post("/room/create", {});
+    if (body['status'] == 'OK') {
+      print(body);
+      return Room.fromJson(body['room'], body['token']);
     } else {
       return null;
     }
@@ -40,10 +50,24 @@ class ApiService {
   Future<Map<String, dynamic>> get(String path) async {
     try {
       print('GET $serverUrl$path');
-      Response res =
-          await http.get(Uri.parse(serverUrl + path));
+      Response res = await http.get(Uri.parse(serverUrl + path));
       String body = res.body;
       return jsonDecode(body);
+    } catch (e) {
+      print(e);
+      throw HttpError("Error while fetching data from server");
+    }
+  }
+
+  Future<Map<String, dynamic>> post(
+      String path, Map<String, dynamic> body) async {
+    try {
+      print('POST $serverUrl$path');
+      Response res = await http.post(Uri.parse(serverUrl + path),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(body));
+      String resBody = res.body;
+      return jsonDecode(resBody);
     } catch (e) {
       print(e);
       throw HttpError("Error while fetching data from server");

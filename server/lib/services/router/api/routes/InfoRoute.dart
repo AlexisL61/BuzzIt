@@ -16,7 +16,8 @@ class InfoRoute extends AbstractRoute {
   Map<String, dynamic> jsonInfoData() {
     return {
       'status': 'OK',
-      'ws_uri': 'ws://10.0.2.2:8080/ws',
+      'wsUrl': 'ws://10.0.2.2:8080/ws',
+      'apiUrl': 'http://10.0.2.2:8080/'
     };
   }
 }

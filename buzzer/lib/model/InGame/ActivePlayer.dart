@@ -1,6 +1,9 @@
 import 'package:buzzer/model/InGame/BuzzerTeam.dart';
 import 'package:buzzer/model/InGame/InGamePlayer.dart';
+import 'package:buzzer/model/InGame/InGameRoom.dart';
+import 'package:buzzer/model/Room.dart';
 import 'package:buzzer/services/ws/WebsocketClient.dart';
+import 'package:buzzer/services/ws/messages/in/RoomJoinMessage.dart';
 import 'package:buzzer/services/ws/messages/out/BuzzMessage.dart';
 import 'package:buzzer/services/ws/messages/out/ChangeTeamRequestMessage.dart';
 import 'package:buzzer/services/ws/messages/out/RoomJoinRequestMessage.dart';
@@ -15,11 +18,22 @@ class ActivePlayer extends InGamePlayer {
 
   ActivePlayer(String name, String image) : state = BuzzerState.IDLE, super(name, image);
 
-  Future<void> init() async {
-    await client.connect(this);
-    RoomJoinRequestMessage roomChosenMessage = RoomJoinRequestMessage();
-    roomChosenMessage.roomId = "1";
-    client.send(roomChosenMessage);
+  Future<void> init(String wsServer) async {
+    await client.connect(this, wsServer);
+  }
+
+  Future<T> waitMessage<T>() async {
+    return await client.waitMessage<T>();
+  }
+
+  Future<InGameRoom> joinRoom(Room room) async {
+    RoomJoinRequestMessage roomJoinRequestMessage = RoomJoinRequestMessage();
+    roomJoinRequestMessage.roomId = room.id; 
+    roomJoinRequestMessage.token = room.connectionToken;
+    client.send(roomJoinRequestMessage);
+    RoomJoinMessage roomJoinMessage = await waitMessage<RoomJoinMessage>();
+    InGameRoom inGameRoom = roomJoinMessage.getInGameRoomWithActivePlayer(this);
+    return inGameRoom;
   }
 
   void buzz() {

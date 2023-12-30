@@ -1,5 +1,5 @@
 import 'package:buzzer/components/cards/BuzzerCard.dart';
-import 'package:buzzer/model/room.dart';
+import 'package:buzzer/model/Room.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,7 +22,7 @@ class _RoomCardState extends State<RoomCard> {
         ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: Image.network(
-              widget.room.host.image,
+              widget.room.host!.image,
               width: 60,
               height: 60,
               fit: BoxFit.cover,
@@ -32,7 +32,7 @@ class _RoomCardState extends State<RoomCard> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Salon de " + widget.room.host.name,
+            Text("Salon de " + widget.room.host!.name,
                 style: GoogleFonts.rubik(
                     textStyle: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.w600))),

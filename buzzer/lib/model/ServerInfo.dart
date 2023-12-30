@@ -1,10 +1,10 @@
 class ServerInfo {
-  final String url;
+  final String apiUrl;
   final String wsUrl;
 
-  ServerInfo(this.url, this.wsUrl);
+  ServerInfo(this.apiUrl, this.wsUrl);
 
   static ServerInfo fromJson(Map<String, dynamic> json) {
-    return ServerInfo(json['url'], json['wsUrl']);
+    return ServerInfo(json['apiUrl'], json['wsUrl']);
   }
 }

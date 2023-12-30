@@ -1,11 +1,13 @@
+import 'package:server/model/ConnectionToken.dart';
 import 'package:server/model/Player.dart';
 import 'package:server/model/buzzerState.dart';
 import 'package:server/model/buzzerTeam.dart';
+import 'package:server/server.dart';
 
 class Room {
   String id;
   List<Player> buzzers;
-  late Player host;
+  Player? host;
   Player? activeBuzzer;
 
   Room(this.id) : buzzers = [];
@@ -51,7 +53,19 @@ class Room {
     return {
       'id': id,
       'playersNumber': buzzers.length,
-      'host': host.toPartialJson()
+      'host': host!=null?host!.toPartialJson():null
     };
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'host': host!.toJson(),
+      'players': buzzers.map((e) => e.toJson()).toList()
+    };
+  }
+
+  ConnectionToken generateConnectionToken() {
+    return BuzzerServer().generateConnectionToken(this);
   }
 }
