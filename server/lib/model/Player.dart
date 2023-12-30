@@ -15,7 +15,7 @@ class Player {
   String image;
   bool _inactive = false;
   BuzzerState _state;
-  BuzzerTeam team = BuzzerTeam.NONE;
+  BuzzerTeam team = BuzzerTeam.BLUE;
 
   Player(this.channel, this.name, this.image) : _state = BuzzerState.IDLE;
 
