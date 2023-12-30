@@ -1,8 +1,7 @@
-import 'package:buzzer/model/InGame/ActivePlayer.dart';
-import 'package:buzzer/pages/ingame/BuzzerPage.dart';
 import 'package:buzzer/pages/ingame/InGamePage.dart';
 import 'package:buzzer/pages/menu/MainMenuPage.dart';
 import 'package:buzzer/services/api/ApiService.dart';
+import 'package:buzzer/services/preferences/SavedPlayerService.dart';
 import 'package:buzzer/services/preferences/UserPreferencesService.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +14,7 @@ void main() async{
 Future<void> appInit() async {
   await UserPreferencesService().init();
   await ApiService().init();
+  await SavedPlayerService.init();
 }
 
 class MyApp extends StatelessWidget {

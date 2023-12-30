@@ -1,11 +1,13 @@
 import 'package:buzzer/components/buttons/OneLineIconTextButton.dart';
 import 'package:buzzer/components/buttons/TwoLineBigButton.dart';
 import 'package:buzzer/components/cards/PlayerCard.dart';
+import 'package:buzzer/components/dialogs/ProfileDialog.dart';
 import 'package:buzzer/components/transitions/OpacitySlideTransition.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
 import 'package:buzzer/model/Player.dart';
 import 'package:buzzer/pages/menu/components/GameCodeComponent.dart';
 import 'package:buzzer/services/connection/RoomConnection.dart';
+import 'package:buzzer/services/preferences/SavedPlayerService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -121,9 +123,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
   Widget _buildPlayerInfo() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: PlayerCard(
-          player: Player("Alexis",
-              "https://avatars.githubusercontent.com/u/30233189?v=4")),
+      child: PlayerCard(player: SavedPlayerService.savedPlayer),
     );
   }
 
@@ -138,11 +138,10 @@ class _MainMenuPageState extends State<MainMenuPage> {
                 bottomRight: Radius.circular(20),
                 topRight: Radius.circular(20)),
             onPressed: () async {
-              InGameRoom? room = await RoomConnectionService().createRoom(Player("Alexis",
-              "https://avatars.githubusercontent.com/u/30233189?v=4"));
+              InGameRoom? room = await RoomConnectionService()
+                  .createRoom(SavedPlayerService.savedPlayer);
               if (room != null) {
-                Navigator.pushNamed(context, '/ingame',
-                    arguments: room);
+                Navigator.pushNamed(context, '/ingame', arguments: room);
               }
             }));
   }
@@ -180,7 +179,12 @@ class _MainMenuPageState extends State<MainMenuPage> {
             colors: [Colors.deepPurple, Color.fromARGB(255, 113, 67, 219)],
             iconBackgroundColor: Colors.deepPurpleAccent,
             icon: Icons.badge,
-            onPressed: () {},
+            onPressed: () async {
+              await showDialog(
+                  context: context,
+                  builder: (BuildContext context) => ProfileDialog());
+              setState(() {});
+            },
             text: "INVENTAIRE"));
   }
 

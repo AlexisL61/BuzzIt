@@ -23,4 +23,34 @@ class UserPreferencesService {
     }
     return masterServerURI;
   }
+
+  Future<String> get username async {
+    String? username = await _preferences.getString("username");
+    if (username == null) {
+      username = "Player";
+      _preferences.setString("username", username);
+    }
+    return username;
+  }
+
+  Future<String> get avatar async {
+    String? avatar = await _preferences.getString("avatar");
+    if (avatar == null) {
+      avatar = await username;
+      _preferences.setString("avatar", avatar);
+    }
+    return avatar;
+  }
+
+  Future<void> setUsername(String username) async {
+    await _preferences.setString("username", username);
+  }
+
+  Future<void> setAvatar(String avatar) async {
+    await _preferences.setString("avatar", avatar);
+  }
+
+  Future<void> setMasterServerURL(String url) async {
+    await _preferences.setString("master_server", url);
+  }
 }

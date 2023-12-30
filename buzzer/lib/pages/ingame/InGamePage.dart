@@ -1,6 +1,7 @@
 import 'package:buzzer/components/BuzzerWidget.dart';
 import 'package:buzzer/components/buttons/BigButton.dart';
 import 'package:buzzer/components/cards/InGamePlayerCard.dart';
+import 'package:buzzer/config.dart';
 import 'package:buzzer/model/InGame/BuzzerTeam.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
 import 'package:flutter/material.dart';
@@ -162,8 +163,9 @@ class _InGamePageState extends State<InGamePage> {
                               children: [
                                 ClipRRect(
                                     borderRadius: BorderRadius.circular(60),
-                                    child: Image.network(
-                                      widget.inGameRoom.activePlayer!.image,
+                                    child: Image(
+                                      image: Svg(widget.inGameRoom!.currentPlayer.avatar,
+                                          source: SvgSource.network),
                                       width: 120,
                                       height: 120,
                                       fit: BoxFit.cover,

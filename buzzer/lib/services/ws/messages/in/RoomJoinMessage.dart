@@ -20,7 +20,7 @@ class RoomJoinMessage extends WebsocketConnectionMessage {
     this.player = InGamePlayer.fromJson(data["player"]);
   }
 
-  InGameRoom getInGameRoomWithActivePlayer(ActivePlayer activePlayer){
+  InGameRoom getInGameRoomWithActivePlayer(ActivePlayer activePlayer) {
     InGameRoom roomCreated = InGameRoom.fromJson(inGameRoomData, activePlayer);
     activePlayer.id = player.id;
     return roomCreated;

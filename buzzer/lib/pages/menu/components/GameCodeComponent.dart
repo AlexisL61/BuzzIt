@@ -7,6 +7,7 @@ import 'package:buzzer/model/Player.dart';
 import 'package:buzzer/model/Room.dart';
 import 'package:buzzer/services/api/ApiService.dart';
 import 'package:buzzer/services/connection/RoomConnection.dart';
+import 'package:buzzer/services/preferences/SavedPlayerService.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
@@ -147,8 +148,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
                     InGameRoom inGameRoom = await RoomConnectionService()
                         .connectToRoom(
                             roomFound!,
-                            Player("Alexis",
-                                "https://avatars.githubusercontent.com/u/30233189?v=4"));
+                            SavedPlayerService.savedPlayer);
                     Navigator.pushNamed(context, '/ingame',
                         arguments: inGameRoom);
                   },

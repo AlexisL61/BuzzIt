@@ -1,6 +1,7 @@
 import 'package:buzzer/components/cards/BuzzerCard.dart';
 import 'package:buzzer/model/Room.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RoomCard extends StatefulWidget {
@@ -21,8 +22,8 @@ class _RoomCardState extends State<RoomCard> {
       child: Row(children: [
         ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: Image.network(
-              widget.room.host!.image,
+            child: Image(
+              image: Svg(widget.room.host!.avatar, source: SvgSource.network),
               width: 60,
               height: 60,
               fit: BoxFit.cover,
@@ -36,7 +37,7 @@ class _RoomCardState extends State<RoomCard> {
                 style: GoogleFonts.rubik(
                     textStyle: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.w600))),
-            Text("Le magicien",
+            Text("Pro des quiz",
                 style: GoogleFonts.rubik(
                     textStyle: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w600))),
