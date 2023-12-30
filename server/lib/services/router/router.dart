@@ -48,21 +48,24 @@ class ServerRouter {
   }
 
   void listenToPlayerActions(Stream stream, Player player) {
-    stream.asBroadcastStream().listen((event) {
+    stream.listen((event) {
       WebsocketConnectionMessage message =
           WebsocketConnectionMessage.fromJson(jsonDecode(event));
       message.actions.forEach((element) {
         element.activate(player, message);
       });
+    }, onDone: () {
+      player.inactive = true;
+    }, onError: (error) {
+      player.inactive = true;
     });
   }
 
   Future<Player?> waitForPlayerData(Stream stream, WebSocketChannel channel) async {
     Player? player;
-    String event = await stream.asBroadcastStream().first;
+    String event = await stream.first;
     WebsocketConnectionMessage message =
         WebsocketConnectionMessage.fromJson(jsonDecode(event));
-    print(event);
     if (message is PlayerDataMessage) {
       return Player(channel, message.name, message.image);
     } else {

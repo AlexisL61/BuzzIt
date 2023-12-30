@@ -2,8 +2,6 @@ import 'package:buzzer/components/buttons/BigButton.dart';
 import 'package:buzzer/components/cards/BuzzerCard.dart';
 import 'package:buzzer/components/cards/RoomCard.dart';
 import 'package:buzzer/components/transitions/OpacityTransition.dart';
-import 'package:buzzer/model/InGame/ActivePlayer.dart';
-import 'package:buzzer/model/InGame/InGamePlayer.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
 import 'package:buzzer/model/Player.dart';
 import 'package:buzzer/model/Room.dart';
@@ -105,7 +103,6 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
   }
 
   Future<void> retrieveRoomFromCode(String pin) async {
-    print("Retrieving room from code $pin");
     setState(() {
       roomDataLoading = RoomDataStatus.LOADING;
     });

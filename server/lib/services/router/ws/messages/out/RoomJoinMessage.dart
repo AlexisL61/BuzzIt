@@ -1,4 +1,5 @@
 
+import 'package:server/model/Player.dart';
 import 'package:server/model/Room.dart';
 import 'package:server/services/router/ws/WebsocketAction.dart';
 import 'package:server/services/router/ws/WebsocketMessage.dart';
@@ -6,6 +7,7 @@ import 'package:server/services/router/ws/WebsocketMessage.dart';
 class RoomJoinMessage extends WebsocketConnectionMessage {
   static const String eventId = "roomJoin";
   Room? room = null;
+  late Player player;
 
   @override
   List<WebsocketAction> actions = [];
@@ -20,7 +22,8 @@ class RoomJoinMessage extends WebsocketConnectionMessage {
     if (room != null) {
       return {"event": event, "data": {
         "status": "OK",
-        "room": room!.toJson()
+        "room": room!.toJson(),
+        "player": player.toJson(),
       }};
     }
     return {"event": event, "data": {

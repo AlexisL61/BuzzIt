@@ -21,6 +21,7 @@ class AddBuzzerToRoomAction extends WebsocketAction {
       if (token != null){
         token.room.addPlayer(player);
         roomJoinMessage.room = token.room;
+        roomJoinMessage.player = player;
       } else {
         roomJoinMessage.room = null;
       }

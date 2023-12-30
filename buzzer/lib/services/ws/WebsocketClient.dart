@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:buzzer/model/InGame/ActivePlayer.dart';
+import 'package:buzzer/model/InGame/InGameRoom.dart';
 import 'package:buzzer/services/ws/WebsocketMessage.dart';
 import 'package:buzzer/services/ws/messages/in/PlayerDataConfirmationMessage.dart';
 import 'package:buzzer/services/ws/messages/out/PlayerDataMessage.dart';
@@ -47,11 +48,10 @@ class WebsocketClient {
     playerDataMessage.name = player.name;
     playerDataMessage.image = player.image;
     send(playerDataMessage);
-    
+
     String event = await stream.first;
     WebsocketConnectionMessage message =
         WebsocketConnectionMessage.fromJson(jsonDecode(event));
-    print(event);
     if (message.event == PlayerDataConfirmationMessage.eventId) {
       return true;
     } else {
@@ -65,7 +65,6 @@ class WebsocketClient {
   }
 
   void onMessage(ActivePlayer buzzer, dynamic event) {
-    print("MESSAGE RECEIVED " + event);
     WebsocketConnectionMessage message =
         WebsocketConnectionMessage.fromJson(jsonDecode(event));
     message.actions.forEach((element) {
@@ -83,7 +82,8 @@ class WebsocketClient {
         return false;
       }
     });
-    T convertedMessage = WebsocketConnectionMessage.fromJson(jsonDecode(message)) as T;
+    T convertedMessage =
+        WebsocketConnectionMessage.fromJson(jsonDecode(message)) as T;
     return convertedMessage;
   }
 }

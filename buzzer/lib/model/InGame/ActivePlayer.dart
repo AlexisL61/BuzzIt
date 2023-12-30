@@ -15,8 +15,11 @@ class ActivePlayer extends InGamePlayer {
   BuzzerTeam ennemyTeam = BuzzerTeam.RED;
   WebsocketClient client = WebsocketClient();
   List<Function> _listeners = [];
+  InGameRoom? room;
 
-  ActivePlayer(String name, String image) : state = BuzzerState.IDLE, super(name, image);
+  ActivePlayer(String name, String image)
+      : state = BuzzerState.IDLE,
+        super("ACTIVE_PLAYER", name, image);
 
   Future<void> init(String wsServer) async {
     await client.connect(this, wsServer);
@@ -28,11 +31,12 @@ class ActivePlayer extends InGamePlayer {
 
   Future<InGameRoom> joinRoom(Room room) async {
     RoomJoinRequestMessage roomJoinRequestMessage = RoomJoinRequestMessage();
-    roomJoinRequestMessage.roomId = room.id; 
+    roomJoinRequestMessage.roomId = room.id;
     roomJoinRequestMessage.token = room.connectionToken;
     client.send(roomJoinRequestMessage);
     RoomJoinMessage roomJoinMessage = await waitMessage<RoomJoinMessage>();
     InGameRoom inGameRoom = roomJoinMessage.getInGameRoomWithActivePlayer(this);
+    this.room = inGameRoom;
     return inGameRoom;
   }
 
@@ -66,5 +70,19 @@ class ActivePlayer extends InGamePlayer {
     _listeners.forEach((element) {
       element();
     });
+  }
+
+  @override
+  void updateFromUpdateData(Map<String, dynamic> data) {
+    this.state = BuzzerStateExtension.fromString(data['state']);
+    super.updateFromUpdateData(data);
+    notifyListeners();
+  }
+
+  static ActivePlayer fromJson(Map<String, dynamic> json) {
+    ActivePlayer player = ActivePlayer(json['name'], json['image']);
+    player.team = BuzzerTeam.values[json['team']];
+    player.state = BuzzerState.values[json['state']];
+    return player;
   }
 }

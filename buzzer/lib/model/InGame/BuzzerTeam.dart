@@ -43,6 +43,23 @@ extension BuzzerTeamExtension on BuzzerTeam {
     }
   }
 
+  List<Color> get gradient {
+    switch (this) {
+      case BuzzerTeam.BLUE:
+        return [Colors.blue.shade600, Colors.blueAccent.shade700];
+      case BuzzerTeam.RED:
+        return [Colors.red, Colors.redAccent.shade400];
+      case BuzzerTeam.GREEN:
+        return [Colors.green.shade400, Colors.greenAccent.shade700];
+      case BuzzerTeam.YELLOW:
+        return [Colors.yellowAccent.shade700, Colors.yellow.shade800];
+      case BuzzerTeam.NONE:
+        return [Colors.grey, Colors.grey];
+      default:
+        return [Colors.grey, Colors.grey];
+    }
+  }
+
   static BuzzerTeam fromString(String name) {
     switch (name) {
       case "BLUE":

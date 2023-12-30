@@ -19,7 +19,11 @@ class _InGamePlayerCardState extends State<InGamePlayerCard> {
     return BuzzerCard(
       rowExpanding: false,
         child: Container(
-      color: widget.player.team.color,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors:widget.player.team.gradient)),
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Row(mainAxisSize: MainAxisSize.min, children: [

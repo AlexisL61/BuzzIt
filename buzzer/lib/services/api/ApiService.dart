@@ -40,7 +40,6 @@ class ApiService {
   Future<Room?> createRoom() async {
     Map<String, dynamic> body = await post("/room/create", {});
     if (body['status'] == 'OK') {
-      print(body);
       return Room.fromJson(body['room'], body['token']);
     } else {
       return null;

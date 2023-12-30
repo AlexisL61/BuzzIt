@@ -8,7 +8,6 @@ import 'package:buzzer/services/api/ApiService.dart';
 class RoomConnectionService {
   Future<InGameRoom?> createRoom(Player currentPlayer) async {
     Room? roomCreated = await ApiService().createRoom();
-    print(roomCreated);
     if (roomCreated != null) {
       return await connectToRoom(roomCreated, currentPlayer);
     } else {

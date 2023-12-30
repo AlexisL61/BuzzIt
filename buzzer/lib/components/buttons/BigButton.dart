@@ -7,11 +7,13 @@ class BigButton extends StatefulWidget {
   final Widget child;
   final VoidCallback onPressed;
   final BorderRadius? borderRadius;
+  final bool rowExpanding;
 
   const BigButton(
       {super.key,
       required this.child,
       required this.onPressed,
+      this.rowExpanding = true,
       this.borderRadius});
 
   @override
@@ -25,6 +27,6 @@ class _BigButtonState extends State<BigButton> {
         padding: EdgeInsets.all(0),
         onPressed: widget.onPressed,
         child:
-            BuzzerCard(child: widget.child, borderRadius: widget.borderRadius));
+            BuzzerCard(rowExpanding: widget.rowExpanding, child: widget.child, borderRadius: widget.borderRadius));
   }
 }

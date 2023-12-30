@@ -1,59 +1,62 @@
+import 'dart:convert';
+
 import 'package:server/model/ConnectionToken.dart';
 import 'package:server/model/Player.dart';
 import 'package:server/model/buzzerState.dart';
 import 'package:server/model/buzzerTeam.dart';
 import 'package:server/server.dart';
+import 'package:collection/collection.dart';
+import 'package:server/services/router/ws/messages/out/UpdateDataMessage.dart';
 
 class Room {
   String id;
-  List<Player> buzzers;
+  List<Player> players;
   Player? host;
-  Player? activeBuzzer;
+  Player? activePlayer;
 
-  Room(this.id) : buzzers = [];
+  Room(this.id) : players = [];
 
   void addPlayer(Player buzzer) {
-    if (buzzers.length == 0) host = buzzer;
-    buzzers.add(buzzer);
+    if (players.length == 0) host = buzzer;
+    players.add(buzzer);
   }
 
   void removePlayer(Player buzzer) {
-    buzzers.remove(buzzer);
+    players.remove(buzzer);
+    if (players.length == 0) {
+      BuzzerServer().rooms.remove(this);
+    }
   }
 
   void playerActivated(Player buzzer) {
-    if (activeBuzzer != null) return;
-    activeBuzzer = buzzer;
-    buzzers.forEach((element) {
-      if (element != buzzer) {
-        if (element.team == activeBuzzerTeam)
-          element.state = BuzzerState.LOCKED_BY_TEAM;
-        else
-          element.state = BuzzerState.LOCKED_BY_ENNEMY;
-      }
-    });
-    buzzer.state = BuzzerState.BUZZED;
+    if (activePlayer != null) return;
+    activePlayer = buzzer;
+    UpdateDataMessage message = UpdateDataMessage.fromRoom(this);
+    sendToAll(jsonEncode(message.toJson()));
   }
 
   BuzzerTeam? get activeBuzzerTeam {
-    if (activeBuzzer == null) return null;
-    return activeBuzzer!.team;
+    if (activePlayer == null) return null;
+    return activePlayer!.team;
+  }
+
+  void sendToAll(event) {
+    players.forEach((element) {
+      element.channel.sink.add(event);
+    });
   }
 
   void unbuzz() {
-    if (activeBuzzer == null) return;
-    activeBuzzer!.state = BuzzerState.IDLE;
-    activeBuzzer = null;
-    buzzers.forEach((element) {
-      element.state = BuzzerState.IDLE;
-    });
+    activePlayer = null;
+    UpdateDataMessage message = UpdateDataMessage.fromRoom(this);
+    sendToAll(jsonEncode(message.toJson()));
   }
 
   Map<String, dynamic> toPartialJson() {
     return {
       'id': id,
-      'playersNumber': buzzers.length,
-      'host': host!=null?host!.toPartialJson():null
+      'playersNumber': players.length,
+      'host': host != null ? host!.toPartialJson() : null
     };
   }
 
@@ -61,11 +64,21 @@ class Room {
     return {
       'id': id,
       'host': host!.toJson(),
-      'players': buzzers.map((e) => e.toJson()).toList()
+      'players': players.map((e) => e.toJson()).toList(),
+      'activePlayer': activePlayer != null ? activePlayer!.id : null,
     };
   }
 
   ConnectionToken generateConnectionToken() {
     return BuzzerServer().generateConnectionToken(this);
+  }
+
+  void playerBecomeInactive(Player player) {
+    if (host == player) {
+      host = players.firstWhereOrNull((element) => element != player);
+    }
+    if (activePlayer == player) {
+      unbuzz();
+    }
   }
 }
