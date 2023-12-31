@@ -21,12 +21,25 @@ class BigButton extends StatefulWidget {
 }
 
 class _BigButtonState extends State<BigButton> {
+  bool isDown = false;
+
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-        padding: EdgeInsets.all(0),
-        onPressed: widget.onPressed,
-        child:
-            BuzzerCard(rowExpanding: widget.rowExpanding, child: widget.child, borderRadius: widget.borderRadius));
+    return GestureDetector(
+        onTap: widget.onPressed,
+        onTapDown: (_) {
+          setState(() {
+            isDown = true;
+          });
+        },
+        onTapUp: (_) {
+          setState(() {
+            isDown = false;
+          });
+        },
+        child: BuzzerCard(
+            rowExpanding: widget.rowExpanding,
+            child: widget.child,
+            borderRadius: widget.borderRadius, shadowVisible: !isDown));
   }
 }

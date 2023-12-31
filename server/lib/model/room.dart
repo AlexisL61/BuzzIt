@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:server/model/ConnectionToken.dart';
 import 'package:server/model/Player.dart';
-import 'package:server/model/buzzerState.dart';
 import 'package:server/model/buzzerTeam.dart';
 import 'package:server/server.dart';
 import 'package:collection/collection.dart';

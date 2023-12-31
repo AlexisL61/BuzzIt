@@ -198,7 +198,9 @@ class _MainMenuPageState extends State<MainMenuPage> {
             ],
             iconBackgroundColor: Colors.deepPurpleAccent,
             icon: Icons.settings,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/settings');
+            },
             text: "PARAMÈTRES"));
   }
 

@@ -23,10 +23,10 @@ class _PlayerCardState extends State<PlayerCard> {
       child: Row(children: [
         ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: 
-              Image(image:Svg(widget.player.avatar, source: SvgSource.network),
-                  width: 60, height: 60
-            )),
+            child: Image(
+                image: Svg(widget.player.avatar, source: SvgSource.network),
+                width: 60,
+                height: 60)),
         const SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +35,7 @@ class _PlayerCardState extends State<PlayerCard> {
                 style: GoogleFonts.rubik(
                     textStyle: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.w600))),
-            Text("Pro des quiz",
+            Text("Amateur de quiz",
                 style: GoogleFonts.rubik(
                     textStyle: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w600))),

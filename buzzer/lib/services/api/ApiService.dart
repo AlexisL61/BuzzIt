@@ -23,8 +23,8 @@ class ApiService {
     httpClient = HttpClient();
   }
 
-  Future<ServerInfo> getServerInfo() async {
-    Map<String, dynamic> body = await get("/info");
+  Future<ServerInfo> getServerInfo([String? serverUrlOverride]) async {
+    Map<String, dynamic> body = await get("/info", serverUrlOverride);
     return ServerInfo.fromJson(body);
   }
 
@@ -46,10 +46,13 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> get(String path) async {
+  Future<Map<String, dynamic>> get(String path,
+      [String? serverUrlOverride]) async {
     try {
       print('GET $serverUrl$path');
-      Response res = await http.get(Uri.parse(serverUrl + path));
+      print(serverUrlOverride);
+      Response res =
+          await http.get(Uri.parse((serverUrlOverride ?? serverUrl) + path));
       String body = res.body;
       return jsonDecode(body);
     } catch (e) {

@@ -37,7 +37,7 @@ class _RoomCardState extends State<RoomCard> {
                 style: GoogleFonts.rubik(
                     textStyle: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.w600))),
-            Text("Pro des quiz",
+            Text("Amateur de quiz",
                 style: GoogleFonts.rubik(
                     textStyle: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w600))),

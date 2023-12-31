@@ -1,5 +1,6 @@
 import 'package:buzzer/pages/ingame/InGamePage.dart';
 import 'package:buzzer/pages/menu/MainMenuPage.dart';
+import 'package:buzzer/pages/settings/SettingsPage.dart';
 import 'package:buzzer/services/api/ApiService.dart';
 import 'package:buzzer/services/preferences/SavedPlayerService.dart';
 import 'package:buzzer/services/preferences/UserPreferencesService.dart';
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
         initialRoute: MainMenuPage.route,
         routes: {
           MainMenuPage.route: (context) => MainMenuPage(),
-          InGameRoute.route: (context) => InGameRoute()
+          InGameRoute.route: (context) => InGameRoute(), 
+          SettingsRoute.route: (context) => SettingsRoute()
         });
   }
 }
