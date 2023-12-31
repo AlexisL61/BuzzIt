@@ -1,4 +1,5 @@
 import 'package:server/model/Player.dart';
+import 'package:server/server.dart';
 
 class Reconnectiontoken {
   String token;
@@ -11,6 +12,7 @@ class Reconnectiontoken {
   bool isValid(String token, String roomId) {
     return this.token == token &&
         this.roomId == roomId &&
-        timeout.isAfter(DateTime.now());
+        timeout.isAfter(DateTime.now())
+        && BuzzerServer().getRoomById(roomId) != null;
   }
 }

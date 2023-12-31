@@ -26,7 +26,7 @@ class Player {
   }
 
   Map<String, dynamic> toPartialJson() {
-    return {'id':id, 'name': name, 'image': image};
+    return {'id': id, 'name': name, 'image': image};
   }
 
   toJson() {
@@ -63,6 +63,7 @@ class Player {
   }
 
   set inactive(bool value) {
+    print("IS INACTIVE $value");
     _inactive = value;
   }
 }

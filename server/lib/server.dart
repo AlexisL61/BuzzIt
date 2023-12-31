@@ -55,7 +55,7 @@ class BuzzerServer {
   }
 
   Reconnectiontoken generateReconnectionToken(Player player) {
-    Reconnectiontoken token = Reconnectiontoken(TokenGenerator.generateToken(), player.room!.id, player, DateTime.now().add(Duration(minutes: 10)));
+    Reconnectiontoken token = Reconnectiontoken(TokenGenerator.generateToken(), player.room!.id, player, DateTime.now().add(Duration(minutes: 60)));
     reconnectionTokens.add(token);
     return token;
   }

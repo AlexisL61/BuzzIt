@@ -47,6 +47,7 @@ class WebsocketClient {
 
   void emitOnError(ActivePlayer player) {
     _isConnected = false;
+    _socket.sink.close(1001, "Connection closed");
     player.notifyListeners();
   }
 
