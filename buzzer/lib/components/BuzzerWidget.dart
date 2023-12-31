@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:buzzer/model/InGame/ActivePlayer.dart';
 import 'package:buzzer/model/InGame/BuzzerTeam.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,9 @@ class _BuzzerWidgetState extends State<BuzzerWidget> {
         },
         onTap: () {
           widget.buzzer.buzz();
+          
+          final player = AudioPlayer();
+          player.play(AssetSource('sounds/buzz.mp3'));
         });
   }
 }

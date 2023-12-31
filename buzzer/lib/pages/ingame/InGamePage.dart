@@ -188,7 +188,7 @@ class _InGamePageState extends State<InGamePage> {
                                     child: Image(
                                       image: Svg(
                                           widget
-                                              .inGameRoom!.currentPlayer.avatar,
+                                              .inGameRoom.activePlayer!.avatar,
                                           source: SvgSource.network),
                                       width: 120,
                                       height: 120,
