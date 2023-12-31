@@ -64,16 +64,53 @@ class InGameRoom {
   }
 
   void updateFromUpdateData(Map<String, dynamic> updatedData) {
-    if (updatedData['activePlayer'] != null){
+    if (updatedData["players"] != null) {
+      updatePlayers(updatedData["players"]);
+    }
+
+    if (updatedData['activePlayer'] != null) {
       for (InGamePlayer player in players) {
         if (player.id == updatedData['activePlayer']) {
           activePlayer = player;
           break;
         }
       }
-    }else{
+    } else {
       activePlayer = null;
     }
     notifyActivePlayerUpdate(activePlayer);
+  }
+
+  void updatePlayers(List<dynamic> players) {
+    for (dynamic player in players) {
+      bool found = false;
+      for (InGamePlayer roomPlayer in this.players) {
+        if (roomPlayer.id == player["id"]) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        addPlayer(InGamePlayer.fromJson(player));
+      }
+    }
+
+    List<InGamePlayer> playersToRemove = [];
+    for (InGamePlayer roomPlayer in this.players) {
+      bool found = false;
+      for (dynamic player in players) {
+        if (roomPlayer.id == player["id"]) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        playersToRemove.add(roomPlayer);
+      }
+    }
+
+    for (InGamePlayer player in playersToRemove) {
+      removePlayer(player);
+    }
   }
 }

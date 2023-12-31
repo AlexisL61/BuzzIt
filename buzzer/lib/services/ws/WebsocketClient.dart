@@ -74,6 +74,7 @@ class WebsocketClient {
   }
 
   void onMessage(ActivePlayer buzzer, dynamic event) {
+    print(event);
     WebsocketConnectionMessage message =
         WebsocketConnectionMessage.fromJson(jsonDecode(event));
     message.actions.forEach((element) {

@@ -7,6 +7,7 @@ import 'package:server/services/router/ws/WebsocketAction.dart';
 import 'package:server/services/router/ws/WebsocketMessage.dart';
 import 'package:server/services/router/ws/messages/in/RoomJoinRequestMessage.dart';
 import 'package:server/services/router/ws/messages/out/RoomJoinMessage.dart';
+import 'package:server/services/router/ws/messages/out/UpdateDataMessage.dart';
 
 class AddBuzzerToRoomAction extends WebsocketAction {
   @override
@@ -27,6 +28,10 @@ class AddBuzzerToRoomAction extends WebsocketAction {
         roomJoinMessage.room = null;
       }
       player.channel.sink.add(jsonEncode(roomJoinMessage.toJson()));
+
+      UpdateDataMessage updateDataMessage =
+          UpdateDataMessage.fromRoom(roomJoinMessage.room!);
+      roomJoinMessage.room!.sendToAll(jsonEncode(updateDataMessage.toJson()));
     }
   }
 }
