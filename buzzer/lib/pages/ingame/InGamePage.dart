@@ -1,6 +1,7 @@
 import 'package:buzzer/components/BuzzerWidget.dart';
 import 'package:buzzer/components/buttons/BigButton.dart';
 import 'package:buzzer/components/cards/InGamePlayerCard.dart';
+import 'package:buzzer/components/dialogs/ReconnectDialog.dart';
 import 'package:buzzer/config.dart';
 import 'package:buzzer/model/InGame/BuzzerTeam.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
@@ -37,10 +38,17 @@ class _InGamePageState extends State<InGamePage> {
     super.initState();
 
     widget.inGameRoom.currentPlayer.addListener(() {
+      if (mounted == false)
+        return;
+      if (widget.inGameRoom.currentPlayer.client.isConnected == false) {
+        showReconnectDialog();
+      }
       setState(() {});
     });
 
     widget.inGameRoom.addActivePlayerUpdateListener((player) {
+      if (mounted == false)
+        return; 
       setState(() {
         foregroundActive = player != null;
       });
@@ -57,6 +65,19 @@ class _InGamePageState extends State<InGamePage> {
       _buildRoomCode(),
       _buildActivatedGradient()
     ]));
+  }
+
+  void showReconnectDialog() async {
+    InGameRoom? gameroom = await showDialog(
+        context: context,
+        builder: (context) =>
+            ReconnectDialog(player: widget.inGameRoom.currentPlayer));
+    if (gameroom == null) {
+      Navigator.of(context).pop();
+    } else {
+      Navigator.of(context)
+          .pushReplacementNamed("/ingame", arguments: gameroom);
+    }
   }
 
   Widget _buildBackground() {
@@ -147,7 +168,8 @@ class _InGamePageState extends State<InGamePage> {
             duration: Duration(milliseconds: 200),
             child: Container(
               width: foregroundActive ? MediaQuery.of(context).size.width : 0,
-              decoration: BoxDecoration(gradient: LinearGradient(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: widget.inGameRoom.activePlayer != null
@@ -164,7 +186,9 @@ class _InGamePageState extends State<InGamePage> {
                                 ClipRRect(
                                     borderRadius: BorderRadius.circular(60),
                                     child: Image(
-                                      image: Svg(widget.inGameRoom!.currentPlayer.avatar,
+                                      image: Svg(
+                                          widget
+                                              .inGameRoom!.currentPlayer.avatar,
                                           source: SvgSource.network),
                                       width: 120,
                                       height: 120,

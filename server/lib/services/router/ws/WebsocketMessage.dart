@@ -3,6 +3,7 @@ import 'package:server/services/router/ws/messages/in/BuzzMessage.dart';
 import 'package:server/services/router/ws/messages/in/ChangeTeamRequestMessage.dart';
 import 'package:server/services/router/ws/messages/in/PlayerDataMessage.dart';
 import 'package:server/services/router/ws/messages/in/RoomJoinRequestMessage.dart';
+import 'package:server/services/router/ws/messages/in/RoomReconnectRequestMessage.dart';
 import 'package:server/services/router/ws/messages/in/UnBuzzMessage.dart';
 
 /// Message websocket
@@ -37,6 +38,8 @@ abstract class WebsocketConnectionMessage {
         return ChangeTeamRequestMessage();
       case PlayerDataMessage.eventId:
         return PlayerDataMessage();
+      case RoomReconnectRequestMessage.eventId:
+        return RoomReconnectRequestMessage();
       default:
         throw Exception("Unknown message type");
     }

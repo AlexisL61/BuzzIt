@@ -21,4 +21,19 @@ class RoomConnectionService {
     await player.init(serverInfo.wsUrl);
     return await player.joinRoom(room);
   }
+
+  Future<InGameRoom?> reconnectToRoom(
+      String roomCode, String reconnectionToken, Player player) async {
+    ActivePlayer currentPlayer;
+    if (player is! ActivePlayer) {
+      currentPlayer = ActivePlayer(player.name, player.image);
+    } else {
+      currentPlayer = player;
+    }
+    ServerInfo serverInfo = await ApiService().getServerInfo();
+    print(serverInfo.wsUrl);
+    await currentPlayer.init(serverInfo.wsUrl);
+    print("init");
+    return await currentPlayer.reconnect(roomCode, reconnectionToken);
+  }
 }

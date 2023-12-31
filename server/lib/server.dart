@@ -6,6 +6,8 @@ import 'package:server/services/generator/TokenGenerator.dart';
 import 'package:server/services/router/router.dart';
 import 'package:collection/collection.dart';
 
+import 'model/Player.dart';
+
 void startServer() {}
 
 class BuzzerServer {
@@ -50,5 +52,15 @@ class BuzzerServer {
 
   ConnectionToken? getConnectionToken(String token, String roomId) {
     return connectionTokens.firstWhereOrNull((element) => element.isValid(token, roomId));
+  }
+
+  Reconnectiontoken generateReconnectionToken(Player player) {
+    Reconnectiontoken token = Reconnectiontoken(TokenGenerator.generateToken(), player.room!.id, player, DateTime.now().add(Duration(minutes: 10)));
+    reconnectionTokens.add(token);
+    return token;
+  }
+
+  Reconnectiontoken? getReconnectionToken(String token, String roomId) {
+    return reconnectionTokens.firstWhereOrNull((element) => element.isValid(token, roomId));
   }
 }

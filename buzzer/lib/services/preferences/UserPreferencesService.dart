@@ -33,6 +33,16 @@ class UserPreferencesService {
     return username;
   }
 
+  Future<String?> get latestRoomCode async {
+    String? roomCode = await _preferences.getString("room_code");
+    return roomCode;
+  }
+
+  Future<String?> get reconnectionToken async {
+    String? reconnectionToken = await _preferences.getString("reconnection_token");
+    return reconnectionToken;
+  }
+
   Future<String> get avatar async {
     String? avatar = await _preferences.getString("avatar");
     if (avatar == null) {
@@ -52,5 +62,13 @@ class UserPreferencesService {
 
   Future<void> setMasterServerURL(String url) async {
     await _preferences.setString("master_server", url);
+  }
+
+  Future<void> setLatestRoomCode(String roomCode) async {
+    await _preferences.setString("room_code", roomCode);
+  }
+
+  Future<void> setReconnectionToken(String reconnectionToken) async {
+    await _preferences.setString("reconnection_token", reconnectionToken);
   }
 }

@@ -34,12 +34,20 @@ class WebsocketClient {
       player.notifyListeners();
       stream.listen((event) {
         onMessage(player, event);
+      }, onError: (e) {
+        emitOnError(player);
+      }, onDone: () {
+        emitOnError(player);
       });
     } catch (e) {
-      _isConnected = false;
-      player.notifyListeners();
+      emitOnError(player);
       print(e);
     }
+  }
+
+  void emitOnError(ActivePlayer player) {
+    _isConnected = false;
+    player.notifyListeners();
   }
 
   Future<bool> sendPlayerData(

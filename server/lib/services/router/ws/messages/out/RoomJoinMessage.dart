@@ -8,6 +8,7 @@ class RoomJoinMessage extends WebsocketConnectionMessage {
   static const String eventId = "roomJoin";
   Room? room = null;
   late Player player;
+  late String reconnectionToken;
 
   @override
   List<WebsocketAction> actions = [];
@@ -24,6 +25,7 @@ class RoomJoinMessage extends WebsocketConnectionMessage {
         "status": "OK",
         "room": room!.toJson(),
         "player": player.toJson(),
+        "reconnectiontoken":  reconnectionToken
       }};
     }
     return {"event": event, "data": {

@@ -27,6 +27,11 @@ class Room {
     }
   }
 
+  void switchPlayers(Player playerToSwitch, Player newPlayer ){
+    int index = players.indexOf(playerToSwitch);
+    players[index] = newPlayer;
+  }
+
   void playerActivated(Player buzzer) {
     if (activePlayer != null) return;
     activePlayer = buzzer;
