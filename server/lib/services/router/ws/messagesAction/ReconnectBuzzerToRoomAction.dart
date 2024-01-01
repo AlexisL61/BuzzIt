@@ -14,20 +14,18 @@ import 'package:server/services/router/ws/messages/out/RoomJoinMessage.dart';
 class ReconnectBuzzerToRoomAction extends WebsocketAction {
   @override
   void activate(Player player, WebsocketConnectionMessage message) {
-    RoomReconnectRequestMessage roomReconnectMessage =
-        message as RoomReconnectRequestMessage;
+    RoomReconnectRequestMessage roomReconnectMessage = message as RoomReconnectRequestMessage;
     if (player.room == null) {
       RoomJoinMessage roomJoinMessage = RoomJoinMessage();
-      Reconnectiontoken? token = BuzzerServer().getReconnectionToken(
-          roomReconnectMessage.reconnectionToken, roomReconnectMessage.roomId);
+      Reconnectiontoken? token =
+          BuzzerServer().getReconnectionToken(roomReconnectMessage.reconnectionToken, roomReconnectMessage.roomId);
       if (token != null) {
         player.id = token.player.id;
         Room room = token.player.room!;
         room.switchPlayers(token.player, player);
         roomJoinMessage.room = room;
         roomJoinMessage.player = player;
-        roomJoinMessage.reconnectionToken =
-            BuzzerServer().generateReconnectionToken(player).token;
+        roomJoinMessage.reconnectionToken = BuzzerServer().generateReconnectionToken(player).token;
       } else {
         roomJoinMessage.room = null;
       }

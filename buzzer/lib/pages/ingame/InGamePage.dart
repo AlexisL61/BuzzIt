@@ -15,8 +15,7 @@ class InGameRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    InGameRoom inGameRoom =
-        ModalRoute.of(context)!.settings.arguments as InGameRoom;
+    InGameRoom inGameRoom = ModalRoute.of(context)!.settings.arguments as InGameRoom;
     return InGamePage(inGameRoom: inGameRoom);
   }
 }
@@ -32,23 +31,25 @@ class InGamePage extends StatefulWidget {
 
 class _InGamePageState extends State<InGamePage> {
   bool foregroundActive = false;
+  bool showingReconnectDialog = false;
 
   @override
   void initState() {
     super.initState();
 
     widget.inGameRoom.currentPlayer.addListener(() {
-      if (mounted == false)
-        return;
+      if (mounted == false) return;
       if (widget.inGameRoom.currentPlayer.client.isConnected == false) {
-        showReconnectDialog();
+        if (showingReconnectDialog == false) {
+          showingReconnectDialog = true;
+          showReconnectDialog();
+        }
       }
       setState(() {});
     });
 
     widget.inGameRoom.addActivePlayerUpdateListener((player) {
-      if (mounted == false)
-        return; 
+      if (mounted == false) return;
       setState(() {
         foregroundActive = player != null;
       });
@@ -69,14 +70,11 @@ class _InGamePageState extends State<InGamePage> {
 
   void showReconnectDialog() async {
     InGameRoom? gameroom = await showDialog(
-        context: context,
-        builder: (context) =>
-            ReconnectDialog(player: widget.inGameRoom.currentPlayer));
+        context: context, builder: (context) => ReconnectDialog(player: widget.inGameRoom.currentPlayer));
     if (gameroom == null) {
       Navigator.of(context).pop();
     } else {
-      Navigator.of(context)
-          .pushReplacementNamed("/ingame", arguments: gameroom);
+      Navigator.of(context).pushReplacementNamed("/ingame", arguments: gameroom);
     }
   }
 
@@ -86,8 +84,7 @@ class _InGamePageState extends State<InGamePage> {
         Expanded(
             child: Image(
           color: widget.inGameRoom.currentPlayer.team.color.withOpacity(0.2),
-          image: Svg("assets/images/background_image.svg",
-              color: widget.inGameRoom.currentPlayer.team.color),
+          image: Svg("assets/images/background_image.svg", color: widget.inGameRoom.currentPlayer.team.color),
           repeat: ImageRepeat.repeat,
         )),
       ],
@@ -135,20 +132,15 @@ class _InGamePageState extends State<InGamePage> {
           child: SizedBox(
             width: 200,
             child: BigButton(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20)),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                 child: Container(
                   color: Colors.deepPurpleAccent,
                   child: Padding(
                       padding: EdgeInsets.all(8),
                       child: Text(
                         widget.inGameRoom.id,
-                        style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            letterSpacing: 2),
+                        style:
+                            TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 2),
                         textAlign: TextAlign.center,
                       )),
                 ),
@@ -186,10 +178,7 @@ class _InGamePageState extends State<InGamePage> {
                                 ClipRRect(
                                     borderRadius: BorderRadius.circular(60),
                                     child: Image(
-                                      image: Svg(
-                                          widget
-                                              .inGameRoom.activePlayer!.avatar,
-                                          source: SvgSource.network),
+                                      image: Svg(widget.inGameRoom.activePlayer!.avatar, source: SvgSource.network),
                                       width: 120,
                                       height: 120,
                                       fit: BoxFit.cover,
@@ -198,16 +187,12 @@ class _InGamePageState extends State<InGamePage> {
                                 Text(widget.inGameRoom.activePlayer!.name,
                                     style: GoogleFonts.rubik(
                                         textStyle: const TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white))),
+                                            fontSize: 30, fontWeight: FontWeight.w600, color: Colors.white))),
                                 const SizedBox(height: 10),
                                 Text(widget.inGameRoom.activePlayer!.team.name,
                                     style: GoogleFonts.rubik(
                                         textStyle: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white))),
+                                            fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white))),
                               ],
                             )
                           : null),
@@ -219,10 +204,8 @@ class _InGamePageState extends State<InGamePage> {
                       padding: const EdgeInsets.all(16.0),
                       child: Text("Activer le buzzer",
                           style: GoogleFonts.rubik(
-                              textStyle: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black))),
+                              textStyle:
+                                  const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black))),
                     ),
                     onPressed: () {
                       widget.inGameRoom.currentPlayer.unbuzz();

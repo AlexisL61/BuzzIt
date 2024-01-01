@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:buzzer/model/InGame/ActivePlayer.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
+import 'package:buzzer/model/Player.dart';
 import 'package:buzzer/services/ws/WebsocketMessage.dart';
+import 'package:buzzer/services/ws/messages/in/PingMessage.dart';
 import 'package:buzzer/services/ws/messages/in/PlayerDataConfirmationMessage.dart';
 import 'package:buzzer/services/ws/messages/out/PlayerDataMessage.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -32,6 +34,7 @@ class WebsocketClient {
       }
       _isConnected = true;
       player.notifyListeners();
+      _checkPingMessages(player);
       stream.listen((event) {
         onMessage(player, event);
       }, onError: (e) {
@@ -51,16 +54,14 @@ class WebsocketClient {
     player.notifyListeners();
   }
 
-  Future<bool> sendPlayerData(
-      ActivePlayer player, WebSocketChannel socket) async {
+  Future<bool> sendPlayerData(ActivePlayer player, WebSocketChannel socket) async {
     PlayerDataMessage playerDataMessage = PlayerDataMessage();
     playerDataMessage.name = player.name;
     playerDataMessage.image = player.image;
     send(playerDataMessage);
 
     String event = await stream.first;
-    WebsocketConnectionMessage message =
-        WebsocketConnectionMessage.fromJson(jsonDecode(event));
+    WebsocketConnectionMessage message = WebsocketConnectionMessage.fromJson(jsonDecode(event));
     if (message.event == PlayerDataConfirmationMessage.eventId) {
       return true;
     } else {
@@ -74,9 +75,8 @@ class WebsocketClient {
   }
 
   void onMessage(ActivePlayer buzzer, dynamic event) {
+    WebsocketConnectionMessage message = WebsocketConnectionMessage.fromJson(jsonDecode(event));
     print(event);
-    WebsocketConnectionMessage message =
-        WebsocketConnectionMessage.fromJson(jsonDecode(event));
     message.actions.forEach((element) {
       element.activate(buzzer, message);
     });
@@ -84,16 +84,28 @@ class WebsocketClient {
 
   Future<T> waitMessage<T>() async {
     String message = await stream.firstWhere((event) {
-      WebsocketConnectionMessage message =
-          WebsocketConnectionMessage.fromJson(jsonDecode(event));
+      WebsocketConnectionMessage message = WebsocketConnectionMessage.fromJson(jsonDecode(event));
       if (message is T) {
         return true;
       } else {
         return false;
       }
     });
-    T convertedMessage =
-        WebsocketConnectionMessage.fromJson(jsonDecode(message)) as T;
+    T convertedMessage = WebsocketConnectionMessage.fromJson(jsonDecode(message)) as T;
     return convertedMessage;
+  }
+
+  void _checkPingMessages(ActivePlayer player) async {
+    while (_isConnected) {
+      bool istimeout = false;
+      Future timeout = Future.delayed(Duration(seconds: 10));
+      timeout.then((value) => istimeout = true);
+      await Future.any([timeout, waitMessage<PingMessage>()]);
+      if (istimeout) {
+        _isConnected = false;
+        _socket.sink.close(1001, "Connection closed");
+        player.notifyListeners();
+      }
+    }
   }
 }

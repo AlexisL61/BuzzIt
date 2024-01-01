@@ -1,5 +1,6 @@
 import 'package:buzzer/services/ws/WebsocketAction.dart';
 import 'package:buzzer/services/ws/messages/in/BuzzStateMessage.dart';
+import 'package:buzzer/services/ws/messages/in/PingMessage.dart';
 import 'package:buzzer/services/ws/messages/in/PlayerDataConfirmationMessage.dart';
 import 'package:buzzer/services/ws/messages/in/UpdateDataMessage.dart';
 import 'package:buzzer/services/ws/messages/in/RoomJoinMessage.dart';
@@ -34,6 +35,8 @@ abstract class WebsocketConnectionMessage {
         return RoomJoinMessage();
       case PlayerDataConfirmationMessage.eventId:
         return PlayerDataConfirmationMessage();
+      case PingMessage.eventId:
+        return PingMessage();
       default:
         throw Exception("Unknown message type");
     }

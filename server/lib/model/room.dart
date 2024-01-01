@@ -27,12 +27,13 @@ class Room {
     }
   }
 
-  void switchPlayers(Player playerToSwitch, Player newPlayer ){
+  void switchPlayers(Player playerToSwitch, Player newPlayer) {
     int index = players.indexOf(playerToSwitch);
     players[index] = newPlayer;
   }
 
   void playerActivated(Player buzzer) {
+    print(activePlayer);
     if (activePlayer != null) return;
     activePlayer = buzzer;
     UpdateDataMessage message = UpdateDataMessage.fromRoom(this);
@@ -45,6 +46,7 @@ class Room {
   }
 
   void sendToAll(event) {
+    print(players);
     players.forEach((element) {
       element.channel.sink.add(event);
     });
@@ -57,11 +59,7 @@ class Room {
   }
 
   Map<String, dynamic> toPartialJson() {
-    return {
-      'id': id,
-      'playersNumber': players.length,
-      'host': host != null ? host!.toPartialJson() : null
-    };
+    return {'id': id, 'playersNumber': players.length, 'host': host != null ? host!.toPartialJson() : null};
   }
 
   Map<String, dynamic> toJson() {

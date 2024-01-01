@@ -33,7 +33,6 @@ class RoomConnectionService {
     ServerInfo serverInfo = await ApiService().getServerInfo();
     print(serverInfo.wsUrl);
     await currentPlayer.init(serverInfo.wsUrl);
-    print("init");
     return await currentPlayer.reconnect(roomCode, reconnectionToken);
   }
 }

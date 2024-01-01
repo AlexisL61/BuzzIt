@@ -6,6 +6,7 @@ import 'package:buzzer/services/ws/WebsocketClient.dart';
 import 'package:buzzer/services/ws/messages/in/RoomJoinMessage.dart';
 import 'package:buzzer/services/ws/messages/out/BuzzMessage.dart';
 import 'package:buzzer/services/ws/messages/out/ChangeTeamRequestMessage.dart';
+import 'package:buzzer/services/ws/messages/out/PongMessage.dart';
 import 'package:buzzer/services/ws/messages/out/RoomJoinRequestMessage.dart';
 import 'package:buzzer/services/ws/messages/out/RoomReconnectRequestMessage.dart';
 import 'package:buzzer/services/ws/messages/out/UnBuzzMessage.dart';
@@ -47,10 +48,8 @@ class ActivePlayer extends InGamePlayer {
         RoomReconnectRequestMessage();
     roomReconnectRequestMessage.roomId = roomCode;
     roomReconnectRequestMessage.reconnectionToken = reconnectionToken;
-    print("sending");
     client.send(roomReconnectRequestMessage);
     RoomJoinMessage roomJoinMessage = await waitMessage<RoomJoinMessage>();
-    print("received");
     print(roomJoinMessage.status);
     if (roomJoinMessage.status == "OK") {
       InGameRoom inGameRoom =
@@ -92,6 +91,10 @@ class ActivePlayer extends InGamePlayer {
     _listeners.forEach((element) {
       element();
     });
+  }
+
+  void sendPong() {
+    client.send(PongMessage());
   }
 
   @override

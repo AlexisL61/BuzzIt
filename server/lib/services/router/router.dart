@@ -9,6 +9,8 @@ import 'package:server/services/router/api/routes/HealthCheckRoute.dart';
 import 'package:server/services/router/api/routes/InfoRoute.dart';
 import 'package:server/services/router/ws/WebsocketMessage.dart';
 import 'package:server/services/router/ws/messages/in/PlayerDataMessage.dart';
+import 'package:server/services/router/ws/messages/in/PongMessage.dart';
+import 'package:server/services/router/ws/messages/out/PingMessage.dart';
 import 'package:server/services/router/ws/messages/out/PlayerDataConfirmationMessage.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -39,30 +41,26 @@ class ServerRouter {
     await channel.ready;
     Stream stream = channel.stream.asBroadcastStream();
     Player? player = await waitForPlayerData(stream, channel);
-    PlayerDataConfirmationMessage confirmationMessage =
-        PlayerDataConfirmationMessage();
+    PlayerDataConfirmationMessage confirmationMessage = PlayerDataConfirmationMessage();
     channel.sink.add(jsonEncode(confirmationMessage));
     if (player != null) {
+      _emitPingMessages(player, channel, stream);
       listenToPlayerActions(stream, player);
     }
   }
 
   void listenToPlayerActions(Stream stream, Player player) {
-    print("LISTENING");
     try {
       stream.listen((event) {
         print(event);
-        WebsocketConnectionMessage message =
-            WebsocketConnectionMessage.fromJson(jsonDecode(event));
+        WebsocketConnectionMessage message = WebsocketConnectionMessage.fromJson(jsonDecode(event));
         message.actions.forEach((element) {
           element.activate(player, message);
         });
       }, onDone: () {
-        print("Player disconnected");
         player.inactive = true;
       }, onError: (error) {
         player.inactive = true;
-        print("Player disconnected");
       });
     } catch (e) {
       player.inactive = true;
@@ -70,17 +68,45 @@ class ServerRouter {
     }
   }
 
-  Future<Player?> waitForPlayerData(
-      Stream stream, WebSocketChannel channel) async {
+  Future<Player?> waitForPlayerData(Stream stream, WebSocketChannel channel) async {
     Player? player;
     String event = await stream.first;
-    WebsocketConnectionMessage message =
-        WebsocketConnectionMessage.fromJson(jsonDecode(event));
+    WebsocketConnectionMessage message = WebsocketConnectionMessage.fromJson(jsonDecode(event));
     if (message is PlayerDataMessage) {
       return Player(channel, message.name, message.image);
     } else {
       channel.sink.close();
     }
     return player;
+  }
+
+  Future<T> waitMessage<T>(Stream stream) async {
+    String message = await stream.firstWhere((event) {
+      WebsocketConnectionMessage message = WebsocketConnectionMessage.fromJson(jsonDecode(event));
+      if (message is T) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    T convertedMessage = WebsocketConnectionMessage.fromJson(jsonDecode(message)) as T;
+    return convertedMessage;
+  }
+
+  void _emitPingMessages(Player player, WebSocketChannel channel, Stream stream) async {
+    while (player.inactive == false) {
+      await Future.delayed(Duration(seconds: 3));
+      PingMessage pingMessage = PingMessage();
+      channel.sink.add(jsonEncode(pingMessage.toJson()));
+
+      bool istimeout = false;
+      Future timeout = Future.delayed(Duration(seconds: 10));
+      timeout.then((value) => istimeout = true);
+      await Future.any([timeout, waitMessage<PongMessage>(stream)]);
+      if (istimeout) {
+        player.inactive = true;
+        channel.sink.close(1001, "Connection closed");
+      }
+    }
   }
 }

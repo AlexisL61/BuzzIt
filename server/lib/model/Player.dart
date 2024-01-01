@@ -20,6 +20,8 @@ class Player {
   Player(this.channel, this.name, this.image) : _state = BuzzerState.IDLE;
 
   void buzz() {
+    print(id);
+    print(room);
     if (room != null) {
       room!.playerActivated(this);
     }
@@ -30,20 +32,11 @@ class Player {
   }
 
   toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'image': image,
-      'state': state.name,
-      'team': team.name,
-      'inactive': inactive
-    };
+    return {'id': id, 'name': name, 'image': image, 'state': state.name, 'team': team.name, 'inactive': inactive};
   }
 
   Room? get room {
-    return BuzzerServer()
-        .rooms
-        .firstWhereOrNull((Room element) => element.players.contains(this));
+    return BuzzerServer().rooms.firstWhereOrNull((Room element) => element.players.contains(this));
   }
 
   BuzzerState get state => _state;
@@ -63,7 +56,6 @@ class Player {
   }
 
   set inactive(bool value) {
-    print("IS INACTIVE $value");
     _inactive = value;
   }
 }

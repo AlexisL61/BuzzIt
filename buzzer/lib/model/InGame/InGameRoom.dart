@@ -25,10 +25,8 @@ class InGameRoom {
     players.remove(player);
   }
 
-  static InGameRoom fromJson(
-      Map<String, dynamic> json, ActivePlayer currentPlayer) {
-    InGameRoom room = InGameRoom(
-        json['id'], currentPlayer, InGamePlayer.fromJson(json['host']));
+  static InGameRoom fromJson(Map<String, dynamic> json, ActivePlayer currentPlayer) {
+    InGameRoom room = InGameRoom(json['id'], currentPlayer, InGamePlayer.fromJson(json['host']));
     json['players'].forEach((element) {
       room.addPlayer(InGamePlayer.fromJson(element));
     });
@@ -36,11 +34,7 @@ class InGameRoom {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'host': host.toJson(),
-      'players': players.map((e) => e.toJson()).toList()
-    };
+    return {'id': id, 'host': host.toJson(), 'players': players.map((e) => e.toJson()).toList()};
   }
 
   void addPlayerUpdateListener(Function(InGamePlayer) listener) {
@@ -58,6 +52,7 @@ class InGameRoom {
   }
 
   void notifyActivePlayerUpdate(InGamePlayer? player) {
+    print(_activePlayerUpdateListeners.length);
     _activePlayerUpdateListeners.forEach((element) {
       element(player);
     });
