@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:server/model/Player.dart';
 import 'package:server/services/router/api/routes/AbstractRoute.dart';
@@ -34,7 +35,7 @@ class ServerRouter {
 
     app.get('/ws', webSocketHandler(onNewWsConnection));
 
-    shelf_io.serve(app, "0.0.0.0", 8080, shared: true);
+    shelf_io.serve(app, "0.0.0.0", int.parse(Platform.environment["SERVER_PORT"]!), shared: true);
   }
 
   void onNewWsConnection(WebSocketChannel channel) async {

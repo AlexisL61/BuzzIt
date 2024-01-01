@@ -26,17 +26,17 @@ class InfoRoute extends AbstractRoute {
 
   String buildWsLink(){
     if (Platform.environment['TLS'] == 'true') {
-      return 'wss://${Platform.environment['SERVER_URL']}:${Platform.environment['SERVER_PORT']}/ws';
+      return 'wss://${Platform.environment['SERVER_URL']}/ws';
     } else {
-      return 'ws://${Platform.environment['SERVER_URL']}:${Platform.environment['SERVER_PORT']}/ws';
+      return 'ws://${Platform.environment['SERVER_URL']}/ws';
     }
   }
 
   String buildApiLink(){
     if (Platform.environment['TLS'] == 'true') {
-      return 'https://${Platform.environment['SERVER_URL']}:${Platform.environment['PORT']}/';
+      return 'https://${Platform.environment['SERVER_URL']}/';
     } else {
-      return 'http://${Platform.environment['SERVER_URL']}:${Platform.environment['PORT']}/';
+      return 'http://${Platform.environment['SERVER_URL']}/';
     }
   }
 }
