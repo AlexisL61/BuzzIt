@@ -3,6 +3,8 @@ import 'package:buzzer/model/Player.dart';
 import 'package:buzzer/services/connection/RoomConnection.dart';
 import 'package:buzzer/services/preferences/UserPreferencesService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReconnectDialog extends StatefulWidget {
   final Player player;
@@ -17,14 +19,14 @@ class _ReconnectDialogState extends State<ReconnectDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Connexion perdue"),
-      content: const Text("Voulez-vous vous reconnecter ?"),
+      title: Text(AppLocalizations.of(context)!.reconnect_dialog_title),
+      content: Text(AppLocalizations.of(context)!.reconnect_dialog_text),
       actions: [
         TextButton(
             onPressed: () {
               Navigator.of(context).pop(null);
             },
-            child: const Text("Non")),
+            child: Text(AppLocalizations.of(context)!.reconnect_dialog_no)),
         TextButton(
             onPressed: () async {
               String? roomCode = await UserPreferencesService().latestRoomCode;
@@ -41,11 +43,11 @@ class _ReconnectDialogState extends State<ReconnectDialog> {
                 Navigator.of(context).pop(gameroom);
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Impossible de se reconnecter")));
+                    SnackBar(content: Text(AppLocalizations.of(context)!.reconnect_dialog_error)));
                 Navigator.of(context).pop(null);
               }
             },
-            child: const Text("Oui")),
+            child: Text(AppLocalizations.of(context)!.reconnect_dialog_yes)),
       ],
     );
   }

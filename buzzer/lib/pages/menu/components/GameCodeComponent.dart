@@ -10,6 +10,7 @@ import 'package:buzzer/services/preferences/SavedPlayerService.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum RoomDataStatus { IDLE, LOADING, NOT_FOUND, FOUND }
 
@@ -38,7 +39,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  Text("ENTREZ VOTRE CODE",
+                  Text(AppLocalizations.of(context)!.join_room_code.toUpperCase(),
                       style: GoogleFonts.rubik(
                           textStyle: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w600))),
                 ],
@@ -84,7 +85,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
                 children: [
                   IconButton.filled(onPressed: widget.goingBack, icon: const Icon(Icons.arrow_back)),
                   const SizedBox(width: 16),
-                  Text("RETOUR AU MENU",
+                  Text(AppLocalizations.of(context)!.join_room_back_button.toUpperCase(),
                       style: GoogleFonts.rubik(
                           textStyle: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w600))),
                 ],
@@ -142,7 +143,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
             padding: const EdgeInsets.all(16),
             child: BuzzerCard(
                 child: Center(
-                    child: Text("Salle non trouvée",
+                    child: Text(AppLocalizations.of(context)!.join_room_not_found,
                         style: GoogleFonts.rubik(
                             textStyle: const TextStyle(color: Colors.black, fontSize: 26, fontWeight: FontWeight.w600)))))),
       ]),

@@ -2,6 +2,7 @@ import 'package:buzzer/components/buttons/BigButton.dart';
 import 'package:buzzer/components/dialogs/SettingsDialog.dart';
 import 'package:buzzer/components/textstyle/font.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ServerSettingsComponent extends StatefulWidget {
   const ServerSettingsComponent({super.key});
@@ -24,7 +25,7 @@ class _ServerSettingsComponentState extends State<ServerSettingsComponent> {
                 children: [
                   const Icon(Icons.settings),
                   const SizedBox(width: 10),
-                  Text("Serveur de jeu", style: BuzzerTextStyle.mediumRubik.copyWith(color: Colors.black)),
+                  Text(AppLocalizations.of(context)!.settings_server_title, style: BuzzerTextStyle.mediumRubik.copyWith(color: Colors.black)),
                   const Spacer(),
                   const Icon(Icons.arrow_forward_ios)
                 ],

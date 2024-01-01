@@ -4,6 +4,7 @@ import 'package:buzzer/config.dart';
 import 'package:buzzer/services/api/ApiService.dart';
 import 'package:buzzer/services/preferences/UserPreferencesService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MasterServerDialog extends StatefulWidget {
   const MasterServerDialog({super.key});
@@ -20,13 +21,11 @@ class MasterServerDialogState extends State<MasterServerDialog> {
 
   @override
   void initState() {
-    UserPreferencesService()
-        .masterServerURL
-        .then((value) =>
-        setState(() {
-          _controller.text = value;
-        },)    
-    );
+    UserPreferencesService().masterServerURL.then((value) => setState(
+          () {
+            _controller.text = value;
+          },
+        ));
 
     super.initState();
   }
@@ -34,7 +33,7 @@ class MasterServerDialogState extends State<MasterServerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Serveur de jeu",
+      title: Text(AppLocalizations.of(context)!.settings_server_title,
           style: BuzzerTextStyle.mediumRubik.copyWith(color: Colors.black)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -43,7 +42,7 @@ class MasterServerDialogState extends State<MasterServerDialog> {
             children: [
               Expanded(
                 child: BuzzerTextField(
-                  hint: "Adresse du serveur",
+                  hint: AppLocalizations.of(context)!.settings_server_label,
                   controller: _controller,
                   onChanged: (value) {},
                 ),
@@ -65,12 +64,11 @@ class MasterServerDialogState extends State<MasterServerDialog> {
                   await testConnection();
                 }
               : null,
-          child: Text("Tester la connexion",
-              style: BuzzerTextStyle.smallRubik.copyWith(
-                  color: !testingConnection ? Colors.purple : Colors.grey)),
+          child: Text(AppLocalizations.of(context)!.settings_server_test_connection,
+              style: BuzzerTextStyle.smallRubik.copyWith(color: !testingConnection ? Colors.purple : Colors.grey)),
         ),
         TextButton(
-          child: Text("Valider",
+          child: Text(AppLocalizations.of(context)!.settings_server_validate,
               style: BuzzerTextStyle.smallRubik.copyWith(color: Colors.purple)),
           onPressed: () async {
             await UserPreferencesService().setMasterServerURL(_controller.value.text);
@@ -91,13 +89,13 @@ class MasterServerDialogState extends State<MasterServerDialog> {
       if (connectionSuccess) {
         return Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text("Connexion réussie",
+          child: Text(AppLocalizations.of(context)!.settings_server_success,
               style: BuzzerTextStyle.smallRubik.copyWith(color: Colors.green)),
         );
       } else {
         return Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text("Impossible de se connecter au serveur",
+          child: Text(AppLocalizations.of(context)!.settings_server_error,
               style: BuzzerTextStyle.smallRubik.copyWith(color: Colors.red)),
         );
       }

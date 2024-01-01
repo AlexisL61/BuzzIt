@@ -1,0 +1,53 @@
+{
+    "app_name": "Buzz It",
+    "app_description": "Un système de buzzer open source",
+    "app_version": "Version {version}",
+    "@app_version": {
+        "placeholders": {
+            "version": {
+                "type": "String",
+                "example": "1.0.0"
+            }
+        }
+    },
+    
+    "profile_default_title": "Amateur de quiz",
+    
+    "room_title": "Salon de {username}",
+    "@room_title": {
+        "placeholders": {
+            "username": {
+                "type": "String",
+                "example": "Alexis"
+            }
+        }
+    },
+
+    "reconnect_dialog_title": "Connexion perdue",
+    "reconnect_dialog_text": "Voulez-vous vous reconnecter ?",
+    "reconnect_dialog_yes": "Oui",
+    "reconnect_dialog_no": "Non",
+    "reconnect_dialog_error": "Impossible de se reconnecter",
+
+    "settings_server_title": "Serveur de jeu",
+    "settings_server_label": "Adresse du serveur",
+    "settings_server_test_connection": "Tester la connexion",
+    "settings_server_validate": "Valider",
+    "settings_server_error": "Impossible de se connecter au serveur",
+    "settings_server_success": "Connexion réussie",
+
+    "activate_buzzer": "Activer le buzzer",
+
+    "main_menu_title": "Bienvenue sur Buzz It !",
+    "main_menu_subtitle": "Et si on jouait ?",
+    "main_menu_create_room_title": "Créer",
+    "main_menu_create_room_subtitle": "Un salon et recevoir un code",
+    "main_menu_join_room_title": "Rejoindre",
+    "main_menu_join_room_subtitle": "Un salon avec un code",
+    "main_menu_profile_title": "Profil",
+    "main_menu_settings_title": "Paramètres",
+
+    "join_room_code": "Entrez votre code",
+    "join_room_back_button": "Retour au menu",
+    "join_room_not_found": "Salon introuvable"
+}

@@ -3,6 +3,7 @@ import 'package:buzzer/model/Room.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RoomCard extends StatefulWidget {
   final Room room;
@@ -33,23 +34,17 @@ class _RoomCardState extends State<RoomCard> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Salon de ${widget.room.host!.name}",
-                style: GoogleFonts.rubik(
-                    textStyle: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w600))),
-            Text("Amateur de quiz",
-                style: GoogleFonts.rubik(
-                    textStyle: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w600))),
+            Text(AppLocalizations.of(context)!.room_title(widget.room.host!.name),
+                style: GoogleFonts.rubik(textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600))),
+            Text(AppLocalizations.of(context)!.profile_default_title,
+                style: GoogleFonts.rubik(textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600))),
           ],
         ),
         const Spacer(),
         Row(
           children: [
             Text(widget.room.playersNumber.toString(),
-                style: GoogleFonts.rubik(
-                    textStyle: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w600))),
+                style: GoogleFonts.rubik(textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600))),
             const SizedBox(width: 10),
             const Icon(Icons.person, size: 30)
           ],

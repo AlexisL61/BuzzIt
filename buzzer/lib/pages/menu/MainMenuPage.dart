@@ -10,6 +10,7 @@ import 'package:buzzer/services/preferences/SavedPlayerService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainMenuPage extends StatefulWidget {
   static const String route = "/";
@@ -85,11 +86,11 @@ class _MainMenuPageState extends State<MainMenuPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("BIEN LE BONJOUR !",
+            Text(AppLocalizations.of(context)!.main_menu_title.toUpperCase(),
                 style: GoogleFonts.rubik(
                     textStyle:
                         TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 20, fontWeight: FontWeight.w600))),
-            Text("ET SI ON JOUAIT ?",
+            Text(AppLocalizations.of(context)!.main_menu_subtitle.toUpperCase(),
                 style: GoogleFonts.rubik(
                     textStyle: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600))),
           ],
@@ -122,8 +123,8 @@ class _MainMenuPageState extends State<MainMenuPage> {
     return Padding(
         padding: const EdgeInsets.only(right: 16.0),
         child: TwoLineBigButton(
-            firstLine: "CRÉER",
-            secondLine: "UN SALON ET RECEVOIR UN CODE",
+            firstLine: AppLocalizations.of(context)!.main_menu_create_room_title.toUpperCase(),
+            secondLine: AppLocalizations.of(context)!.main_menu_create_room_subtitle.toUpperCase(),
             icon: Icons.add,
             borderRadius: const BorderRadius.only(bottomRight: Radius.circular(20), topRight: Radius.circular(20)),
             onPressed: () async {
@@ -138,8 +139,8 @@ class _MainMenuPageState extends State<MainMenuPage> {
     return Padding(
         padding: const EdgeInsets.only(right: 16.0),
         child: TwoLineBigButton(
-            firstLine: "REJOINDRE",
-            secondLine: "UN SALON AVEC UN CODE",
+            firstLine: AppLocalizations.of(context)!.main_menu_join_room_title.toUpperCase(),
+            secondLine: AppLocalizations.of(context)!.main_menu_join_room_subtitle.toUpperCase(),
             icon: Icons.send,
             borderRadius: const BorderRadius.only(bottomRight: Radius.circular(20), topRight: Radius.circular(20)),
             onPressed: () {
@@ -166,7 +167,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
               await showDialog(context: context, builder: (BuildContext context) => const ProfileDialog());
               setState(() {});
             },
-            text: "INVENTAIRE"));
+            text: AppLocalizations.of(context)!.main_menu_profile_title.toUpperCase()));
   }
 
   Widget _buildSettingsButton() {
@@ -179,7 +180,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             onPressed: () {
               Navigator.pushNamed(context, '/settings');
             },
-            text: "PARAMÈTRES"));
+            text: AppLocalizations.of(context)!.main_menu_settings_title.toUpperCase()));
   }
 
   Widget _buildBottomBackground() {

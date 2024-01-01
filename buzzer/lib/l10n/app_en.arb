@@ -1,0 +1,53 @@
+{
+    "app_name": "Buzz It",
+    "app_description": "An open source buzzer system",
+    "app_version": "Version {version}",
+    "@app_version": {
+        "placeholders": {
+            "version": {
+                "type": "String",
+                "example": "1.0.0"
+            }
+        }
+    },
+
+    "profile_default_title": "Quiz amateur",
+    
+    "room_title": "Salon de {username}",
+    "@room_title": {
+        "placeholders": {
+            "username": {
+                "type": "String",
+                "example": "Alexis"
+            }
+        }
+    },
+
+    "reconnect_dialog_title": "Connection lost",
+    "reconnect_dialog_text": "Do you want to reconnect?",
+    "reconnect_dialog_yes": "Yes",
+    "reconnect_dialog_no": "No",
+    "reconnect_dialog_error": "Unable to reconnect",
+
+    "settings_server_title": "Game server",
+    "settings_server_label": "Server address",
+    "settings_server_test_connection": "Test connection",
+    "settings_server_validate": "Validate",
+    "settings_server_error": "Unable to connect to the server",
+    "settings_server_success": "Connection successful",
+
+    "activate_buzzer": "Activate buzzer",
+
+    "main_menu_title": "Welcome to Buzz It",
+    "main_menu_subtitle": "Let's play",
+    "main_menu_create_room_title": "Create",
+    "main_menu_create_room_subtitle": "A room and get a code",
+    "main_menu_join_room_title": "Join",
+    "main_menu_join_room_subtitle": "A room with a code",
+    "main_menu_profile_title": "Profile",
+    "main_menu_settings_title": "Settings",
+
+    "join_room_code": "Enter your code",
+    "join_room_back_button": "Go back to menu",
+    "join_room_not_found": "Room not found"
+}

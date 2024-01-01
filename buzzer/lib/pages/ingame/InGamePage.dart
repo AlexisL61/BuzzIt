@@ -7,6 +7,7 @@ import 'package:buzzer/model/InGame/InGameRoom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InGameRoute extends StatelessWidget {
   static const String route = "/ingame";
@@ -201,7 +202,7 @@ class _InGamePageState extends State<InGamePage> {
                   child: BigButton(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Text("Activer le buzzer",
+                      child: Text(AppLocalizations.of(context)!.activate_buzzer,
                           style: GoogleFonts.rubik(
                               textStyle:
                                   const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black))),

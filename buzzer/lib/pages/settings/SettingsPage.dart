@@ -1,6 +1,7 @@
 import 'package:buzzer/components/textstyle/font.dart';
 import 'package:buzzer/pages/settings/components/ServerSettingsComponent.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsRoute extends StatelessWidget {
   static const String route = "/settings";
@@ -59,11 +60,11 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Buzz it", style: BuzzerTextStyle.bigRubik.copyWith(color: Colors.white)),
-            Text("An open-source buzzer system", style: BuzzerTextStyle.mediumRubik.copyWith(color: Colors.white)),
+            Text(AppLocalizations.of(context)!.app_name, style: BuzzerTextStyle.bigRubik.copyWith(color: Colors.white)),
+            Text(AppLocalizations.of(context)!.app_description, style: BuzzerTextStyle.mediumRubik.copyWith(color: Colors.white)),
             const Spacer(),
             Text(
-              "Version 1.0.0",
+              AppLocalizations.of(context)!.app_version("1.0.0"),
               style: BuzzerTextStyle.mediumRubik.copyWith(color: Colors.white),
             )
           ],
