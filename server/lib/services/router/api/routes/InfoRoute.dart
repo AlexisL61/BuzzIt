@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:server/services/router/api/routes/AbstractRoute.dart';
 import 'package:shelf/shelf.dart';
@@ -9,16 +10,33 @@ class InfoRoute extends AbstractRoute {
 
   @override
   void importRoute(Router router) {
-    router.get(info, (Request request) {
-      return Response.ok(jsonEncode(jsonInfoData()));
+    router.get(info, (Request request) async {
+      return Response.ok(jsonEncode(await jsonInfoData()));
     });
   }
 
-  Map<String, dynamic> jsonInfoData() {
+  Future<Map<String, dynamic>> jsonInfoData() async{
     return {
       'status': 'OK',
-      'wsUrl': 'ws://10.0.2.2:8080/ws',
-      'apiUrl': 'http://10.0.2.2:8080/'
+      'wsUrl': buildWsLink(),
+      'apiUrl': buildApiLink(),
+      'version': '0.1.0'
     };
+  }
+
+  String buildWsLink(){
+    if (Platform.environment['TLS'] == 'true') {
+      return 'wss://${Platform.environment['SERVER_URL']}:${Platform.environment['SERVER_PORT']}/ws';
+    } else {
+      return 'ws://${Platform.environment['SERVER_URL']}:${Platform.environment['SERVER_PORT']}/ws';
+    }
+  }
+
+  String buildApiLink(){
+    if (Platform.environment['TLS'] == 'true') {
+      return 'https://${Platform.environment['SERVER_URL']}:${Platform.environment['PORT']}/';
+    } else {
+      return 'http://${Platform.environment['SERVER_URL']}:${Platform.environment['PORT']}/';
+    }
   }
 }
