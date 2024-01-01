@@ -33,50 +33,53 @@ class _MainMenuPageState extends State<MainMenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Stack(children: [
-          Column(
-            children: [
-              _buildUpperBackground(),
-              Expanded(
-                  child: Image(
-                color: Colors.deepPurpleAccent.withOpacity(0.2),
-                image: const Svg("assets/images/background_image.svg", color: Colors.deepPurpleAccent),
-                repeat: ImageRepeat.repeat,
-              )),
-              _buildBottomBackground()
-            ],
-          ),
-          SafeArea(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildIntro(),
-              _buildPlayerInfo(),
-              Expanded(
-                child: OpacitySlideTransition(selectedChild: selectedChild, children: [
-                  Column(children: [
-                    const Spacer(),
-                    _buildCreateGameButton(),
-                    const SizedBox(height: 40),
-                    _buildJoinGameButton(),
-                    const Spacer(),
-                    _buildInventoryAndSettings(),
-                    const SizedBox(height: 20),
-                  ]),
-                  GameCodeComponent(
-                    goingBack: () {
-                      setState(() {
-                        selectedChild = 0;
-                      });
-                    },
-                  ),
-                ]),
-              )
-            ],
-          ))
-        ]));
+    return PopScope(
+      canPop: selectedChild == 0,
+      onPopInvoked: handlePop,
+        child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Stack(children: [
+              Column(
+                children: [
+                  _buildUpperBackground(),
+                  Expanded(
+                      child: Image(
+                    color: Colors.deepPurpleAccent.withOpacity(0.2),
+                    image: const Svg("assets/images/background_image.svg", color: Colors.deepPurpleAccent),
+                    repeat: ImageRepeat.repeat,
+                  )),
+                  _buildBottomBackground()
+                ],
+              ),
+              SafeArea(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildIntro(),
+                  _buildPlayerInfo(),
+                  Expanded(
+                    child: OpacitySlideTransition(selectedChild: selectedChild, children: [
+                      Column(children: [
+                        const Spacer(),
+                        _buildCreateGameButton(),
+                        const SizedBox(height: 40),
+                        _buildJoinGameButton(),
+                        const Spacer(),
+                        _buildInventoryAndSettings(),
+                        const SizedBox(height: 20),
+                      ]),
+                      GameCodeComponent(
+                        goingBack: () {
+                          setState(() {
+                            selectedChild = 0;
+                          });
+                        },
+                      ),
+                    ]),
+                  )
+                ],
+              ))
+            ])));
   }
 
   Widget _buildIntro() {
@@ -188,5 +191,13 @@ class _MainMenuPageState extends State<MainMenuPage> {
       height: 0,
       decoration: const BoxDecoration(color: Colors.deepPurpleAccent),
     );
+  }
+
+  void handlePop(_){
+    if(selectedChild == 1){
+      setState(() {
+        selectedChild = 0;
+      });
+    }
   }
 }
