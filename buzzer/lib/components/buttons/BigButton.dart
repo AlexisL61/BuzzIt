@@ -39,7 +39,7 @@ class _BigButtonState extends State<BigButton> {
         },
         child: BuzzerCard(
             rowExpanding: widget.rowExpanding,
-            child: widget.child,
-            borderRadius: widget.borderRadius, shadowVisible: !isDown));
+            borderRadius: widget.borderRadius, shadowVisible: !isDown,
+            child: widget.child));
   }
 }

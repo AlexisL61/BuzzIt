@@ -16,13 +16,13 @@ class Room {
   Room(this.id) : players = [];
 
   void addPlayer(Player buzzer) {
-    if (players.length == 0) host = buzzer;
+    if (players.isEmpty) host = buzzer;
     players.add(buzzer);
   }
 
   void removePlayer(Player buzzer) {
     players.remove(buzzer);
-    if (players.length == 0) {
+    if (players.isEmpty) {
       BuzzerServer().rooms.remove(this);
     }
   }
@@ -47,9 +47,9 @@ class Room {
 
   void sendToAll(event) {
     print(players);
-    players.forEach((element) {
+    for (var element in players) {
       element.channel.sink.add(event);
-    });
+    }
   }
 
   void unbuzz() {

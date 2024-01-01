@@ -12,8 +12,8 @@ class PlayerDataMessage extends WebsocketConnectionMessage {
 
   @override
   void hydrateData(data) {
-    this.name = data["name"];
-    this.image = data["image"];
+    name = data["name"];
+    image = data["image"];
   }
 
   @override

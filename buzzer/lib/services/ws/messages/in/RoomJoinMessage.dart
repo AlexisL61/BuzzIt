@@ -23,9 +23,9 @@ class RoomJoinMessage extends WebsocketConnectionMessage {
     if (data["status"] != "OK") {
       return;
     }
-    this.inGameRoomData = data["room"];
-    this.player = InGamePlayer.fromJson(data["player"]);
-    this.reconnectToken = data["reconnectiontoken"];
+    inGameRoomData = data["room"];
+    player = InGamePlayer.fromJson(data["player"]);
+    reconnectToken = data["reconnectiontoken"];
   }
 
   InGameRoom getInGameRoomWithActivePlayer(ActivePlayer activePlayer) {

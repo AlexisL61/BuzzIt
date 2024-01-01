@@ -2,7 +2,6 @@ import 'package:buzzer/components/BuzzerWidget.dart';
 import 'package:buzzer/components/buttons/BigButton.dart';
 import 'package:buzzer/components/cards/InGamePlayerCard.dart';
 import 'package:buzzer/components/dialogs/ReconnectDialog.dart';
-import 'package:buzzer/config.dart';
 import 'package:buzzer/model/InGame/BuzzerTeam.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
 import 'package:flutter/material.dart';
@@ -132,15 +131,15 @@ class _InGamePageState extends State<InGamePage> {
           child: SizedBox(
             width: 200,
             child: BigButton(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                 child: Container(
                   color: Colors.deepPurpleAccent,
                   child: Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       child: Text(
                         widget.inGameRoom.id,
                         style:
-                            TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 2),
+                            const TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 2),
                         textAlign: TextAlign.center,
                       )),
                 ),
@@ -157,7 +156,7 @@ class _InGamePageState extends State<InGamePage> {
         Expanded(
           child: AnimatedOpacity(
             opacity: widget.inGameRoom.activePlayer != null ? 1.0 : 0.0,
-            duration: Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 200),
             child: Container(
               width: foregroundActive ? MediaQuery.of(context).size.width : 0,
               decoration: BoxDecoration(

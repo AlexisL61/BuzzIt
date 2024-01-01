@@ -15,7 +15,7 @@ class ChangeTeamRequestMessage extends WebsocketConnectionMessage {
 
   @override
   void hydrateData(data) {
-    this.buzzerTeam = BuzzerTeamExtension.fromString(data["team"]);
+    buzzerTeam = BuzzerTeamExtension.fromString(data["team"]);
   }
 
   @override

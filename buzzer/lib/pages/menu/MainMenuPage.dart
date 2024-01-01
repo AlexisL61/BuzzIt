@@ -4,7 +4,6 @@ import 'package:buzzer/components/cards/PlayerCard.dart';
 import 'package:buzzer/components/dialogs/ProfileDialog.dart';
 import 'package:buzzer/components/transitions/OpacitySlideTransition.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
-import 'package:buzzer/model/Player.dart';
 import 'package:buzzer/pages/menu/components/GameCodeComponent.dart';
 import 'package:buzzer/services/connection/RoomConnection.dart';
 import 'package:buzzer/services/preferences/SavedPlayerService.dart';
@@ -42,8 +41,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
               Expanded(
                   child: Image(
                 color: Colors.deepPurpleAccent.withOpacity(0.2),
-                image: Svg("assets/images/background_image.svg",
-                    color: Colors.deepPurpleAccent),
+                image: const Svg("assets/images/background_image.svg", color: Colors.deepPurpleAccent),
                 repeat: ImageRepeat.repeat,
               )),
               _buildBottomBackground()
@@ -56,26 +54,24 @@ class _MainMenuPageState extends State<MainMenuPage> {
               _buildIntro(),
               _buildPlayerInfo(),
               Expanded(
-                child: OpacitySlideTransition(
-                    selectedChild: selectedChild,
-                    children: [
-                      Column(children: [
-                        Spacer(),
-                        _buildCreateGameButton(),
-                        const SizedBox(height: 40),
-                        _buildJoinGameButton(),
-                        const Spacer(),
-                        _buildInventoryAndSettings(),
-                        const SizedBox(height: 20),
-                      ]),
-                      GameCodeComponent(
-                        goingBack: () {
-                          setState(() {
-                            selectedChild = 0;
-                          });
-                        },
-                      ),
-                    ]),
+                child: OpacitySlideTransition(selectedChild: selectedChild, children: [
+                  Column(children: [
+                    const Spacer(),
+                    _buildCreateGameButton(),
+                    const SizedBox(height: 40),
+                    _buildJoinGameButton(),
+                    const Spacer(),
+                    _buildInventoryAndSettings(),
+                    const SizedBox(height: 20),
+                  ]),
+                  GameCodeComponent(
+                    goingBack: () {
+                      setState(() {
+                        selectedChild = 0;
+                      });
+                    },
+                  ),
+                ]),
               )
             ],
           ))
@@ -91,16 +87,11 @@ class _MainMenuPageState extends State<MainMenuPage> {
           children: [
             Text("BIEN LE BONJOUR !",
                 style: GoogleFonts.rubik(
-                    textStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600))),
+                    textStyle:
+                        TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 20, fontWeight: FontWeight.w600))),
             Text("ET SI ON JOUAIT ?",
                 style: GoogleFonts.rubik(
-                    textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600))),
+                    textStyle: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600))),
           ],
         )
       ]),
@@ -134,12 +125,9 @@ class _MainMenuPageState extends State<MainMenuPage> {
             firstLine: "CRÉER",
             secondLine: "UN SALON ET RECEVOIR UN CODE",
             icon: Icons.add,
-            borderRadius: const BorderRadius.only(
-                bottomRight: Radius.circular(20),
-                topRight: Radius.circular(20)),
+            borderRadius: const BorderRadius.only(bottomRight: Radius.circular(20), topRight: Radius.circular(20)),
             onPressed: () async {
-              InGameRoom? room = await RoomConnectionService()
-                  .createRoom(SavedPlayerService.savedPlayer);
+              InGameRoom? room = await RoomConnectionService().createRoom(SavedPlayerService.savedPlayer);
               if (room != null) {
                 Navigator.pushNamed(context, '/ingame', arguments: room);
               }
@@ -153,9 +141,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             firstLine: "REJOINDRE",
             secondLine: "UN SALON AVEC UN CODE",
             icon: Icons.send,
-            borderRadius: const BorderRadius.only(
-                bottomRight: Radius.circular(20),
-                topRight: Radius.circular(20)),
+            borderRadius: const BorderRadius.only(bottomRight: Radius.circular(20), topRight: Radius.circular(20)),
             onPressed: () {
               setState(() {
                 selectedChild = 1;
@@ -165,10 +151,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
 
   Widget _buildInventoryAndSettings() {
     return Row(
-      children: [
-        Expanded(child: _buildInventoryButton()),
-        Expanded(child: _buildSettingsButton())
-      ],
+      children: [Expanded(child: _buildInventoryButton()), Expanded(child: _buildSettingsButton())],
     );
   }
 
@@ -176,13 +159,11 @@ class _MainMenuPageState extends State<MainMenuPage> {
     return Padding(
         padding: const EdgeInsets.only(left: 16, right: 8.0),
         child: OneLineIconTextButton(
-            colors: [Colors.deepPurple, Color.fromARGB(255, 113, 67, 219)],
+            colors: const [Colors.deepPurple, Color.fromARGB(255, 113, 67, 219)],
             iconBackgroundColor: Colors.deepPurpleAccent,
             icon: Icons.badge,
             onPressed: () async {
-              await showDialog(
-                  context: context,
-                  builder: (BuildContext context) => ProfileDialog());
+              await showDialog(context: context, builder: (BuildContext context) => const ProfileDialog());
               setState(() {});
             },
             text: "INVENTAIRE"));
@@ -192,10 +173,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
     return Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 16.0),
         child: OneLineIconTextButton(
-            colors: [
-              const Color.fromARGB(255, 113, 67, 219),
-              Colors.deepPurpleAccent
-            ],
+            colors: const [Color.fromARGB(255, 113, 67, 219), Colors.deepPurpleAccent],
             iconBackgroundColor: Colors.deepPurpleAccent,
             icon: Icons.settings,
             onPressed: () {

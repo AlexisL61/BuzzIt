@@ -12,8 +12,8 @@ class InGameRoom {
   /// The buzzer that is currently active
   InGamePlayer? activePlayer;
 
-  List<Function> _playerUpdateListeners = [];
-  List<Function> _activePlayerUpdateListeners = [];
+  final List<Function> _playerUpdateListeners = [];
+  final List<Function> _activePlayerUpdateListeners = [];
 
   InGameRoom(this.id, this.currentPlayer, this.host) : players = [host];
 
@@ -42,9 +42,9 @@ class InGameRoom {
   }
 
   void notifyPlayerUpdate(InGamePlayer player) {
-    _playerUpdateListeners.forEach((element) {
+    for (var element in _playerUpdateListeners) {
       element(player);
-    });
+    }
   }
 
   void addActivePlayerUpdateListener(Function(InGamePlayer?) listener) {
@@ -53,9 +53,9 @@ class InGameRoom {
 
   void notifyActivePlayerUpdate(InGamePlayer? player) {
     print(_activePlayerUpdateListeners.length);
-    _activePlayerUpdateListeners.forEach((element) {
+    for (var element in _activePlayerUpdateListeners) {
       element(player);
-    });
+    }
   }
 
   void updateFromUpdateData(Map<String, dynamic> updatedData) {

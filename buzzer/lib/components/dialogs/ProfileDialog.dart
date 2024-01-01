@@ -1,4 +1,3 @@
-import 'package:buzzer/config.dart';
 import 'package:buzzer/services/preferences/SavedPlayerService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -12,7 +11,7 @@ class ProfileDialog extends StatefulWidget {
 }
 
 class _ProfileDialogState extends State<ProfileDialog> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -47,7 +46,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
         TextField(
             controller: _controller,
             decoration: InputDecoration(
-              border: UnderlineInputBorder(),
+              border: const UnderlineInputBorder(),
               hintText: 'Entrez votre nom',
               labelStyle: GoogleFonts.rubik(
                   textStyle: const TextStyle(

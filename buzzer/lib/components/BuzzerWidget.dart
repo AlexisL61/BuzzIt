@@ -38,7 +38,7 @@ class _BuzzerWidgetState extends State<BuzzerWidget> {
                   color: Colors.black.withOpacity(0.3),
                   spreadRadius: 5,
                   blurRadius: 10,
-                  offset: Offset(0, 0)
+                  offset: const Offset(0, 0)
                 ),
               ]:null)),
         ),

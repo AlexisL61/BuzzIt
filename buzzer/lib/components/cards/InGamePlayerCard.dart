@@ -1,5 +1,4 @@
 import 'package:buzzer/components/cards/BuzzerCard.dart';
-import 'package:buzzer/config.dart';
 import 'package:buzzer/model/InGame/BuzzerTeam.dart';
 import 'package:buzzer/model/InGame/InGamePlayer.dart';
 import 'package:flutter/material.dart';

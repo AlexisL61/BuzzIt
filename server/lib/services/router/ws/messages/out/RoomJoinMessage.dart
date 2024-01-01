@@ -6,7 +6,7 @@ import 'package:server/services/router/ws/WebsocketMessage.dart';
 
 class RoomJoinMessage extends WebsocketConnectionMessage {
   static const String eventId = "roomJoin";
-  Room? room = null;
+  Room? room;
   late Player player;
   late String reconnectionToken;
 

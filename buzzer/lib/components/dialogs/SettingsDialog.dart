@@ -1,7 +1,6 @@
 import 'package:buzzer/components/fields/TextField.dart';
 import 'package:buzzer/components/textstyle/font.dart';
 import 'package:buzzer/config.dart';
-import 'package:buzzer/model/ServerInfo.dart';
 import 'package:buzzer/services/api/ApiService.dart';
 import 'package:buzzer/services/preferences/UserPreferencesService.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ class MasterServerDialog extends StatefulWidget {
 }
 
 class MasterServerDialogState extends State<MasterServerDialog> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   bool testDone = false;
   bool testingConnection = false;
   bool connectionSuccess = false;
@@ -56,19 +55,19 @@ class MasterServerDialogState extends State<MasterServerDialog> {
                   icon: const Icon(Icons.undo))
             ],
           ),
-          testDone ? _buildConnectionStatus() : SizedBox()
+          testDone ? _buildConnectionStatus() : const SizedBox()
         ],
       ),
       actions: [
         TextButton(
-          child: Text("Tester la connexion",
-              style: BuzzerTextStyle.smallRubik.copyWith(
-                  color: !testingConnection ? Colors.purple : Colors.grey)),
           onPressed: !testingConnection
               ? () async {
                   await testConnection();
                 }
               : null,
+          child: Text("Tester la connexion",
+              style: BuzzerTextStyle.smallRubik.copyWith(
+                  color: !testingConnection ? Colors.purple : Colors.grey)),
         ),
         TextButton(
           child: Text("Valider",
@@ -91,13 +90,13 @@ class MasterServerDialogState extends State<MasterServerDialog> {
     } else {
       if (connectionSuccess) {
         return Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Text("Connexion réussie",
               style: BuzzerTextStyle.smallRubik.copyWith(color: Colors.green)),
         );
       } else {
         return Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Text("Impossible de se connecter au serveur",
               style: BuzzerTextStyle.smallRubik.copyWith(color: Colors.red)),
         );

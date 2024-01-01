@@ -26,9 +26,9 @@ class InGamePlayer extends Player {
   }
 
   void updateFromUpdateData(Map<String, dynamic> newPlayer) {
-    this.name = newPlayer['name'];
-    this.image = newPlayer['image'];
-    this.team = BuzzerTeamExtension.fromString(newPlayer['team']);
-    this.inactive = newPlayer['inactive'];
+    name = newPlayer['name'];
+    image = newPlayer['image'];
+    team = BuzzerTeamExtension.fromString(newPlayer['team']);
+    inactive = newPlayer['inactive'];
   }
 }

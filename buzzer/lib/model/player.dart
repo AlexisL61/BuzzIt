@@ -11,6 +11,6 @@ class Player {
   }
 
   get avatar {
-    return BuzzerConfig.DICEBEAR_API +"?seed="+image;
+    return "${BuzzerConfig.DICEBEAR_API}?seed=$image";
   }
 }

@@ -33,7 +33,7 @@ class _RoomCardState extends State<RoomCard> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Salon de " + widget.room.host!.name,
+            Text("Salon de ${widget.room.host!.name}",
                 style: GoogleFonts.rubik(
                     textStyle: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.w600))),
@@ -43,7 +43,7 @@ class _RoomCardState extends State<RoomCard> {
                         fontSize: 16, fontWeight: FontWeight.w600))),
           ],
         ),
-        Spacer(),
+        const Spacer(),
         Row(
           children: [
             Text(widget.room.playersNumber.toString(),
@@ -51,7 +51,7 @@ class _RoomCardState extends State<RoomCard> {
                     textStyle: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.w600))),
             const SizedBox(width: 10),
-            Icon(Icons.person, size: 30)
+            const Icon(Icons.person, size: 30)
           ],
         ),
       ]),

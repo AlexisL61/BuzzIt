@@ -24,17 +24,17 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+        extendBodyBehindAppBar: true,
         body: Stack(
           children: [
             _buildUpperBackground(),
-            ListView(children: [_buildAppInfo(), ServerSettingsComponent()]),
+            ListView(children: [_buildAppInfo(), const ServerSettingsComponent()]),
           ],
         ));
   }
 
-  Widget _buildUpperBackground(){
-     return Container(
+  Widget _buildUpperBackground() {
+    return Container(
       height: 160,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -48,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildAppInfo() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -59,11 +59,13 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Buzz it",
-                style: BuzzerTextStyle.bigRubik.copyWith(color: Colors.white)),
+            Text("Buzz it", style: BuzzerTextStyle.bigRubik.copyWith(color: Colors.white)),
             Text("An open-source buzzer system", style: BuzzerTextStyle.mediumRubik.copyWith(color: Colors.white)),
             const Spacer(),
-            Text("Version 1.0.0", style: BuzzerTextStyle.mediumRubik.copyWith(color:Colors.white), )
+            Text(
+              "Version 1.0.0",
+              style: BuzzerTextStyle.mediumRubik.copyWith(color: Colors.white),
+            )
           ],
         ),
       ),

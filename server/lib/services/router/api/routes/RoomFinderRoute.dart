@@ -9,6 +9,7 @@ import 'package:shelf_router/shelf_router.dart';
 class RoomFinderRoute extends AbstractRoute {
   static const String route = '/room/join/<id>';
 
+  @override
   void importRoute(Router router) {
     router.get(route, (Request request, String id) {
       return Response.ok(jsonEncode(findRoom(id)));

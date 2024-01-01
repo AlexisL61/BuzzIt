@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:buzzer/model/InGame/ActivePlayer.dart';
-import 'package:buzzer/model/InGame/InGameRoom.dart';
-import 'package:buzzer/model/Player.dart';
 import 'package:buzzer/services/ws/WebsocketMessage.dart';
 import 'package:buzzer/services/ws/messages/in/PingMessage.dart';
 import 'package:buzzer/services/ws/messages/in/PlayerDataConfirmationMessage.dart';
@@ -30,7 +28,7 @@ class WebsocketClient {
       bool success = await sendPlayerData(player, _socket);
       if (!success) {
         _socket.sink.close();
-        throw new Exception("Could not connect to server");
+        throw Exception("Could not connect to server");
       }
       _isConnected = true;
       player.notifyListeners();
@@ -77,9 +75,9 @@ class WebsocketClient {
   void onMessage(ActivePlayer buzzer, dynamic event) {
     WebsocketConnectionMessage message = WebsocketConnectionMessage.fromJson(jsonDecode(event));
     print(event);
-    message.actions.forEach((element) {
+    for (var element in message.actions) {
       element.activate(buzzer, message);
-    });
+    }
   }
 
   Future<T> waitMessage<T>() async {
@@ -98,7 +96,7 @@ class WebsocketClient {
   void _checkPingMessages(ActivePlayer player) async {
     while (_isConnected) {
       bool istimeout = false;
-      Future timeout = Future.delayed(Duration(seconds: 10));
+      Future timeout = Future.delayed(const Duration(seconds: 10));
       timeout.then((value) => istimeout = true);
       await Future.any([timeout, waitMessage<PingMessage>()]);
       if (istimeout) {

@@ -26,15 +26,16 @@ class BuzzerCard extends StatefulWidget {
   static Widget buildWhiteCard(
       {required Widget child, BorderRadius? borderRadius}) {
     return BuzzerCard(
-        child: child, borderRadius: borderRadius, style: BuzzerCardStyle.WHITE);
+        borderRadius: borderRadius, style: BuzzerCardStyle.WHITE,
+        child: child);
   }
 
   static Widget buildPurpleCard(
       {required Widget child, BorderRadius? borderRadius}) {
     return BuzzerCard(
-        child: child,
         borderRadius: borderRadius,
-        style: BuzzerCardStyle.PURPLE);
+        style: BuzzerCardStyle.PURPLE,
+        child: child);
   }
 }
 
@@ -94,7 +95,7 @@ class _BuzzerCardState extends State<BuzzerCard> with TickerProviderStateMixin {
 
   BoxDecoration buildPurpleBoxDecoration() {
     return BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
             colors: [Colors.deepPurple, Colors.deepPurpleAccent]),
         borderRadius: widget.borderRadius ?? BorderRadius.circular(10),
         boxShadow: [_buildBoxShadow()]);
@@ -112,7 +113,7 @@ class _BuzzerCardState extends State<BuzzerCard> with TickerProviderStateMixin {
       color: Colors.black.withOpacity((1-animationController.value) * 0.1 + 0.2),
       spreadRadius: 5,
       blurRadius: 10,
-      offset: Offset(0, 0),
+      offset: const Offset(0, 0),
     );
   }
 }

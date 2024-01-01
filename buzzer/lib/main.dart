@@ -32,9 +32,9 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: MainMenuPage.route,
         routes: {
-          MainMenuPage.route: (context) => MainMenuPage(),
-          InGameRoute.route: (context) => InGameRoute(), 
-          SettingsRoute.route: (context) => SettingsRoute()
+          MainMenuPage.route: (context) => const MainMenuPage(),
+          InGameRoute.route: (context) => const InGameRoute(), 
+          SettingsRoute.route: (context) => const SettingsRoute()
         });
   }
 }

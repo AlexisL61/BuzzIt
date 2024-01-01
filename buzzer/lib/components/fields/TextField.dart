@@ -18,7 +18,7 @@ class _BuzzerTextFieldState extends State<BuzzerTextField> {
     return TextField(
         controller: widget.controller,
         decoration: InputDecoration(
-          border: UnderlineInputBorder(),
+          border: const UnderlineInputBorder(),
           hintText: widget.hint,
           labelStyle: BuzzerTextStyle.mediumRubik
               .copyWith(color: Colors.deepPurpleAccent),

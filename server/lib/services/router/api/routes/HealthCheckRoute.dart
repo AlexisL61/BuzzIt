@@ -7,6 +7,7 @@ import 'package:shelf_router/shelf_router.dart';
 class HealthcheckRoute extends AbstractRoute {
   static const String healthcheck = '/healthcheck';
 
+  @override
   void importRoute(Router router){
     router.get(healthcheck, (Request request) {
       return Response.ok(jsonEncode(jsonHealthcheckData()));

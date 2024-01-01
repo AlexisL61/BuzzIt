@@ -15,11 +15,12 @@ class BuzzStateMessage extends WebsocketConnectionMessage {
 
   @override
   void hydrateData(data) {
-    this.state = BuzzerStateExtension.fromString(data["state"]);
-    if (data["activeTeam"] != null)
-    this.activeTeam = BuzzerTeamExtension.fromString(data["activeTeam"]);
-    else 
-    this.activeTeam = null;
+    state = BuzzerStateExtension.fromString(data["state"]);
+    if (data["activeTeam"] != null) {
+      activeTeam = BuzzerTeamExtension.fromString(data["activeTeam"]);
+    } else {
+      activeTeam = null;
+    }
   }
 
   @override

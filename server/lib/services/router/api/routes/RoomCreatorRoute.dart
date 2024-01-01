@@ -9,6 +9,7 @@ import 'package:shelf_router/shelf_router.dart';
 class RoomCreatorRoute extends AbstractRoute {
   static const String route = '/room/create';
 
+  @override
   void importRoute(Router router) {
     router.post(route, (Request request) {
       return Response.ok(jsonEncode(createRoom()));

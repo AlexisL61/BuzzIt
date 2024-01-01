@@ -7,6 +7,7 @@ import 'package:shelf_router/shelf_router.dart';
 class InfoRoute extends AbstractRoute {
   static const String info = '/info';
 
+  @override
   void importRoute(Router router) {
     router.get(info, (Request request) {
       return Response.ok(jsonEncode(jsonInfoData()));

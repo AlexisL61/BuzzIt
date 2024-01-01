@@ -3,7 +3,6 @@ import 'package:buzzer/components/cards/BuzzerCard.dart';
 import 'package:buzzer/components/cards/RoomCard.dart';
 import 'package:buzzer/components/transitions/OpacityTransition.dart';
 import 'package:buzzer/model/InGame/InGameRoom.dart';
-import 'package:buzzer/model/Player.dart';
 import 'package:buzzer/model/Room.dart';
 import 'package:buzzer/services/api/ApiService.dart';
 import 'package:buzzer/services/connection/RoomConnection.dart';
@@ -31,20 +30,17 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Spacer(),
+        const Spacer(),
         Padding(
             padding: const EdgeInsets.all(16.0),
             child: BuzzerCard.buildPurpleCard(
                 child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
                   Text("ENTREZ VOTRE CODE",
                       style: GoogleFonts.rubik(
-                          textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 26,
-                              fontWeight: FontWeight.w600))),
+                          textStyle: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w600))),
                 ],
               ),
             ))),
@@ -56,7 +52,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
             width: 50,
             height: 50,
             textStyle: GoogleFonts.rubik(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
               color: Colors.white,
               fontSize: 30,
             )),
@@ -83,19 +79,14 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
             padding: const EdgeInsets.all(16.0),
             child: BuzzerCard.buildPurpleCard(
                 child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  IconButton.filled(
-                      onPressed: widget.goingBack,
-                      icon: Icon(Icons.arrow_back)),
+                  IconButton.filled(onPressed: widget.goingBack, icon: const Icon(Icons.arrow_back)),
                   const SizedBox(width: 16),
                   Text("RETOUR AU MENU",
                       style: GoogleFonts.rubik(
-                          textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 26,
-                              fontWeight: FontWeight.w600))),
+                          textStyle: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w600))),
                 ],
               ),
             ))),
@@ -109,8 +100,7 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
     });
     roomFound = await ApiService().getRoomData(pin);
     setState(() {
-      roomDataLoading =
-          roomFound == null ? RoomDataStatus.NOT_FOUND : RoomDataStatus.FOUND;
+      roomDataLoading = roomFound == null ? RoomDataStatus.NOT_FOUND : RoomDataStatus.FOUND;
     });
   }
 
@@ -133,36 +123,28 @@ class _GameCodeComponentState extends State<GameCodeComponent> {
     return SizedBox(
       height: 120,
       child: OpacityTransition(selectedChild: selectedChild, children: [
-        SizedBox.shrink(),
+        const SizedBox.shrink(),
         const Padding(
-            padding: EdgeInsets.all(16),
-            child:
-                BuzzerCard(child: Center(child: CircularProgressIndicator()))),
+            padding: EdgeInsets.all(16), child: BuzzerCard(child: Center(child: CircularProgressIndicator()))),
         roomFound == null
-            ? SizedBox.shrink()
+            ? const SizedBox.shrink()
             : Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: BigButton(
                   child: RoomCard(room: roomFound!),
                   onPressed: () async {
-                    InGameRoom inGameRoom = await RoomConnectionService()
-                        .connectToRoom(
-                            roomFound!,
-                            SavedPlayerService.savedPlayer);
-                    Navigator.pushNamed(context, '/ingame',
-                        arguments: inGameRoom);
+                    InGameRoom inGameRoom =
+                        await RoomConnectionService().connectToRoom(roomFound!, SavedPlayerService.savedPlayer);
+                    Navigator.pushNamed(context, '/ingame', arguments: inGameRoom);
                   },
                 )),
         Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: BuzzerCard(
                 child: Center(
                     child: Text("Salle non trouvée",
                         style: GoogleFonts.rubik(
-                            textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 26,
-                                fontWeight: FontWeight.w600)))))),
+                            textStyle: const TextStyle(color: Colors.black, fontSize: 26, fontWeight: FontWeight.w600)))))),
       ]),
     );
   }

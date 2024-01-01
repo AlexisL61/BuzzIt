@@ -20,6 +20,7 @@ class OneLineIconTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BigButton(
+        onPressed: onPressed,
         child: Container(
           decoration: BoxDecoration(gradient: LinearGradient(colors: colors)),
           child: Padding(
@@ -30,15 +31,14 @@ class OneLineIconTextButton extends StatelessWidget {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle, color: iconBackgroundColor),
                     child: Icon(icon, color: Colors.white)),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(text,
                     style: GoogleFonts.rubik(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w600))),
               ])),
-        ),
-        onPressed: onPressed);
+        ));
   }
 }

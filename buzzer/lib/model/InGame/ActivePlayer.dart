@@ -16,7 +16,7 @@ class ActivePlayer extends InGamePlayer {
   BuzzerState state;
   BuzzerTeam ennemyTeam = BuzzerTeam.RED;
   WebsocketClient client = WebsocketClient();
-  List<Function> _listeners = [];
+  final List<Function> _listeners = [];
   InGameRoom? room;
 
   ActivePlayer(String name, String image)
@@ -54,7 +54,7 @@ class ActivePlayer extends InGamePlayer {
     if (roomJoinMessage.status == "OK") {
       InGameRoom inGameRoom =
           roomJoinMessage.getInGameRoomWithActivePlayer(this);
-      this.room = inGameRoom;
+      room = inGameRoom;
       return inGameRoom;
     } else {
       return null;
@@ -88,9 +88,9 @@ class ActivePlayer extends InGamePlayer {
   }
 
   void notifyListeners() {
-    _listeners.forEach((element) {
+    for (var element in _listeners) {
       element();
-    });
+    }
   }
 
   void sendPong() {
@@ -99,7 +99,7 @@ class ActivePlayer extends InGamePlayer {
 
   @override
   void updateFromUpdateData(Map<String, dynamic> data) {
-    this.state = BuzzerStateExtension.fromString(data['state']);
+    state = BuzzerStateExtension.fromString(data['state']);
     super.updateFromUpdateData(data);
     notifyListeners();
   }

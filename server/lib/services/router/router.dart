@@ -28,9 +28,9 @@ class ServerRouter {
   void startRouter() {
     Router app = Router();
 
-    availableApiRoutes.forEach((element) {
+    for (var element in availableApiRoutes) {
       element.importRoute(app);
-    });
+    }
 
     app.get('/ws', webSocketHandler(onNewWsConnection));
 
@@ -54,9 +54,9 @@ class ServerRouter {
       stream.listen((event) {
         print(event);
         WebsocketConnectionMessage message = WebsocketConnectionMessage.fromJson(jsonDecode(event));
-        message.actions.forEach((element) {
+        for (var element in message.actions) {
           element.activate(player, message);
-        });
+        }
       }, onDone: () {
         player.inactive = true;
       }, onError: (error) {

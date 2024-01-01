@@ -16,7 +16,7 @@ class UserPreferencesService {
   }
 
   Future<String> get masterServerURL async {
-    String? masterServerURI = await _preferences.getString("master_server");
+    String? masterServerURI = _preferences.getString("master_server");
     if (masterServerURI == null) {
       masterServerURI = BuzzerConfig.API_URL;
       _preferences.setString("master_server", masterServerURI);
@@ -25,7 +25,7 @@ class UserPreferencesService {
   }
 
   Future<String> get username async {
-    String? username = await _preferences.getString("username");
+    String? username = _preferences.getString("username");
     if (username == null) {
       username = "Player";
       _preferences.setString("username", username);
@@ -34,17 +34,17 @@ class UserPreferencesService {
   }
 
   Future<String?> get latestRoomCode async {
-    String? roomCode = await _preferences.getString("room_code");
+    String? roomCode = _preferences.getString("room_code");
     return roomCode;
   }
 
   Future<String?> get reconnectionToken async {
-    String? reconnectionToken = await _preferences.getString("reconnection_token");
+    String? reconnectionToken = _preferences.getString("reconnection_token");
     return reconnectionToken;
   }
 
   Future<String> get avatar async {
-    String? avatar = await _preferences.getString("avatar");
+    String? avatar = _preferences.getString("avatar");
     if (avatar == null) {
       avatar = await username;
       _preferences.setString("avatar", avatar);

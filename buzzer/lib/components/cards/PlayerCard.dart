@@ -1,5 +1,4 @@
 import 'package:buzzer/components/cards/BuzzerCard.dart';
-import 'package:buzzer/config.dart';
 import 'package:buzzer/model/Player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';

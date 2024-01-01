@@ -41,7 +41,7 @@ class _ReconnectDialogState extends State<ReconnectDialog> {
                 Navigator.of(context).pop(gameroom);
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Impossible de se reconnecter")));
+                    const SnackBar(content: Text("Impossible de se reconnecter")));
                 Navigator.of(context).pop(null);
               }
             },

@@ -15,8 +15,8 @@ class UpdateDataMessage extends WebsocketConnectionMessage {
 
   @override
   void hydrateData(data) {
-    this.type = data["type"];
-    this.updatedData = data["updatedData"];
+    type = data["type"];
+    updatedData = data["updatedData"];
   }
 
   @override

@@ -11,8 +11,8 @@ class RoomReconnectRequestMessage extends WebsocketConnectionMessage {
 
   @override
   void hydrateData(data) {
-    this.roomId = data["roomId"];
-    this.reconnectionToken = data["token"];
+    roomId = data["roomId"];
+    reconnectionToken = data["token"];
   }
 
   @override

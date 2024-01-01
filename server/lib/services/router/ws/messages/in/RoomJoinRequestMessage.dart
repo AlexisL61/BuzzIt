@@ -13,8 +13,8 @@ class RoomJoinRequestMessage extends WebsocketConnectionMessage {
 
   @override
   void hydrateData(data) {
-    this.roomId = data["roomId"];
-    this.token = data["token"];
+    roomId = data["roomId"];
+    token = data["token"];
   }
 
   @override
