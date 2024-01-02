@@ -3,13 +3,13 @@ import 'dart:io';
 
 import 'package:server/services/router/api/routes/AbstractRoute.dart';
 import 'package:shelf/shelf.dart';
-import 'package:shelf_router/shelf_router.dart';
+import 'package:shelf_plus/shelf_plus.dart';
 
 class InfoRoute extends AbstractRoute {
   static const String info = '/info';
 
   @override
-  void importRoute(Router router) {
+  void importRoute(RouterPlus router) {
     router.get(info, (Request request) async {
       return Response.ok(jsonEncode(await jsonInfoData()));
     });

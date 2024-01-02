@@ -11,6 +11,8 @@ dependencies:
   shelf: 1.4.1
   shelf_router: 1.1.4
   shelf_web_socket: 1.0.4
+  shelf_cors_headers: 0.1.5
+  shelf_plus: 1.7.0
   # path: ^1.8.0
 
 dev_dependencies:

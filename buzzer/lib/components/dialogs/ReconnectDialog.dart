@@ -32,8 +32,6 @@ class _ReconnectDialogState extends State<ReconnectDialog> {
               String? roomCode = await UserPreferencesService().latestRoomCode;
               String? reconnectionToken =
                   await UserPreferencesService().reconnectionToken;
-              print(roomCode);
-              print(reconnectionToken);
               if (roomCode == null || reconnectionToken == null) {
                 return;
               }

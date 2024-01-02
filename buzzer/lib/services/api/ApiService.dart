@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:buzzer/model/ServerInfo.dart';
 import 'package:buzzer/model/Room.dart';
 import 'package:buzzer/services/api/HttpError.dart';
@@ -10,7 +8,6 @@ import 'package:http/http.dart';
 
 class ApiService {
   late String serverUrl;
-  late HttpClient httpClient;
 
   factory ApiService() => _instance;
 
@@ -20,7 +17,6 @@ class ApiService {
 
   Future<void> init() async {
     serverUrl = await UserPreferencesService().masterServerURL;
-    httpClient = HttpClient();
   }
 
   Future<ServerInfo> getServerInfo([String? serverUrlOverride]) async {

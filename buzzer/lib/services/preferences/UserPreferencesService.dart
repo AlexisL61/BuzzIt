@@ -1,4 +1,5 @@
 import 'package:buzzer/config.dart';
+import 'package:buzzer/services/api/ApiService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferencesService {
@@ -6,8 +7,7 @@ class UserPreferencesService {
 
   factory UserPreferencesService() => _instance;
 
-  static final UserPreferencesService _instance =
-      UserPreferencesService._internal();
+  static final UserPreferencesService _instance = UserPreferencesService._internal();
 
   UserPreferencesService._internal();
 
@@ -62,6 +62,7 @@ class UserPreferencesService {
 
   Future<void> setMasterServerURL(String url) async {
     await _preferences.setString("master_server", url);
+    await ApiService().init();
   }
 
   Future<void> setLatestRoomCode(String roomCode) async {

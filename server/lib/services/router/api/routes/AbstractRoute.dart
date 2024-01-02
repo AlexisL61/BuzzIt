@@ -1,5 +1,5 @@
-import 'package:shelf_router/shelf_router.dart';
+import 'package:shelf_plus/shelf_plus.dart';
 
 abstract class AbstractRoute {
-  void importRoute(Router router);
+  void importRoute(RouterPlus router);
 }

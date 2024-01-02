@@ -13,10 +13,12 @@ import 'package:server/services/router/ws/messages/in/PlayerDataMessage.dart';
 import 'package:server/services/router/ws/messages/in/PongMessage.dart';
 import 'package:server/services/router/ws/messages/out/PingMessage.dart';
 import 'package:server/services/router/ws/messages/out/PlayerDataConfirmationMessage.dart';
+import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
+import 'package:shelf_plus/shelf_plus.dart';
 
 class ServerRouter {
   static List<AbstractRoute> availableApiRoutes = [
@@ -26,14 +28,27 @@ class ServerRouter {
     InfoRoute()
   ];
 
-  void startRouter() {
-    Router app = Router();
+  final serverCorsHeaders = {
+    ACCESS_CONTROL_ALLOW_ORIGIN:
+        !Platform.environment.containsKey("CORS_ORIGIN") ? "" : Platform.environment["CORS_ORIGIN"]!, 
+    'Content-Type': 'application/json'
+  };
+
+  void startRouter() {    
+    RouterPlus app = Router().plus;
+
+    app.use(corsHeaders(headers: serverCorsHeaders));
 
     for (var element in availableApiRoutes) {
       element.importRoute(app);
     }
 
     app.get('/ws', webSocketHandler(onNewWsConnection));
+
+    app.all('/<ignored|.*>', (Request request) {
+      if (request.method == 'OPTIONS') return Response.ok(null, headers: serverCorsHeaders);
+      return Response.internalServerError();
+    });
 
     shelf_io.serve(app, "0.0.0.0", int.parse(Platform.environment["SERVER_PORT"]!), shared: true);
   }
