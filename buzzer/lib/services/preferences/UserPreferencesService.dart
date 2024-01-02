@@ -1,5 +1,6 @@
 import 'package:buzzer/config.dart';
 import 'package:buzzer/services/api/ApiService.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferencesService {
@@ -16,6 +17,10 @@ class UserPreferencesService {
   }
 
   Future<String> get masterServerURL async {
+    if (kIsWeb) {
+      return Uri.base.origin;
+    }
+
     String? masterServerURI = _preferences.getString("master_server");
     if (masterServerURI == null) {
       masterServerURI = BuzzerConfig.API_URL;

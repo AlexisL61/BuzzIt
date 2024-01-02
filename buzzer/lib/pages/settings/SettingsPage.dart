@@ -1,5 +1,6 @@
 import 'package:buzzer/components/textstyle/font.dart';
 import 'package:buzzer/pages/settings/components/ServerSettingsComponent.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -29,7 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
         body: Stack(
           children: [
             _buildUpperBackground(),
-            ListView(children: [_buildAppInfo(), const ServerSettingsComponent()]),
+            ListView(children: [_buildAppInfo(), !kIsWeb ? const ServerSettingsComponent() : const SizedBox.shrink()]),
           ],
         ));
   }
@@ -61,7 +62,8 @@ class _SettingsPageState extends State<SettingsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(AppLocalizations.of(context)!.app_name, style: BuzzerTextStyle.bigRubik.copyWith(color: Colors.white)),
-            Text(AppLocalizations.of(context)!.app_description, style: BuzzerTextStyle.mediumRubik.copyWith(color: Colors.white)),
+            Text(AppLocalizations.of(context)!.app_description,
+                style: BuzzerTextStyle.mediumRubik.copyWith(color: Colors.white)),
             const Spacer(),
             Text(
               AppLocalizations.of(context)!.app_version("1.0.0"),
