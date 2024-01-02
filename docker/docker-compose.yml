@@ -1,0 +1,10 @@
+services:
+  buzzit_server:
+    build:
+      context: .
+      dockerfile: DockerFile
+    ports:
+      - "8080:8080"
+    environment:
+      - TLS: ${TLS}
+      - SERVER_URL: ${SERVER_URL}

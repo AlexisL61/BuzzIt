@@ -1,4 +1,29 @@
 FROM alpine
 
+ARG version=0.1.0
+
 WORKDIR /usr/src/app
 
+RUN apk update
+RUN apk add zip
+
+RUN wget https://github.com/AlexisL61/BuzzIt/releases/download/{$version}/server_linux.zip
+RUN wget https://github.com/AlexisL61/BuzzIt/releases/download/{$version}/buzzer_web.zip
+
+RUN mkdir app
+RUN mv buzzer_web.zip app
+
+RUN unzip server_linux.zip
+RUN unzip app/buzzer_web.zip -d app
+
+RUN rm server_linux.zip
+RUN rm app/buzzer_web.zip
+
+RUN chmod +x server_linux
+
+EXPOSE 8080
+
+ENV SERVER_PORT=8080
+ENV STATIC_FILES_PATH=/usr/src/app/app
+
+CMD ["./server_linux"]

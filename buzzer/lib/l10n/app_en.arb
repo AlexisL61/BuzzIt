@@ -11,9 +11,9 @@
         }
     },
 
-    "profile_default_title": "Quiz amateur",
+    "profile_default_title": "Quiz enthusiast",
     
-    "room_title": "Salon de {username}",
+    "room_title": "{username}'s room",
     "@room_title": {
         "placeholders": {
             "username": {
