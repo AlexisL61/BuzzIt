@@ -6,5 +6,5 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - TLS: ${TLS}
-      - SERVER_URL: ${SERVER_URL}
+      TLS: ${TLS}
+      SERVER_URL: ${SERVER_URL}
