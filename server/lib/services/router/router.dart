@@ -45,9 +45,14 @@ class ServerRouter {
 
     app.get('/ws', webSocketHandler(onNewWsConnection));
 
+    // Starting static file handler
+    if (Platform.environment.containsKey("STATIC_FILES_PATH")) {
+      app.mount('/app', createStaticHandler(Platform.environment["STATIC_FILES_PATH"]!, defaultDocument: 'index.html'));
+    }
+
     app.all('/<ignored|.*>', (Request request) {
       if (request.method == 'OPTIONS') return Response.ok(null, headers: serverCorsHeaders);
-      return Response.internalServerError();
+      return Response.notFound('Not found');
     });
 
     shelf_io.serve(app, "0.0.0.0", int.parse(Platform.environment["SERVER_PORT"]!), shared: true);
