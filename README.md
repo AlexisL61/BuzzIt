@@ -15,6 +15,14 @@ A free, online and open-source buzzer system.
 
 # Installation
 
+## Client
+
+You can download the app on Android by downloading the buzzer_android.apk file in the latest release : https://github.com/AlexisL61/BuzzIt/releases
+
+The app is not available on the play store. This is due to a new rule on the store : we need at least 20 users testing the app for at least 14 days to publish the app. If you want to help, you can add a message in the issue : https://github.com/AlexisL61/BuzzIt/issues/1
+
+## Server
+
 The server can be launched using a files in the [docker](https://github.com/AlexisL61/BuzzIt/tree/main/docker) folder.
 
 After downloading these files run : 
