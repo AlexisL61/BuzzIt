@@ -10,9 +10,23 @@ A free, online and open-source buzzer system.
 
 # Directories
 
-`buzzer` : contains the source code for the web app and the mobile app
-`server` : contains the source code for the server
+- `buzzer` : contains the source code for the web app and the mobile app
+- `server` : contains the source code for the server
 
 # Installation
 
-TBR
+The server can be launched using a files in the [docker](https://github.com/AlexisL61/BuzzIt/tree/main/docker) folder.
+
+After downloading these files run : 
+
+```sh
+cp .env.dist .env
+```
+
+Replace the content of the .env file following your server configuration
+
+Next, run this command to launch the server : 
+
+```sh
+docker compose up -d
+```
