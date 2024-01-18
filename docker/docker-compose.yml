@@ -8,3 +8,4 @@ services:
     environment:
       TLS: ${TLS}
       SERVER_URL: ${SERVER_URL}
+      CORS_ORIGIN: ${CORS_ORIGIN}
