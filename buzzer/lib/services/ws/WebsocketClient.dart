@@ -33,6 +33,7 @@ class WebsocketClient {
       _isConnected = true;
       player.notifyListeners();
       _checkPingMessages(player);
+      
       stream.listen((event) {
         onMessage(player, event);
       }, onError: (e) {
